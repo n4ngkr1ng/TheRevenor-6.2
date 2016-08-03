@@ -1,0 +1,78 @@
+NOTE  |Author: TheRevenor - ver. 1.2 - 07.29.2016
+NOTE  |Attack: TH9-10 GOWIPE With Spell
+NOTE  |Make these Troops and Spells: 100% Archer, 6-8 WallBreakers, Wizard 18-22, 2-3 P.E.K.K.A's, 2-3 Golems, 1-3 H.Spell, 1-3 R.Spell
+NOTE  |
+NOTE  |Please Send Me Report
+
+      |-----------------------------------------------Start--------------------------------------------|
+      |                                                                                                |
+
+      |EXTR. GOLD |EXTR.ELIXIR|EXTR. DARK |DEPO. GOLD |DEPO.ELIXIR|DEPO. DARK |TOWNHALL   |FORCED SIDE |
+SIDE  |           |           |           |           |           |           |5          |            |
+
+
+      |VECTOR_____|SIDE_______|DROP_POINTS|ADDTILES___|VERSUS_____|RANDOMX_PX_|RANDOMY_PX_|____________|
+MAKE  |A          |RIGHT-BACK |15         |1          |INT-EXT    |2          |2          |            |
+MAKE  |B          |RIGHT-FRONT|15         |1          |INT-EXT    |2          |2          |            |
+MAKE  |C          |RIGHT-BACK |15         |2          |INT-EXT    |2          |2          |            |
+MAKE  |D          |RIGHT-FRONT|15         |2          |INT-EXT    |2          |2          |            |
+MAKE  |E          |RIGHT-BACK |15         |1          |INT-EXT    |2          |2          |            |
+MAKE  |F          |RIGHT-FRONT|15         |1          |INT-EXT    |2          |2          |            |
+MAKE  |G          |RIGHT-BACK |15         |2          |INT-EXT    |2          |2          |            |
+MAKE  |H          |RIGHT-FRONT|15         |2          |INT-EXT    |2          |2          |            |
+
+      |VECTOR_____|SIDE_______|DROP_POINTS|ADDTILES___|VERSUS_____|RANDOMX_PX_|RANDOMY_PX_|____________|
+MAKE  |I          |RIGHT-BACK |15         |-10        |INT-EXT    |0          |0          |            |
+MAKE  |J          |RIGHT-FRONT|15         |-10        |INT-EXT    |0          |0          |            |
+MAKE  |K          |RIGHT-BACK |15         |-14        |INT-EXT    |0          |0          |            |
+MAKE  |L          |RIGHT-FRONT|15         |-10        |INT-EXT    |2          |2          |            |
+MAKE  |M          |RIGHT-BACK |15         |-9         |INT-EXT    |0          |0          |            |
+MAKE  |N          |RIGHT-FRONT|15         |-10        |INT-EXT    |2          |2          |            |
+MAKE  |O          |RIGHT-BACK |15         |-16        |INT-EXT    |0          |0          |            |
+MAKE  |P          |RIGHT-FRONT|60         |-14        |INT-EXT    |0          |1          |            |vector for quakes and freeze
+
+      |VECTOR_____|INDEX______|QTY_X_VECT_|TROOPNAME__|DELAY_DROP_|DELAYCHANGE|SLEEPAFTER_|____________| SEQUENCE 1
+DROP  |P          |1          |4          |Espell     |200        |0          |1000       |            | Droping quake(s)
+DROP  |A          |4          |1          |Gole       |200        |0          |500        |            | Droping 1 Golem
+DROP  |P          |1          |4          |Espell     |200        |0          |50         |            | Droping quake(s) if error
+DROP  |B          |4          |2          |Gole       |200        |50-70      |2000       |            | Droping 1-2 Golem
+DROP  |C-D        |2-10       |5          |Wiza       |500        |50-70      |800        |            | Droping Wizards
+DROP  |G-H        |6          |3          |Wall       |300        |0          |2000       |            | Droping 6 Wall breakers
+DROP  |F          |1          |1          |Castle     |1          |0          |500        |            | Droping Castle
+DROP  |A-B        |1          |1          |Pekk       |300        |50-70      |3000       |            | Droping 2 Pekka
+DROP  |M          |3          |1          |PSpell     |1          |0          |500        |            | Droping Poison Spell
+DROP  |F          |1          |1          |King       |1          |100        |500        |            | Droping King
+DROP  |A-B        |1          |2          |Pekk       |200        |50-70      |3000       |            | Droping 1-2 Pekka
+DROP  |H          |1          |1          |Queen      |1          |100        |500        |            | Droping Queen
+DROP  |E          |1          |2          |Wall       |200        |0          |500        |            | Droping 2 Wall breakers
+DROP  |I          |3          |1          |HSpell     |1          |0          |2000-3500  |            | Droping Heal Spell
+DROP  |J          |1          |1          |RSpell     |1          |0          |2000-3500  |            | Droping Rage Spell
+DROP  |A-B        |2-10       |4          |Wiza       |500        |50-70      |2000       |            | Droping Wizards
+      
+WAIT  |5000       |           |           |           |           |           |           |            | Add a wait time
+
+      |VECTOR_____|INDEX______|QTY_X_VECT_|TROOPNAME__|DELAY_DROP_|DELAYCHANGE|SLEEPAFTER_|____________| SEQUENCE 2
+DROP  |K          |2          |1          |Hspell     |1          |0          |2000-3000  |            | Droping Heal Spell
+DROP  |A-B        |2-10       |4          |Wiza       |500        |50-70      |1000       |            | Droping Wizards
+DROP  |O          |2          |1          |Rspell     |1          |0          |2000       |            | Droping Rage Spell
+
+      |VECTOR_____|INDEX______|QTY_X_VECT_|TROOPNAME__|DELAY_DROP_|DELAYCHANGE|SLEEPAFTER_|____________| Droping remaining Troops if Redline error
+DROP  |B          |4          |2          |Gole       |200        |0          |1000       |            | Droping 1-2 Golem
+DROP  |A-B        |1          |2          |Pekk       |200        |50-70      |1000       |            | Droping 1-2 Pekka
+DROP  |F          |1          |1          |Castle     |1          |0          |500        |            | Droping Castle
+DROP  |A-B        |2-10       |4          |Wiza       |500        |50-70      |1000       |            | Droping Wizards
+DROP  |K          |2          |1          |Hspell     |1          |0          |3000       |            | Droping Heal Spell
+DROP  |O          |2          |1          |Rspell     |1          |0          |2000       |            | Droping Rage Spell
+
+WAIT  |1000-2000  |           |           |           |           |           |           |            | Add a wait time during wait time also CHECK exit values
+
+RECALC|           |           |           |           |           |           |           |            | Recalculate remaining troops and then launch
+
+      |VECTOR_____|INDEX______|QTY_X_VECT_|TROOPNAME__|DELAY_DROP_|DELAYCHANGE|SLEEPAFTER_|____________| DROP REMAINING if TRAINING ERROR
+DROP  |A-B        |2-10       |4          |Wiza       |100        |50-70      |500        |            | Droping Wizards
+DROP  |K          |2          |1          |Hspell     |1          |0          |500        |            | Droping Heal Spell
+DROP  |A          |1          |2          |Wall       |100        |0          |500        |            | Droping Wall breakers
+DROP  |O          |2          |1          |Rspell     |1          |0          |2000       |            | Droping Rage Spell
+DROP  |A-B        |2-10       |30         |Arch       |500        |10         |0          |            | Droping Archer, can drop upto 30 if training error
+      |                                                                                                |
+      |------------------------------------------------END---------------------------------------------|

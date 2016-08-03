@@ -12,6 +12,7 @@
 ; Link ..........: https://github.com/MyBotRun/MyBot/wiki
 ; Example .......: No
 ; ===============================================================================================================================
+#Cs
 Func cmbProfile()
 	saveConfig()
 
@@ -66,7 +67,8 @@ Func btnAddConfirm()
 			SetLog("If you are seeing this log message there is something wrong.", $COLOR_RED)
 	EndSwitch
 EndFunc   ;==>btnAddConfirm
-
+#Ce
+#Cs
 Func btnDeleteCancel()
 	Switch @GUI_CtrlId
 		Case $btnDelete
@@ -103,7 +105,8 @@ Func btnDeleteCancel()
 		GUICtrlSetState($btnRename, $GUI_DISABLE)
 	EndIf
 EndFunc   ;==>btnDeleteCancel
-
+#Ce
+#Cs
 Func btnRenameConfirm()
 	Switch @GUI_CtrlId
 		Case $btnRename
@@ -141,6 +144,7 @@ Func btnRenameConfirm()
 			SetLog("If you are seeing this log message there is something wrong.", $COLOR_RED)
 	EndSwitch
 EndFunc   ;==>btnRenameConfirm
+#Ce
 Func cmbBotCond()
 	If _GUICtrlComboBox_GetCurSel($cmbBotCond) = 15 Then
 		If _GUICtrlComboBox_GetCurSel($cmbHoursStop) = 0 Then _GUICtrlComboBox_SetCurSel($cmbHoursStop, 1)

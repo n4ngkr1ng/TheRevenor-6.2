@@ -297,6 +297,9 @@ Global $sProfilePath = @ScriptDir & "\Profiles"
 Global $sPreset = @ScriptDir & "\Strategies"
 Global $aTxtLogInitText[0][6] = [[]]
 
+; TheRevenor
+Global $profileString
+
 Global $iMoveMouseOutBS = 0 ; If enabled moves mouse out of Android window when bot is running
 Global $SilentSetLog = False ; No logs to Log Control when enabled
 Global $DevMode = 0
@@ -395,7 +398,7 @@ Global Enum $eIcnArcher = 1, $eIcnDonArcher, $eIcnBalloon, $eIcnDonBalloon, $eIc
 		$eIcnBldgElixir, $eIcnBldgGold, $eIcnMagnifier, $eIcnWallElixir, $eIcnWallGold, $eIcnQueen, $eIcnKing, $eIcnDarkSpellBoost, $eIcnQueenBoostLocate, $eIcnKingBoostLocate, $eIcnKingUpgr, $eIcnQueenUpgr, $eIcnWardenAbility, $eIcnWarden, $eIcnWardenBoostLocate, $eIcnKingBoost, _
 		$eIcnQueenBoost, $eIcnWardenBoost, $eIcnWardenUpgr, $eIcnReload, $eIcnCopy, $eIcnAddcvs, $eIcnEdit, $eIcnTreeSnow, $eIcnSleepingQueen, $eIcnSleepingKing, $eIcnGoldElixir, $eIcnBowler, $eIcnDonBowler, $eIcnCCDonate, $eIcnEagleArt, $eIcnGembox, $eIcnInferno4, $eIcnInfo, $eIcnMain, _
 		$eIcnTree, $eIcnProfile, $eIcnCCRequest, $eIcnTelegram, $eIcnTiles, $eIcnXbow3, $eIcnBark, $eIcnDailyProgram, $eIcnLootCart, $eIcnSleepMode, $eIcnTH11, $eIcnTrainMode, $eIcnSleepingWarden, $eIcnCloneSpell, $eIcnSkeletonSpell, $eIcnBabyDragon, $eIcnDonBabyDragon, $eIcnMiner, $eIcnDonMiner, _
-		$eIcnNoShield, $eIcnDonCustomB
+		$eIcnNoShield, $eIcnDonCustomB, $eIcnDevo
 
 Global $eIcnDonBlank = $eIcnDonBlacklist
 Global $eIcnOptions = $eIcnDonBlacklist
@@ -415,6 +418,7 @@ Global $AlertSearch = True
 Global $iChkAttackNow, $iAttackNowDelay, $bBtnAttackNowPressed = False
 Global $PushBulletToken = ""
 Global $TelegramToken = ""
+Global $TelegramEnabled
 
 Global $iGUIMasterWidth = 470
 Global $iGUIMasterHeight = 650
@@ -437,6 +441,8 @@ $sModeText[$MA] = "Milking Attack"
 Global $iAtkAlgorithm[$iModeCount]
 
 ;PushBullet---------------------------------------------------------------
+Global $TroopSpellStats[0][2] = [[]]
+Global $iLastAtkTime ; loot hour:mins last raid Added by CDudz Modified by CDudz
 Global $PBRemoteControlInterval = 60000 ; 60 secs
 Global $PBDeleteOldPushesInterval = 1800000 ; 30 mins
 Global $iOrigPushBullet
@@ -458,6 +464,23 @@ Global $icmbHoursPushBullet
 Global $chkDeleteAllPBPushes
 Global $ichkAlertPBCampFull
 Global $ichkAlertPBCampFullTest = 0
+
+;Info Notify - Added By TheRevenor
+Global $pAlertTopGain
+Global $RequestBuilderInfo = 0
+Global $RequestShieldInfo = 0
+Global $ichkAlertBuilderIdle
+Global $iReportIdleBuilder = 0
+
+;Pushbullet Stuff
+Global $StartTime = @HOUR & ":" & @MIN &", " & @MON & "/" & @MDAY
+Global $Attackcount = 0
+Global $VillageStatIncrement
+Global $VillageStatIncrementTXT
+Global $SearchNotifyCount
+Global $SearchNotifyCountTXT
+Global $SearchNotifyCountMsgIden
+Global $PersonalBreakNotified = False
 
 Global $sLogFName
 Global $sAttackLogFName
@@ -514,7 +537,6 @@ Global $bSearchMode = False
 Global $Is_ClientSyncError = False ;If true means while searching Client Out Of Sync error occurred.
 Global $searchGold, $searchElixir, $searchDark, $searchTrophy, $searchTH ;Resources of bases when searching
 Global $SearchGold2 = 0, $SearchElixir2 = 0, $iStuck = 0, $iNext = 0
-Global $iCmbSearchMode
 Global $iMinGold[$iModeCount], $iMinElixir[$iModeCount], $iMinGoldPlusElixir[$iModeCount], $iMinDark[$iModeCount], $iMinTrophy[$iModeCount], $iMaxTH[$iModeCount], $iEnableAfterCount[$iModeCount], $iEnableBeforeCount[$iModeCount]
 Global $ChkMaxMortar[$iModeCount], $ChkMaxWizTower[$iModeCount], $ChkMaxXBow[$iModeCount], $ChkMaxInferno[$iModeCount], $ChkMaxEagle[$iModeCount]
 Global $iChkMaxMortar[$iModeCount], $iChkMaxWizTower[$iModeCount], $iChkMaxXBow[$iModeCount], $iChkMaxInferno[$iModeCount], $iChkMaxEagle[$iModeCount]
@@ -828,7 +850,7 @@ Global $CurSFactory = 0
 
 ;Wait For Spells
 Global $iEnableSpellsWait[$iModeCount]
-Global $bFullArmySpells = False  ; true when $iTotalTrainSpaceSpell = $iTotalSpellSpace in getArmySpellCount
+Global $bFullArmySpells = False, $IsWaitingForHeroesSpells = 0  ; true when $iTotalTrainSpaceSpell = $iTotalSpellSpace in getArmySpellCount
 
 Global $barrackPos[4][2] ;Positions of each barracks
 
@@ -1146,11 +1168,14 @@ Global $bGForcePBTUpdate = False
 
 Global $iMakeScreenshotNow = False
 
-
+; TheRevenor
 Global $lastversion = "" ;latest version from GIT
+Global $lastModversion = "" ;latest version from GIT
 Global $lastmessage = "" ;message for last version
+Global $lastModmessage = "" ;message for last version
 Global $ichkVersion = 1
 Global $oldversmessage = "" ;warning message for old bot
+Global $oldModversmessage = "" ;warning message for old bot
 
 ;BarracksStatus
 Global $numBarracks = 0
@@ -1474,12 +1499,122 @@ Global $cmbLvl11Fill
 Global $cmbLvl12Fill
 Global $toleranceOffset
 
-
 ;Apply to switch Attack Standard after THSnipe End ==>
 Global $ichkTSActivateCamps2, $iEnableAfterArmyCamps2
 ;==> Apply to switch Attack Standard after THSnipe End
 
 Global $iShouldRearm = True
+;================================== New Variables =========================================
+
+; Profile Switch
+Global $ichkGoldSwitchMax, $itxtMaxGoldAmount, $icmbGoldMaxProfile, $ichkGoldSwitchMin, $itxtMinGoldAmount, $icmbGoldMinProfile
+Global $ichkElixirSwitchMax, $itxtMaxElixirAmount, $icmbElixirMaxProfile, $ichkElixirSwitchMin, $itxtMinElixirAmount, $icmbElixirMinProfile
+Global $ichkDESwitchMax, $itxtMaxDEAmount, $icmbDEMaxProfile, $ichkDESwitchMin, $itxtMinDEAmount, $icmbDEMinProfile
+Global $ichkTrophySwitchMax, $itxtMaxTrophyAmount, $icmbTrophyMaxProfile, $ichkTrophySwitchMin, $itxtMinTrophyAmount, $icmbTrophyMinProfile
+
+; Multi-Farming - Added by TheRevenor
+Global $iSwCount
+Global $ichkSwitchDonate
+Global $ichkMultyFarming
+Global $iAccount, $OkLoc, $AccountLoc
+Global $iconfirm
+Global $bAccount[6] = ["Main", "Second", "Third", "Fourth", "Fifth", "Sixth"]
+
+; Donate Stats - Added by TheRevenor
+Global $ichkLimitDStats = 0
+Global $iLimitDStats = 5000
+
+; Don't Barack Mode - Added by AwesomeGamer
+Global $iChkDontRemove, $chkDontRemove
+Global $iChkBarrackSpell, $chkBarrackSpell
+
+; Check Connections - by TheRevenor
+Global $ichkConnection = 1
+
+; Close Emulator TakeBreak - by TheRevenor
+Global $ichkCloseTakeBreak = 0
+
+; ChatBot - Added By TheRevenor
+Global $FoundChatMessage = 0
+
+; ExtremeZap - by TheRevenor
+Global $ichkExtLightSpell = 1
+
+; SmartZap GUI variables - Added by LunaEclipse
+Global $ichkSmartZap = 1
+Global $ichkSmartZapDB = 1
+Global $ichkSmartZapSaveHeroes = 1
+Global $itxtMinDE = 250
+
+; SmartZap stats - Added by LunaEclipse
+Global $smartZapGain = 0
+Global $ExtremeZapGain = 0
+Global $numLSpellsUsed = 0
+
+; SmartZap Array to hold Total Amount of DE available from Drill at each level (1-6) - Added by LunaEclipse
+Global Const $drillLevelHold[6] = [120, _
+								   225, _
+								   405, _
+								   630, _
+								   960, _
+								   1350]
+
+; SmartZap Array to hold Amount of DE available to steal from Drills at each level (1-6) - Added by LunaEclipse
+Global Const $drillLevelSteal[6] = [59, _
+                                    102, _
+								    172, _
+								    251, _
+								    343, _
+								    479]
+								
+; Android Settings - Added by LunaEclipse
+Global $sAndroid = "<No Emulators>"
+Global $sAndroidInstance = ""
+;Global $ichkHideTaskBar = 0
+
+#region Check Collectors Outside
+; collectors outside filter
+Global $ichkDBMeetCollOutside, $iDBMinCollOutsidePercent, $iCollOutsidePercent ; check later if $iCollOutsidePercent obsolete
+
+; constants
+Global Const $THEllipseWidth = 200, $THEllipseHeigth = 150, $CollectorsEllipseWidth = 130, $CollectorsEllipseHeigth = 97.5
+Global Const $centerX = 430, $centerY = 335 ; check later if $THEllipseWidth, $THEllipseHeigth obsolete
+
+Global $hBitmapFirst
+#endregion
+
+; AwesomeGamer CSV Mod
+Global $attackcsv_use_red_line = 1
+Global $TroopDropNumber = 0
+Global $remainingTroops[12][2]
+
+; Stats Top Loot
+Global $myHourlyStatsGold = ""
+Global $myHourlyStatsElixir = ""
+Global $myHourlyStatsDark = ""
+Global $myHourlyStatsTrophy =""
+Global $topgoldloot = 0
+Global $topelixirloot = 0
+Global $topdarkloot = 0
+Global $topTrophyloot = 0
+
+; CSV Deployment Speed Mod
+Global $isldSelectedCSVSpeed[$iModeCount], $iCSVSpeeds[13]
+$isldSelectedCSVSpeed[$DB] = 4
+$isldSelectedCSVSpeed[$LB] = 4
+$iCSVSpeeds[0] = .1
+$iCSVSpeeds[1] = .25
+$iCSVSpeeds[2] = .5
+$iCSVSpeeds[3] = .75
+$iCSVSpeeds[4] = 1
+$iCSVSpeeds[5] = 1.25
+$iCSVSpeeds[6] = 1.5
+$iCSVSpeeds[7] = 1.75
+$iCSVSpeeds[8] = 2
+$iCSVSpeeds[9] = 2.25
+$iCSVSpeeds[10] = 2.5
+$iCSVSpeeds[11] = 2.75
+$iCSVSpeeds[12] = 3
 
 ;=== No variables below ! ================================================
 

@@ -147,9 +147,12 @@ Func chkSinglePBTForced()
 	If GUICtrlRead($chkSinglePBTForced) = $GUI_CHECKED Then
 		GUICtrlSetState($txtSinglePBTimeForced, $GUI_ENABLE)
 		GUICtrlSetState($txtPBTimeForcedExit, $GUI_ENABLE)
+		GUICtrlSetState($chkCloseTakeBreak, $GUI_ENABLE)
+		GUICtrlSetState($chkCloseTakeBreak, $GUI_CHECKED)
 	Else
 		GUICtrlSetState($txtSinglePBTimeForced, $GUI_DISABLE)
 		GUICtrlSetState($txtPBTimeForcedExit, $GUI_DISABLE)
+		GUICtrlSetState($chkCloseTakeBreak, $GUI_DISABLE)
 	EndIf
 	txtSinglePBTimeForced()
 EndFunc   ;==>chkSinglePBTForced
@@ -172,6 +175,14 @@ Func txtSinglePBTimeForced()
 			GUICtrlSetBkColor($txtPBTimeForcedExit, $COLOR_MONEYGREEN)
 	EndSwitch
 EndFunc   ;==>txtSinglePBTimeForced
+
+Func chkClosePBEmu()
+If GUICtrlRead($chkCloseTakeBreak) = $GUI_CHECKED Then
+		$ichkCloseTakeBreak = 1
+	Else
+		$ichkCloseTakeBreak = 0
+	EndIf
+EndFunc  ;==>chkClosePBEmu
 
 Func chkDebugClick()
 	If GUICtrlRead($chkDebugClick) = $GUI_CHECKED Then

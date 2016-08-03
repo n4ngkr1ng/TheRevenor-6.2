@@ -136,11 +136,11 @@ $hGUI_STATS_TAB_ITEM1 = GUICtrlCreateTabItem(GetTranslated(600,38,"Gain"))
 
 
 	$x = $xStart
-	$y = $yStart + 118
+	$y = $yStart + 113
 
 	$grpLastAttack1 = GUICtrlCreateGroup(GetTranslated(632,102,"Last Attack"), $x - 20, $y - 15, 270, 115)
 	$x = $xStart + 10
-	$y = $yStart + 118 +20
+	$y = $yStart + 113 +20
 	   $grpLastAttack = GUICtrlCreateGroup(GetTranslated(632, 11, "Gain"), $x - 20, $y - 15, 85, 90)
 		   $lblLastAttackTemp = GUICtrlCreateLabel(GetTranslated(632, 3, "Report") & @CRLF & GetTranslated(632, 4, "will appear") & @CRLF & GetTranslated(632, 97, "here after") & @CRLF & GetTranslated(632, 98, "each attack."), $x - 15, $y + 5, 100, 65, BitOR($SS_LEFT, $BS_MULTILINE))
 			   GUICtrlCreateIcon($pIconLib, $eIcnGold, $x + 45, $y, 16, 16)
@@ -165,7 +165,7 @@ $hGUI_STATS_TAB_ITEM1 = GUICtrlCreateTabItem(GetTranslated(600,38,"Gain"))
 	   GUICtrlCreateGroup("", -99, -99, 1, 1)
 
 	   $x = $xStart +10 + 90
-	   $y = $yStart + 118 +20
+	   $y = $yStart + 113 +20
 	   $grpLastAttackBonus = GUICtrlCreateGroup(GetTranslated(632,16, "League Bonus"), $x - 20, $y - 15, 85, 90)
 		   $lblLastAttackBonusTemp = GUICtrlCreateLabel(GetTranslated(632,3, "Report") & @CRLF & GetTranslated(632,99, "will update") & @CRLF & GetTranslated(632,97, "here after") & @CRLF & GetTranslated(632,98, "each attack."), $x - 15, $y + 5, 100, 65, BitOR($SS_LEFT, $BS_MULTILINE))
 			   GUICtrlCreateIcon($pIconLib, $eIcnGold, $x + 45, $y, 16, 16)
@@ -183,8 +183,44 @@ $hGUI_STATS_TAB_ITEM1 = GUICtrlCreateTabItem(GetTranslated(600,38,"Gain"))
 			   $txtTip = GetTranslated(632,19, "The amount of Bonus Dark Elixir you gained on the last attack.")
 			   _GUICtrlSetTip(-1, $txtTip)
 	   GUICtrlCreateGroup("", -99, -99, 1, 1)
+		$x = 3
+		$y += 63
+            $grpMods = GUICtrlCreateGroup(GetTranslated(11, 106, "Stats Top Loot"), $x +2, $y -16, 145, 100)
+            GUICtrlCreateIcon($pIconLib, $eIcnGold, $x + 5, $y, 16, 16)
+            $lbltopgold = GUICtrlCreateLabel(GetTranslated(11,104, "Top Loot: "), $x + 15, $y + 2, 55, 17, $SS_RIGHT)
+            $lbltopgoldloot = GUICtrlCreateLabel("0", $x + 70, $y - 1, 65, 17, $SS_RIGHT)
+			GUICtrlSetFont(-1, 10, $FW_BOLD, Default, "Comic Sans MS", $CLEARTYPE_QUALITY)
+			GUICtrlSetColor(-1, 0x2AA69D)
+            $txtTip = GetTranslated(11,102, "Top Gold gained")
+            _GUICtrlSetTip(-1, $txtTip)
+		$y += 20
+			GUICtrlCreateIcon($pIconLib, $eIcnElixir, $x + 5, $y, 16, 16)
+			$lbltopTrophy = GUICtrlCreateLabel(GetTranslated(11,104, "Top Loot: "), $x + 15, $y + 2, 55, 17, $SS_RIGHT)
+			$lbltopelixirloot = GUICtrlCreateLabel("0", $x + 70, $y - 1, 65, 17, $SS_RIGHT)
+			GUICtrlSetFont(-1, 10, $FW_BOLD, Default, "Comic Sans MS", $CLEARTYPE_QUALITY)
+			GUICtrlSetColor(-1, 0x2AA69D)
+            $txtTip = GetTranslated(11,103, "Top Elixir gained")
+            _GUICtrlSetTip(-1, $txtTip)
+		$y += 20
+			GUICtrlCreateIcon($pIconLib, $eIcnDark, $x + 5, $y, 16, 16)
+			$lbltopTrophy = GUICtrlCreateLabel(GetTranslated(11,104, "Top Loot: "), $x + 15, $y + 2, 55, 17, $SS_RIGHT)
+			$lbltopdarkloot = GUICtrlCreateLabel("0", $x + 70, $y - 1, 65, 17, $SS_RIGHT)
+			GUICtrlSetFont(-1, 10, $FW_BOLD, Default, "Comic Sans MS", $CLEARTYPE_QUALITY)
+			GUICtrlSetColor(-1, 0x2AA69D)
+            $txtTip = GetTranslated(11,105, "Top dark gained")
+            _GUICtrlSetTip(-1, $txtTip)
+		$y += 20
+			GUICtrlCreateIcon($pIconLib, $eIcnTrophy, $x + 5, $y, 16, 16)
+            $lbltopTrophy = GUICtrlCreateLabel(GetTranslated(11,104, "Top Loot: "), $x + 15, $y + 2, 55, 17, $SS_RIGHT)
+            $lbltopTrophyloot = GUICtrlCreateLabel("0", $x + 70, $y - 1, 65, 17, $SS_RIGHT)
+			GUICtrlSetFont(-1, 10, $FW_BOLD, Default, "Comic Sans MS", $CLEARTYPE_QUALITY)
+			GUICtrlSetColor(-1, 0x2AA69D)
+            $txtTip = GetTranslated(11,106, "Top Trophy gained")
+            _GUICtrlSetTip(-1, $txtTip)
+        GUICtrlCreateGroup("", -99, -99, 1, 1)
+		
 	   $x = $xStart +10 + 165
-	   $y = $yStart + 118 +20
+	   $y = $yStart + 113 +20
 		;Display League in Stats ==>
 		$grpLeague = GUICtrlCreateGroup(GetTranslated(632,106, "League"), $x - 5, $y - 15, 70, 90)
 			$y += 1
@@ -553,6 +589,27 @@ $hGUI_STATS_TAB_ITEM3 = GUICtrlCreateTabItem(GetTranslated(600,40,"Attacks"))
 			GUICtrlCreateIcon($pIconLib, $eIcnCollector, $x + 37, $y - 4, 16, 16)
 		$lblNbrOfDetectedDrills[$TB] = GUICtrlCreateLabel("0", $x + 54, $y - 2, 18, 17, $SS_RIGHT)
 			GUICtrlCreateIcon($pIconLib, $eIcnDrill, $x + 73, $y - 4, 16, 16)
+	GUICtrlCreateGroup("", -99, -99, 1, 1)
+
+	; MOD Smart Zap
+	$x = $xStart
+	$y = $yStart + 270
+	$grpStatsSZ = GUICtrlCreateGroup("SmZap && ExZap", $x - 20, $y - 20, 111, 55)
+			GUICtrlCreateIcon($pIconLib, $eIcnLightSpell, $x - 15, $y - 4, 16, 16)
+			GUICtrlCreateLabel("Zap" & ":", $x +3, $y - 2, -1, 17)
+			$lblLightningUsedStat = GUICtrlCreateLabel("0", $x + 2, $y - 4, 80, 17, $SS_RIGHT)
+			GUICtrlSetFont(-1, 10, $FW_BOLD, Default, "Comic Sans MS", $CLEARTYPE_QUALITY)
+			GUICtrlSetColor(-1, 0x2AA69D)
+			$txtTip = "Number of used spells"
+			_GUICtrlSetTip(-1, $txtTip)
+		$y += 17
+			GUICtrlCreateIcon($pIconLib, $eIcnDark, $x - 15, $y - 4, 16, 16)
+			GUICtrlCreateLabel(GetTranslated(632,74, -1) & ":", $x + 3, $y - 2, -1, 17)
+			$lblSmartZapStat = GUICtrlCreateLabel("0", $x + 2, $y - 4, 80, 17, $SS_RIGHT)
+			GUICtrlSetFont(-1, 10, $FW_BOLD, Default, "Comic Sans MS", $CLEARTYPE_QUALITY)
+			GUICtrlSetColor(-1, 0x2AA69D)
+			$txtTip = "Number of dark elixir zapped during the attack with lightning."
+			_GUICtrlSetTip(-1, $txtTip)
 	GUICtrlCreateGroup("", -99, -99, 1, 1)
 
 ;--> TAB Attacks

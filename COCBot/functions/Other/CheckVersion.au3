@@ -33,6 +33,27 @@ Func CheckVersion()
 			SetLog(" ")
 			_PrintLogVersion($lastmessage)
 		EndIf
+		
+		If $lastModversion = "" Then
+			SetLog("WE CANNOT OBTAIN MOD VERSION AT THIS TIME", $COLOR_ORANGE)
+		ElseIf VersionNumFromVersionTXT($sModversion) < VersionNumFromVersionTXT($lastModversion) Then
+			SetLog("WARNING, YOUR MOD VERSION (" & $sModversion & ") IS OUT OF DATE.", $COLOR_RED)
+			SetLog("CHIEF, PLEASE DOWNLOAD THE LATEST(" & $lastModversion & ") FROM HELP MENU              ", $COLOR_RED)
+			SetLog(" ")
+			_PrintLogVersion($oldModversmessage)
+		ElseIf VersionNumFromVersionTXT($sModversion) > VersionNumFromVersionTXT($lastModversion) Then
+			SetLog("YOU ARE USING A FUTURE MOD TheRevenor VERSION CHIEF!", $COLOR_GREEN)
+			SetLog("YOUR MOD VERSION: " & $sModversion, $COLOR_GREEN)
+			SetLog("OFFICIAL MOD VERSION: " & $lastModversion, $COLOR_GREEN)
+			SetLog(" ")
+		Else
+			SetLog("WELCOME CHIEF, YOU HAVE THE LATEST MOD VERSION", $COLOR_GREEN)
+			SetLog(" ")
+			_PrintLogVersion($lastmessage)
+		EndIf
+		
+		CheckMODVersion()
+		
 	EndIf
 EndFunc   ;==>CheckVersion
 
@@ -69,7 +90,7 @@ Func CheckVersionHTML()
 		FileCopy(@ScriptDir & "\TestVersion.txt", $versionfile, 1)
 	Else
 		;download page from site contains last bot version
-		$hDownload = InetGet("https://raw.githubusercontent.com/MyBotRun/MyBot/master/LastVersion.txt", $versionfile, 0, 1)
+		$hDownload = InetGet("https://raw.githubusercontent.com/TheRevenor/MyBot-6.2-Official-Release/master/LastVersions.txt", $versionfile, 0, 1)
 
 		; Wait for the download to complete by monitoring when the 2nd index value of InetGetInfo returns True.
 		Local $i = 0
@@ -84,16 +105,18 @@ Func CheckVersionHTML()
 	;search version into downloaded page
 	Local $f, $f2, $line, $line2, $Casesense = 0, $chkvers = False, $chkmsg = False, $chkmsg2 = False, $i = 0
 	$lastversion = ""
+	$lastModversion = ""
 	If FileExists($versionfile) Then
 		$f = FileOpen($versionfile, 0)
 		$lastversion = IniRead($versionfile, "general", "version", "")
+		$lastModversion = IniRead($versionfile,"mod","version","")
 		;look for localized messages for the new and old versions
 		Local $versionfilelocalized = @ScriptDir & "\LastVersion_" & $sLanguage & ".txt";
 		If FileExists(@ScriptDir & "\TestVersion_" & $sLanguage & ".txt") Then
 			FileCopy(@ScriptDir & "\TestVersion_" & $sLanguage & ".txt", $versionfilelocalized, 1)
 		Else
 			;download page from site contains last bot version localized messages
-			$hDownload = InetGet("https://raw.githubusercontent.com/MyBotRun/MyBot/master/LastVersion_" & $sLanguage & ".txt", $versionfilelocalized, 0, 1)
+			$hDownload = InetGet("https://raw.githubusercontent.com/TheRevenor/MyBot-6.2-Official-Release/master/LastVersions_" & $sLanguage & ".txt", $versionfilelocalized, 0, 1)
 
 			; Wait for the download to complete by monitoring when the 2nd index value of InetGetInfo returns True.
 			Local $i = 0
@@ -108,11 +131,15 @@ Func CheckVersionHTML()
 			$f2 = FileOpen($versionfilelocalized, 0)
 			$lastmessage = IniRead($versionfilelocalized, "general", "messagenew", "")
 			$oldversmessage = IniRead($versionfilelocalized, "general", "messageold", "")
+			$lastModmessage = IniRead($versionfilelocalized,"mod","messagenew","")
+			$oldModversmessage = IniRead($versionfilelocalized,"mod","messageold","")
 			FileClose($f2)
 			FileDelete($versionfilelocalized)
 		Else
 			$lastmessage = IniRead($versionfile, "general", "messagenew", "")
 			$oldversmessage = IniRead($versionfile, "general", "messageold", "")
+			$lastModmessage = IniRead($versionfilelocalized,"mod","messagenew","")
+			$oldModversmessage = IniRead($versionfilelocalized,"mod","messageold","")
 		EndIf
 		FileClose($f)
 		FileDelete($versionfile)
@@ -144,6 +171,37 @@ Func VersionNumFromVersionTXT($versionTXT)
 	EndIf
 	Return $resultnumber
 EndFunc   ;==>VersionNumFromVersionTXT
+
+Func CheckMODVersion()
+	Local $tempJson = @ScriptDir & "\Temp.json"
+	$hDownload = InetGet("https://api.github.com/repos/" & $sGitHubModOwner & "/" & $sGitHubModRepo & "/releases", $tempJson, 0, 1)
+	; Wait for the download to complete by monitoring when the 2nd index value of InetGetInfo returns True.
+	Local $i = 0
+	Do
+		Sleep($iDelayCheckVersionHTML1)
+		$i += 1
+	Until InetGetInfo($hDownload, $INET_DOWNLOADCOMPLETE) or $i > 25
+	InetClose($hDownload)
+
+	Local $file = FileOpen($tempJson, 0)
+	Local $fileContent = FileRead($file)
+	Local $decodedArray = Json_Decode($fileContent)
+	
+	Local $sLatestReleaseTag = ""
+	If Ubound($decodedArray) > 0 Then
+		$sLatestReleaseTag = Json_Get($decodedArray, '[0]["tag_name"]')
+	EndIf
+	FileClose($file)
+	FileDelete($tempJson)
+
+	If $sLatestReleaseTag <> $sGitHubModLatestReleaseTag Then
+		MsgBox(0, "Attentions!", "Chief, A New Version Of Mod By TheRevenor Has Been Uploaded (" & $sLatestReleaseTag & "), Your Version Might Be Outdated." & @CRLF & _
+		"Check And Download Latest Version From Help Menu", 5)
+		Return False
+	EndIf
+ 
+	Return True
+EndFunc
 
 Func _PrintLogVersion($message)
 	Local $messagevet = StringSplit($message, "\n", 1)

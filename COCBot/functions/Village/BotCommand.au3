@@ -97,6 +97,9 @@ Func BotCommand()
 			EndIf
 			Switch $icmbBotCommand
 				Case 0
+					; ChatBot by TheRevenor
+					ChatbotMessage()
+					CheckNewChat()
 					If $bDonationEnabled = False Then
 						SetLog("Halt Attack, Stay Online/Collect...", $COLOR_BLUE)
 					ElseIf $bTrainEnabled = False Then

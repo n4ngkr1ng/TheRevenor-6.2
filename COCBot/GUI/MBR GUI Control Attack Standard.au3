@@ -12,6 +12,24 @@
 ; Link ..........: https://github.com/MyBotRun/MyBot/wiki
 ; Example .......: No
 ; ===============================================================================================================================
+Func cmbDeployAB()
+   If _GUICtrlCombobox_GetCurSel($cmbDeployAB) = 4 Then
+	  GUICtrlSetState($chkSmartAttackRedAreaAB, $GUI_UNCHECKED)
+	  GUICtrlSetState($chkSmartAttackRedAreaAB, $GUI_DISABLE)
+   Else
+	  GUICtrlSetState($chkSmartAttackRedAreaAB, $GUI_ENABLE)
+   EndIf
+EndFunc
+
+Func cmbDeployDB()
+   If _GUICtrlCombobox_GetCurSel($cmbDeployDB) = 4 Then
+	  GUICtrlSetState($chkSmartAttackRedAreaDB, $GUI_UNCHECKED)
+	  GUICtrlSetState($chkSmartAttackRedAreaDB, $GUI_DISABLE)
+   Else
+	  GUICtrlSetState($chkSmartAttackRedAreaDB, $GUI_ENABLE)
+   EndIf
+EndFunc
+
 Func chkRandomSpeedAtkAB()
 	If GUICtrlRead($chkRandomSpeedAtkAB) = $GUI_CHECKED Then
 		;$iChkABRandomSpeedAtk = 1
@@ -62,3 +80,17 @@ Func chkSmartAttackRedAreaDB()
 		Next
 	EndIf
 EndFunc   ;==>chkSmartAttackRedAreaDB
+
+;===== Attack Now Button (Useful for Standart Attack Testing) By TheRevenor =====
+Func AttackNowDB1()
+	If $RunState Then Return
+	LockGUI()
+	$iMatchMode = $DB			; Select Dead Base As Attack Type
+	GuiCtrlRead($cmbDeployDB)
+	$iMatchMode = $DB			; Select Dead Base As Attack Type
+	$RunState = True
+	PrepareAttack($iMatchMode)
+	Attack()					; Fire xD
+	$RunState = False
+	UnLockGUI()
+EndFunc   ;==>AttackNow Dead Base

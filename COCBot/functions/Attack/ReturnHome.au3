@@ -30,6 +30,10 @@ Func ReturnHome($TakeSS = 1, $GoldChangeCheck = True) ;Return main screen
 			While GoldElixirChangeEBO()
 				If _Sleep($iDelayReturnHome1) Then Return
 			WEnd
+			
+			; Check to see if we should zap the DE Drills - Added by LunaEclipse
+			If IsAttackPage() Then (smartZap() Or ExtremeZap())
+			
 			;If Heroes were not activated: Hero Ability activation before End of Battle to restore health
 			If ($checkKPower = True Or $checkQPower = True) And $iActivateKQCondition = "Auto" Then
 				;_CaptureRegion()
@@ -129,7 +133,12 @@ Func ReturnHome($TakeSS = 1, $GoldChangeCheck = True) ;Return main screen
 
 	;push images if requested..
 	If $GoldChangeCheck = True Then
-		PushMsg("LastRaid")
+		PushMsgToPushBullet ("LastRaid")
+		$AttackCount +=1 ;for periodic village stats per number of attacks
+	EndIf
+	;Delete searchcount messages if necessary
+    If $SearchNotifyCount = 1 And $searchcount>=1 And isarray($SearchNotifyCountMsgIden) Then
+        _DeleteMessageOfPushBullet ($SearchNotifyCountMsgIden[0])
 	EndIf
 
 	$i = 0 ; Reset Loop counter

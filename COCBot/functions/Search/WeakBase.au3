@@ -149,9 +149,9 @@ Func getMaxUISetting($settingArray, $defenseType)
 
 	If IsArray($settingArray) Then
 		; Check if dead base search is active and dead base weak base detection is active, use setting if active, 0 if not active
-		$maxDB = (($iCmbSearchMode = 0 Or $iCmbSearchMode = 2) And IsWeakBaseActive($DB)) ? $settingArray[$DB] : 0
+		$maxDB = ($iDBcheck = 1 And IsWeakBaseActive($DB)) ? $settingArray[$DB] : 0
 		; Check if live base search is active and live base weak base detection is active, use setting if active, 0 if not active
-		$maxLB = (($iCmbSearchMode = 1 Or $iCmbSearchMode = 2) And IsWeakBaseActive($LB)) ? $settingArray[$LB] : 0
+		$maxLB = ($iABcheck = 1 And IsWeakBaseActive($LB)) ? $settingArray[$LB] : 0
 
 		; Get the value that is highest
 		$result = _Max(Number($maxDB), Number($maxLB))
@@ -167,9 +167,9 @@ Func getMinUISetting($settingArray, $defenseType)
 
 	If IsArray($settingArray) Then
 		; Check if dead base search is active and dead base weak base detection is active, use setting if active, 0 if not active
-		$minDB = (($iCmbSearchMode = 0 Or $iCmbSearchMode = 2) And IsWeakBaseActive($DB)) ? $settingArray[$DB] : 0
+		$minDB = ($iDBcheck = 1 And IsWeakBaseActive($DB)) ? $settingArray[$DB] : 0
 		; Check if live base search is active and live base weak base detection is active, use setting if active, 0 if not active
-		$minLB = (($iCmbSearchMode = 1 Or $iCmbSearchMode = 2) And IsWeakBaseActive($LB)) ? $settingArray[$LB] : 0
+		$minLB = ($iABcheck = 1 And IsWeakBaseActive($LB)) ? $settingArray[$LB] : 0
 
 		; Get the value that is highest
 		$result = _Min(Number($minDB), Number($minLB))
@@ -181,10 +181,10 @@ EndFunc   ;==>getMinUISetting
 
 Func getIsWeak($aResults, $searchType)
 	Return $aResults[$eWeakEagle][2] <= Number($iCmbWeakEagle[$searchType]) _
-  	   And $aResults[$eWeakInferno][2] <= Number($iCmbWeakInferno[$searchType]) _
-	   And $aResults[$eWeakXBow][2] <= Number($iCmbWeakXBow[$searchType]) _
-	   And $aResults[$eWeakWizard][2] <= Number($iCmbWeakWizTower[$searchType]) _
-	   And $aResults[$eWeakMortar][2] <= Number($iCmbWeakMortar[$searchType])
+			And $aResults[$eWeakInferno][2] <= Number($iCmbWeakInferno[$searchType]) _
+			And $aResults[$eWeakXBow][2] <= Number($iCmbWeakXBow[$searchType]) _
+			And $aResults[$eWeakWizard][2] <= Number($iCmbWeakWizTower[$searchType]) _
+			And $aResults[$eWeakMortar][2] <= Number($iCmbWeakMortar[$searchType])
 EndFunc   ;==>getIsWeak
 
 Func IsWeakBaseActive($type)
@@ -225,18 +225,18 @@ Func defenseSearch(ByRef $aResult, $directory, $townHallLevel, $settingArray, $d
 	EndIf
 
 	Return $aDefenseResult
-EndFunc
+EndFunc   ;==>defenseSearch
 
 Func weakBaseCheck($townHallLevel = 11, $redlines = "")
 	; Setup default return coords of 0,0
 	Local $defaultCoords[1][2] = [[0, 0]]
 	; Setup Empty Results in case to avoid errors, levels are set to max level of each type
 	Local $aResult[6][6] = [[$redlines, 0, 0, "Seconds", "", ""], _
-							["Skipped", "Skipped", 2, 0, 0, $defaultCoords], _
-							["Skipped", "Skipped", 4, 0, 0, $defaultCoords], _
-							["Skipped", "Skipped", 4, 0, 0, $defaultCoords], _
-							["Skipped", "Skipped", 9, 0, 0, $defaultCoords], _
-							["Skipped", "Skipped", 9, 0, 0, $defaultCoords]]
+			["Skipped", "Skipped", 2, 0, 0, $defaultCoords], _
+			["Skipped", "Skipped", 4, 0, 0, $defaultCoords], _
+			["Skipped", "Skipped", 4, 0, 0, $defaultCoords], _
+			["Skipped", "Skipped", 9, 0, 0, $defaultCoords], _
+			["Skipped", "Skipped", 9, 0, 0, $defaultCoords]]
 
 	Local $aEagleResults, $aInfernoResults, $aMortarResults, $aWizardTowerResults, $aXBowResults
 	Local $performSearch = True

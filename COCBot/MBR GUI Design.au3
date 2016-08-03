@@ -60,12 +60,16 @@ GUICtrlSetState($frmBotEmbeddedShieldInput, $GUI_HIDE)
 ;~ ------------------------------------------------------
 ;~ Header Menu
 ;~ ------------------------------------------------------
-
+SplashStep("Loading Header Menu...")
 GUISwitch($frmBot)
 ;$idMENU_DONATE = GUICtrlCreateMenu("&" & GetTranslated(601,18,"Paypal Donate?"))
 ;_GUICtrlMenu_SetItemType(_GUICtrlMenu_GetMenu($frmBot), 0, $MFT_RIGHTJUSTIFY) ; move to right
 ;$idMENU_DONATE_SUPPORT = GUICtrlCreateMenuItem(GetTranslated(601,19,"Support the development"), $idMENU_DONATE)
-;GUICtrlSetOnEvent(-1, "")
+$AboutMenu = GUICtrlCreateMenu("Help")
+$CheckVersionConfig = GUICtrlCreateMenuItem("Check Version", $AboutMenu)
+$DownloadLatestConfig = GUICtrlCreateMenuItem("Download Latest", $AboutMenu)
+$ModSupportConfig = GUICtrlCreateMenuItem("Mod Support", $AboutMenu)
+GUICtrlSetOnEvent(-1, "")
 
 ;~ ------------------------------------------------------
 ;~ GUI Bottom
@@ -86,6 +90,9 @@ SplashStep(GetTranslated(500, 27, "Loading Attack tab..."))
 #include "GUI\MBR GUI Design Child Attack.au3"
 SplashStep(GetTranslated(500, 28, "Loading Bot tab..."))
 #include "GUI\MBR GUI Design Child Bot.au3"
+;Tab MOD
+SplashStep("Loading MOD tab...")
+#include "GUI\MBR GUI Design Child Mod.au3"
 ;GUISetState()
 GUISwitch($frmBotEx)
 $tabMain = GUICtrlCreateTab(5, 85 + $_GUI_MAIN_TOP, $_GUI_MAIN_WIDTH - 9, $_GUI_MAIN_HEIGHT - 225); , $TCS_MULTILINE)
@@ -94,6 +101,7 @@ $tabGeneral = GUICtrlCreateTabItem(GetTranslated(600,1, "Log"))
 $tabVillage = GUICtrlCreateTabItem(GetTranslated(600,2, "Village")) ; Village
 $tabAttack = GUICtrlCreateTabItem(GetTranslated(600,3,"Attack Plan"))
 $tabBot = GUICtrlCreateTabItem(GetTranslated(600,4,"Bot"))
+$tabMOD = GUICtrlCreateTabItem("MOD")
 
 ;~ -------------------------------------------------------------
 ;~ About Us Tab
@@ -172,6 +180,7 @@ Bind_ImageList($hGUI_ACTIVEBASE_TAB)
 Bind_ImageList($hGUI_AttackOption_TAB)
 Bind_ImageList($hGUI_THSNIPE_TAB)
 Bind_ImageList($hGUI_BOT_TAB)
+Bind_ImageList($hGUI_MOD_TAB)
 Bind_ImageList($hGUI_STRATEGIES_TAB)
 Bind_ImageList($hGUI_STATS_TAB)
 #EndRegion ; Bind Icon images to all Tabs in all GUI windows (main and children)

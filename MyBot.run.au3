@@ -17,8 +17,8 @@
 #pragma compile(Icon, "Images\MyBot.ico")
 #pragma compile(FileDescription, Clash of Clans Bot - A Free Clash of Clans bot - https://mybot.run)
 #pragma compile(ProductName, My Bot)
-#pragma compile(ProductVersion, 6.2)
-#pragma compile(FileVersion, 6.2)
+#pragma compile(ProductVersion, 6.2.1)
+#pragma compile(FileVersion, 6.2.1)
 #pragma compile(LegalCopyright, © https://mybot.run)
 #pragma compile(Out, MyBot.run.exe)  ; Required
 
@@ -33,14 +33,21 @@ ProcessSetPriority(@AutoItPID, $PROCESS_ABOVENORMAL)
 Global $iBotLaunchTime = 0
 Local $hBotLaunchTime = TimerInit()
 
-$sBotVersion = "v6.2" ;~ Don't add more here, but below. Version can't be longer than vX.y.z because it it also use on Checkversion()
-$sBotTitle = "My Bot " & $sBotVersion & " " ;~ Don't use any non file name supported characters like \ / : * ? " < > |
+Global $sGitHubModOwner = "TheRevenor"
+Global $sGitHubModRepo = "MyBot-v6.2-MyMod"
+Global $sGitHubModLatestReleaseTag = "v1.8"
+Global $sModSupportUrl = "https://mybot.run/forums/index.php?/topic/20830-mybot-v6121-mod-therevenor-v10-18-06-2016"
+
+$sBotVersion = "v6.2.1" ;~ Don't add more here, but below. Version can't be longer than vX.y.z because it it also use on Checkversion()
+$sBotTitle = "My Bot " & $sBotVersion & " MOD TheRevenor " & $sGitHubModLatestReleaseTag & " " ;~ Don't use any non file name supported characters like \ / : * ? " < > |
+$sModversion = $sGitHubModLatestReleaseTag
 
 #include "COCBot\functions\Config\DelayTimes.au3"
 #include "COCBot\MBR Global Variables.au3"
 #include "COCBot\GUI\MBR GUI Design Splash.au3"
 #include "COCBot\functions\Config\ScreenCoordinates.au3"
 #include "COCBot\functions\Other\ExtMsgBox.au3"
+#include "COCBot\functions\Mod\Chatbot\Chatbot.au3"
 
 Opt("GUIResizeMode", $GUI_DOCKALL) ; Default resize mode for dock android support
 Opt("GUIEventOptions", 1) ; Handle minimize and restore for dock android support
@@ -163,6 +170,13 @@ SetLog(GetTranslated(500, 8, "Android Emulator Configuration: %s", $sAndroidInfo
 AdlibRegister("PushBulletRemoteControl", $PBRemoteControlInterval)
 AdlibRegister("PushBulletDeleteOldPushes", $PBDeleteOldPushesInterval)
 
+; Add Telegram extension by CDudz
+$lastmessage = GetLastMsg()
+If $FirstRun = 1 Then
+	$lastremote = $lastuid
+	Getchatid(GetTranslated(620, 92, "select your remote")) ; receive Telegram chat id and send keyboard
+EndIf
+
 CheckDisplay() ; verify display size and DPI (Dots Per Inch) setting
 
 LoadTHImage() ; Load TH images
@@ -212,6 +226,7 @@ Func runBot() ;Bot that runs everything in order
 		$Restart = False
 		$fullArmy = False
 		$CommandStop = -1
+		
 		If _Sleep($iDelayRunBot1) Then Return
 		checkMainScreen()
 		If $Restart = True Then ContinueLoop
@@ -230,9 +245,13 @@ Func runBot() ;Bot that runs everything in order
 				If _Sleep($iDelayRunBot2) Then Return
 			checkMainScreen(False)
 				If $Restart = True Then ContinueLoop
-			If $RequestScreenshot = 1 Then PushMsg("RequestScreenshot")
+			If $ichkMultyFarming Or $ichkSwitchDonate = 1 Then DetectAccount()
+			If $RequestScreenshot = 1 Then PushMsgToPushBullet("RequestScreenshot")
+			If $RequestBuilderInfo = 1 Then PushMsgToPushBullet("BuilderInfo")
+			If $RequestShieldInfo = 1 Then PushMsgToPushBullet("ShieldInfo")
 				If _Sleep($iDelayRunBot3) Then Return
 			VillageReport()
+			ProfileSwitch() ; Added for Switch profile
 			If $OutOfGold = 1 And (Number($iGoldCurrent) >= Number($itxtRestartGold)) Then ; check if enough gold to begin searching again
 				$OutOfGold = 0 ; reset out of gold flag
 				Setlog("Switching back to normal after no gold to search ...", $COLOR_RED)
@@ -287,6 +306,17 @@ Func runBot() ;Bot that runs everything in order
 				   EndIf
 				   If checkAndroidTimeLag() = True Then ContinueLoop 2 ; must be level 2 due to loop-in-loop
 			   WEnd
+			   
+				If $fullArmy And ($iEnableSpellsWait[$iMatchMode] = 1 Or GUICtrlRead($chkDBKingWait) = $GUI_CHECKED Or GUICtrlRead($chkDBQueenWait) = $GUI_CHECKED Or _
+						GUICtrlRead($chkDBWardenWait) = $GUI_CHECKED Or GUICtrlRead($chkABKingWait) = $GUI_CHECKED Or GUICtrlRead($chkABQueenWait) = $GUI_CHECKED Or _
+						GUICtrlRead($chkABWardenWait) = $GUI_CHECKED) Then
+					$IsWaitingForHeroesSpells = 1
+				ElseIf $fullArmy = False And ($iEnableSpellsWait[$iMatchMode] = 1 Or GUICtrlRead($chkDBKingWait) = $GUI_CHECKED Or GUICtrlRead($chkDBQueenWait) = $GUI_CHECKED Or _
+						GUICtrlRead($chkDBWardenWait) = $GUI_CHECKED Or GUICtrlRead($chkABKingWait) = $GUI_CHECKED Or GUICtrlRead($chkABQueenWait) = $GUI_CHECKED Or _
+						GUICtrlRead($chkABWardenWait) = $GUI_CHECKED) Then
+					$IsWaitingForHeroesSpells = 0
+				EndIf
+			   
 					If $RunState = False Then Return
 					If $Restart = True Then ContinueLoop
 			   If $iUnbreakableMode >= 1 Then
@@ -315,6 +345,7 @@ Func runBot() ;Bot that runs everything in order
 				UpgradeWall()
 					If _Sleep($iDelayRunBot3) Then Return
 					If $Restart = True Then ContinueLoop
+				PushMsgToPushBullet("CheckBuilderIdle")
 				Idle()
 					;$fullArmy1 = $fullArmy
 					If _Sleep($iDelayRunBot3) Then Return
@@ -364,6 +395,134 @@ Func runBot() ;Bot that runs everything in order
 			If _Sleep($iDelayRunBot5) Then Return
 			If $Restart = True Then ContinueLoop
 		EndIf
+		;Multy-Farming ==============================================================================================================
+		If $ichkMultyFarming = 1 Then
+			SetLog("Multy-Farming Mode Active...", $COLOR_RED)
+			SetLog("Please don't PAUSE/STOP BOT during profile change", $COLOR_RED)
+			$canRequestCC = True
+			$bDonationEnabled = True
+			RequestCC()
+			$FirstStart = True
+			$RunState = True
+			$iSwCount = 0
+			If $sCurrProfile = "[01] Main" Then
+				If IniRead($sProfilePath & "\[02] Second\config.ini", "Multy", "MultyFarming", "0") = "1" Then
+					SwitchAccount("Second")
+				ElseIf IniRead($sProfilePath & "\[03] Third\config.ini", "Multy", "MultyFarming", "0") = "1" Then
+					SwitchAccount("Third")
+				ElseIf IniRead($sProfilePath & "\[04] Fourth\config.ini", "Multy", "MultyFarming", "0") = "1" Then
+					SwitchAccount("Fourth")
+				ElseIf IniRead($sProfilePath & "\[05] Fifth\config.ini", "Multy", "MultyFarming", "0") = "1" Then
+					SwitchAccount("Fifth")
+				ElseIf IniRead($sProfilePath & "\[06] Sixth\config.ini", "Multy", "MultyFarming", "0") = "1" Then
+					SwitchAccount("Sixth")
+				Else
+					SetLog("You don't have other profiles configured for multy-farming. Swithing accounts canceled.", $COLOR_RED)
+				EndIF
+
+			ElseIf $sCurrProfile = "[02] Second" Then
+				If $iAccount = "3" Or $iAccount = "4" Or $iAccount = "5" Or $iAccount = "6" Then
+					If IniRead($sProfilePath & "\[03] Third\config.ini", "Multy", "MultyFarming", "0") = "1" Then
+						SwitchAccount("Third")
+					ElseIf IniRead($sProfilePath & "\[04] Fourth\config.ini", "Multy", "MultyFarming", "0") = "1" Then
+						SwitchAccount("Fourth")
+					ElseIf IniRead($sProfilePath & "\[05] Fifth\config.ini", "Multy", "MultyFarming", "0") = "1" Then
+						SwitchAccount("Fifth")
+					ElseIf IniRead($sProfilePath & "\[06] Sixth\config.ini", "Multy", "MultyFarming", "0") = "1" Then
+						SwitchAccount("Sixth")
+					ElseIf IniRead($sProfilePath & "\[01] Main\config.ini", "Multy", "MultyFarming", "0") = "1" Then
+						SwitchAccount("Main")
+					Else
+						SetLog("You don't have other profiles configured for multy-farming. Swithing accounts canceled.", $COLOR_RED)
+					EndIF
+				Else
+					If IniRead($sProfilePath & "\[01] Main\config.ini", "Multy", "MultyFarming", "0") = "1" Then
+						SwitchAccount("Main")
+					EndIF
+				EndIf
+
+			ElseIf $sCurrProfile = "[03] Third" Then
+				If $iAccount = "4" Or $iAccount = "5" Or $iAccount = "6" Then
+					If IniRead($sProfilePath & "\[04] Fourth\config.ini", "Multy", "MultyFarming", "0") = "1" Then
+						SwitchAccount("Fourth")
+					ElseIf IniRead($sProfilePath & "\[05] Fifth\config.ini", "Multy", "MultyFarming", "0") = "1" Then
+						SwitchAccount("Fifth")
+					ElseIf IniRead($sProfilePath & "\[06] Sixth\config.ini", "Multy", "MultyFarming", "0") = "1" Then
+						SwitchAccount("Sixth")
+					ElseIf IniRead($sProfilePath & "\[01] Main\config.ini", "Multy", "MultyFarming", "0") = "1" Then
+						SwitchAccount("Main")
+					ElseIf IniRead($sProfilePath & "\[02] Second\config.ini", "Multy", "MultyFarming", "0") = "1" Then
+						SwitchAccount("Second")
+					Else
+						SetLog("You don't have other profiles configured for multy-farming. Swithing accounts canceled.", $COLOR_RED)
+					EndIf
+
+				ElseIf $iAccount = "3" Then
+					If IniRead($sProfilePath & "\[01] Main\config.ini", "Multy", "MultyFarming", "0") = "1" Then
+						SwitchAccount("Main")
+					EndIf
+
+				EndIf
+			ElseIf $sCurrProfile = "[04] Fourth" Then
+				If $iAccount = "5" Or $iAccount = "6" Then
+					If IniRead($sProfilePath & "\[05] Fifth\config.ini", "Multy", "MultyFarming", "0") = "1" Then
+						SwitchAccount("Fifth")
+					ElseIf IniRead($sProfilePath & "\[06] Sixth\config.ini", "Multy", "MultyFarming", "0") = "1" Then
+						SwitchAccount("Sixth")
+					ElseIf IniRead($sProfilePath & "\[01] Main\config.ini", "Multy", "MultyFarming", "0") = "1" Then
+						SwitchAccount("Main")
+					ElseIf IniRead($sProfilePath & "\[02] Second\config.ini", "Multy", "MultyFarming", "0") = "1" Then
+						SwitchAccount("Second")
+					ElseIf IniRead($sProfilePath & "\[03] Third\config.ini", "Multy", "MultyFarming", "0") = "1" Then
+						SwitchAccount("Third")
+					Else
+						SetLog("You don't have other profiles configured for multy-farming. Swithing accounts canceled.", $COLOR_RED)
+					EndIf
+				ElseIf $iAccount = "4" Then
+					If IniRead($sProfilePath & "\[01] Main\config.ini", "Multy", "MultyFarming", "0") = "1" Then
+						SwitchAccount("Main")
+					EndIf
+				EndIf
+			ElseIf $sCurrProfile = "[05] Fifth" Then
+				If $iAccount = "6" Then
+					If IniRead($sProfilePath & "\[06] Sixth\config.ini", "Multy", "MultyFarming", "0") = "1" Then
+						SwitchAccount("Sixth")
+					ElseIf IniRead($sProfilePath & "\[01] Main\config.ini", "Multy", "MultyFarming", "0") = "1" Then
+						SwitchAccount("Main")
+					ElseIf IniRead($sProfilePath & "\[02] Second\config.ini", "Multy", "MultyFarming", "0") = "1" Then
+						SwitchAccount("Second")
+					ElseIf IniRead($sProfilePath & "\[03] Third\config.ini", "Multy", "MultyFarming", "0") = "1" Then
+						SwitchAccount("Third")
+					ElseIf IniRead($sProfilePath & "\[04] Fourth\config.ini", "Multy", "MultyFarming", "0") = "1" Then
+						SwitchAccount("Fourth")
+					Else
+					
+						SetLog("You don't have other profiles configured for multy-farming. Swithing accounts canceled.", $COLOR_RED)
+					EndIf
+
+				ElseIf $iAccount = "5" Then
+					If IniRead($sProfilePath & "\[01] Main\config.ini", "Multy", "MultyFarming", "0") = "1" Then
+						SwitchAccount("Main")
+					EndIf
+
+				EndIf
+			ElseIf $sCurrProfile = "[06] Sixth" Then
+				If IniRead($sProfilePath & "\[01] Main\config.ini", "Multy", "MultyFarming", "0") = "1" Then
+					SwitchAccount("Main")
+				ElseIf IniRead($sProfilePath & "\[02] Second\config.ini", "Multy", "MultyFarming", "0") = "1" Then
+					SwitchAccount("Second")
+				ElseIf IniRead($sProfilePath & "\[03] Third\config.ini", "Multy", "MultyFarming", "0") = "1" Then
+					SwitchAccount("Third")
+				ElseIf IniRead($sProfilePath & "\[04] Fourth\config.ini", "Multy", "MultyFarming", "0") = "1" Then
+						SwitchAccount("Fourth")
+				ElseIf IniRead($sProfilePath & "\[05] Fifth\config.ini", "Multy", "MultyFarming", "0") = "1" Then
+						SwitchAccount("Fifth")
+				Else
+					SetLog("You don't have other profiles configured for multy-farming. Swithing accounts canceled.", $COLOR_RED)
+				EndIf
+			EndIf
+		EndIf
+		;============================================================================================================================;
 	WEnd
 EndFunc   ;==>_runBot
 
@@ -374,7 +533,9 @@ Func Idle() ;Sequence that runs until Full Army
 	While $fullArmy = False Or $bFullArmyHero = False Or $bFullArmySpells = False
 		checkAndroidTimeLag()
 
-		If $RequestScreenshot = 1 Then PushMsg("RequestScreenshot")
+		If $RequestScreenshot = 1 Then PushMsgToPushBullet("RequestScreenshot")
+		If $RequestBuilderInfo = 1 Then PushMsgToPushBullet("BuilderInfo")
+		If $RequestShieldInfo = 1 Then PushMsgToPushBullet("ShieldInfo")
 		If _Sleep($iDelayIdle1) Then Return
 		If $CommandStop = -1 Then SetLog("====== Waiting for full army ======", $COLOR_GREEN)
 		Local $hTimer = TimerInit()
@@ -383,6 +544,11 @@ Func Idle() ;Sequence that runs until Full Army
 		While $iReHere < 7
 			$iReHere += 1
 			DonateCC(True)
+			;modification Chat by TheRevenor ===============================================
+			If $iReHere = 6 Then
+			   ChatbotMessage()
+			   CheckNewChat()
+			EndIf
 			If _Sleep($iDelayIdle2) Then ExitLoop
 			If $Restart = True Then ExitLoop
 		WEnd
@@ -425,6 +591,16 @@ Func Idle() ;Sequence that runs until Full Army
 		$iCollectCounter = $iCollectCounter + 1
 		If $CommandStop = -1 Then
 			Train()
+			; TheRevenor
+			If $fullArmy And ($iEnableSpellsWait[$iMatchMode] = 1 Or GUICtrlRead($chkDBKingWait) = $GUI_CHECKED Or GUICtrlRead($chkDBQueenWait) = $GUI_CHECKED Or _
+					GUICtrlRead($chkDBWardenWait) = $GUI_CHECKED Or GUICtrlRead($chkABKingWait) = $GUI_CHECKED Or GUICtrlRead($chkABQueenWait) = $GUI_CHECKED Or _
+					GUICtrlRead($chkABWardenWait) = $GUI_CHECKED) Then
+				$IsWaitingForHeroesSpells = 1
+			ElseIf $fullArmy = False And ($iEnableSpellsWait[$iMatchMode] = 1 Or GUICtrlRead($chkDBKingWait) = $GUI_CHECKED Or GUICtrlRead($chkDBQueenWait) = $GUI_CHECKED Or _
+					GUICtrlRead($chkDBWardenWait) = $GUI_CHECKED Or GUICtrlRead($chkABKingWait) = $GUI_CHECKED Or GUICtrlRead($chkABQueenWait) = $GUI_CHECKED Or _
+					GUICtrlRead($chkABWardenWait) = $GUI_CHECKED) Then
+				$IsWaitingForHeroesSpells = 0
+			EndIf
 				If $Restart = True Then ExitLoop
 				If _Sleep($iDelayIdle1) Then ExitLoop
 				checkMainScreen(False)
@@ -433,6 +609,17 @@ Func Idle() ;Sequence that runs until Full Army
 		If $CommandStop = 0 And $bTrainEnabled = True Then
 			If Not ($fullArmy) Then
 				Train()
+				; TheRevenor
+				If $fullArmy And ($iEnableSpellsWait[$iMatchMode] = 1 Or GUICtrlRead($chkDBKingWait) = $GUI_CHECKED Or GUICtrlRead($chkDBQueenWait) = $GUI_CHECKED Or _
+						GUICtrlRead($chkDBWardenWait) = $GUI_CHECKED Or GUICtrlRead($chkABKingWait) = $GUI_CHECKED Or GUICtrlRead($chkABQueenWait) = $GUI_CHECKED Or _
+						GUICtrlRead($chkABWardenWait) = $GUI_CHECKED) Then
+					$IsWaitingForHeroesSpells = 1
+				ElseIf $fullArmy = False And ($iEnableSpellsWait[$iMatchMode] = 1 Or GUICtrlRead($chkDBKingWait) = $GUI_CHECKED Or GUICtrlRead($chkDBQueenWait) = $GUI_CHECKED Or _
+						GUICtrlRead($chkDBWardenWait) = $GUI_CHECKED Or GUICtrlRead($chkABKingWait) = $GUI_CHECKED Or GUICtrlRead($chkABQueenWait) = $GUI_CHECKED Or _
+						GUICtrlRead($chkABWardenWait) = $GUI_CHECKED) Then
+					$IsWaitingForHeroesSpells = 0
+				EndIf
+				
 					If $Restart = True Then ExitLoop
 					If _Sleep($iDelayIdle1) Then ExitLoop
 					checkMainScreen(False)
@@ -472,7 +659,7 @@ EndFunc   ;==>Idle
 Func AttackMain() ;Main control for attack functions
 	;LoadAmountOfResourcesImages() ; for debug
 	If IsSearchAttackEnabled() Then
-		If (IsSearchModeActive($DB) And checkCollectors(True, False)) or IsSearchModeActive($LB) or IsSearchModeActive($TS) Then
+		If IsSearchModeActive($DB) or IsSearchModeActive($LB) or IsSearchModeActive($TS) Then ; fix no collectors are selected warning error
 			If $iChkUseCCBalanced = 1 or $iChkUseCCBalancedCSV = 1 Then ;launch profilereport() only if option balance D/R it's activated
 				ProfileReport()
 				If _Sleep($iDelayAttackMain1) Then Return
