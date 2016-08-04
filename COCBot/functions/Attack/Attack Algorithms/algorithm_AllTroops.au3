@@ -136,27 +136,30 @@ Func algorithm_AllTroops() ;Attack Algorithm for all existing troops
 						, [$eArch, $nbSides, 3, 3, 2] _
 						, [$eGobl, $nbSides, 1, 1, 1] _
 						]
-	; Classic Four Finger
-	ElseIf $nbSides = 5 Then
-		Local $listInfoDeploy[19][5] = [[$eGiant, $nbSides, 1, 1, 2], _
-										[$eBarb,  $nbSides, 1, 1, 0], _
-										[$eWall,  $nbSides, 1, 1, 2], _
-										[$eArch,  $nbSides, 1, 1, 0], _
-										[$eHogs,  $nbSides, 1, 1, 2], _
-										[$eGobl,  $nbSides, 1, 1, 0], _
-										[$eValk,  $nbSides, 1, 1, 2], _
-										[$eBowl,  $nbSides, 1, 1, 0], _
-										[$eMine,  $nbSides, 1, 1, 0], _
-										[$ePekk,  $nbSides, 1, 1, 2], _
-										[$eDrag,  $nbSides, 1, 1, 2], _
-										[$eBabyD, $nbSides, 1, 1, 2], _
-										[$eBall,  $nbSides, 1, 1, 2], _
-										[$eWiza,  $nbSides, 1, 1, 2], _
-										[$eWitc,  $nbSides, 1, 1, 2], _
-										[$eMini,  $nbSides, 1, 1, 0], _
-										["CC",           1, 1, 1, 1], _
-										["HEROES",       1, 2, 1, 1]]
 		EndSwitch
+; Classic Four Finger
+	ElseIf $nbSides = 5 Then
+		Local $listInfoDeploy[21][5] = [[$eGiant, $nbSides, 1, 1, 2], _
+						[$eGole,  $nbSides, 1, 1, 2], _
+						[$eLava,  $nbSides, 1, 1, 2], _
+						[$eBarb,  $nbSides, 1, 1, 0], _
+						[$eWall,  $nbSides, 1, 1, 2], _
+						[$eArch,  $nbSides, 1, 1, 0], _
+						[$eHogs,  $nbSides, 1, 1, 2], _
+						[$eGobl,  $nbSides, 1, 1, 0], _
+						[$eValk,  $nbSides, 1, 1, 2], _
+						[$eBowl,  $nbSides, 1, 1, 0], _
+						[$eMine,  $nbSides, 1, 1, 0], _
+						[$ePekk,  $nbSides, 1, 1, 2], _
+						[$eDrag,  $nbSides, 1, 1, 2], _
+						[$eBall,  $nbSides, 1, 1, 2], _
+						[$eBabyD, $nbSides, 1, 1, 1], _
+						[$eWiza,  $nbSides, 1, 1, 2], _
+						[$eWitc,  $nbSides, 1, 1, 2], _
+						[$eMini,  $nbSides, 1, 1, 0], _
+						["CC",           1, 1, 1, 1], _
+						["HEROES",       1, 2, 1, 1]]
+
 	Else
 		If $debugSetlog = 1 Then SetLog("listdeploy standard for attack", $COLOR_PURPLE)
 		Switch $icmbStandardAlgorithm[$iMatchMode]
