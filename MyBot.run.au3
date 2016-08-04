@@ -33,13 +33,13 @@ ProcessSetPriority(@AutoItPID, $PROCESS_ABOVENORMAL)
 Global $iBotLaunchTime = 0
 Local $hBotLaunchTime = TimerInit()
 
-Global $sGitHubModOwner = "TheRevenor"
-Global $sGitHubModRepo = "MyBot-v6.2-MyMod"
+Global $sGitHubModOwner = "n4ngkr1ng"
+Global $sGitHubModRepo = "TheRevenor-6.2"
 Global $sGitHubModLatestReleaseTag = "v1.8.1"
 Global $sModSupportUrl = "https://mybot.run/forums/index.php?/topic/20830-mybot-v6121-mod-therevenor-v10-18-06-2016"
 
 $sBotVersion = "v6.2.1" ;~ Don't add more here, but below. Version can't be longer than vX.y.z because it it also use on Checkversion()
-$sBotTitle = "My Bot " & $sBotVersion & " MOD TheRevenor " & $sGitHubModLatestReleaseTag & " " ;~ Don't use any non file name supported characters like \ / : * ? " < > |
+$sBotTitle = "My Bot " & $sBotVersion & " MOD nangkring " & $sGitHubModLatestReleaseTag & " " ;~ Don't use any non file name supported characters like \ / : * ? " < > |
 $sModversion = $sGitHubModLatestReleaseTag
 
 Global $sBotTitleDefault = $sBotTitle
