@@ -15,7 +15,6 @@
 ; Link ..........: https://github.com/MyBotRun/MyBot/wiki
 ; Example .......: No
 ; ===============================================================================================================================
-
 Func DropOnEdges($troop, $nbSides, $number, $slotsPerEdge = 0)
 	If $nbSides = 0 Or $number = 1 Then
 		OldDropTroop($troop, $Edges[0], $number);
