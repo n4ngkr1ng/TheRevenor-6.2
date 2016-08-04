@@ -2809,12 +2809,12 @@ Func applyConfig($bRedrawAtExit = True) ;Applies the data from config to the con
 		For $i = $chkCloseWaitTrain To $lblCloseWaitRdmPercent
 			GUICtrlSetState($i, $GUI_HIDE)
 		Next
-		For $i = $lbSwitchMode To $lbMapHelp
+		For $i = $lbMapHelpAccPro To $chkAccRelax
 			GUICtrlSetState($i, $GUI_SHOW)
 		Next
     Else
 	   GUICtrlSetState($chkSwitchAcc, $GUI_UNCHECKED)
-		For $i = $lbSwitchMode To $lbMapHelp
+		For $i = $lbMapHelpAccPro To $chkAccRelax
  			GUICtrlSetState($i, $GUI_HIDE)
  		Next
     EndIf

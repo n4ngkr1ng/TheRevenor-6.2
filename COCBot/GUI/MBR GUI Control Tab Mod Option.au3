@@ -128,7 +128,7 @@ Func chkSwitchAcc()
 		For $i = $chkCloseWaitTrain To $lblCloseWaitRdmPercent
 			GUICtrlSetState($i, $GUI_HIDE)
 		Next
-		For $i = $lbSwitchMode To $lbMapHelp
+		For $i = $lbMapHelpAccPro To $chkAccRelax
 			GUICtrlSetState($i, $GUI_SHOW)
 		Next
 		$ichkSwitchAcc = 1
@@ -138,7 +138,7 @@ Func chkSwitchAcc()
 		For $i = $chkCloseWaitTrain To $lblCloseWaitRdmPercent
 			GUICtrlSetState($i, $GUI_SHOW)
 		Next
-		For $i = $lbSwitchMode To $lbMapHelp
+		For $i = $lbMapHelpAccPro To $chkAccRelax
 			GUICtrlSetState($i, $GUI_HIDE)
 		Next
 		$ichkSwitchAcc = 0

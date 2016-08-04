@@ -18,8 +18,8 @@ GUISetBkColor($COLOR_WHITE, $hGUI_ModOption)
 GUISwitch($hGUI_ModOption)
 
 	; SmartZap Settings
-	Local $x = 20, $y = 25
-    $grpStatsMisc = GUICtrlCreateGroup("Smart Zap && Extreme Zap", $x - 20, $y - 20, 438, 148)
+	Local $x = 20, $y = 23
+    $grpStatsMisc = GUICtrlCreateGroup("Smart Zap && Extreme Zap", $x - 20, $y - 20, 438, 138)
 		GUICtrlCreateIcon($pIconLib, $eIcnLightSpell, $x - 10, $y + 20, 24, 24)
 		GUICtrlCreateIcon($pIconLib, $eIcnDrill, $x - 10, $y - 7, 24, 24)
 		$chkSmartLightSpell = GUICtrlCreateCheckbox("Use Lightning Spells to SmartZap Drills", $x + 20, $y - 5, -1, -1)
@@ -91,8 +91,8 @@ GUISwitch($hGUI_ModOption)
 ; Example .......: No
 ; ===============================================================================================================================
 
-Local $x = 20, $y = 177 ;150
-	$grpMultyFarming = GUICtrlCreateGroup( "Multy-Farming With Smart Switch", $x - 20, $y - 20, 438, 65)
+Local $x = 20, $y = 162 ;150
+	$grpMultyFarming = GUICtrlCreateGroup( "Multy-Farming With Smart Switch", $x - 20, $y - 20, 438, 62)
 	;$x -= 10
 		$chkMultyFarming = GUICtrlCreateCheckbox(GetTranslated(17,1, "Multy-Farming"), $x - 10, $y -7, -1 , -1)
 			$txtTip = GetTranslated(17,3, "Will switch account and attack, then switch back")
@@ -165,8 +165,8 @@ Local $x = 20, $y = 177 ;150
 ; Example .......: No
 ; ===============================================================================================================================
 
-	Local $x = 20, $y = 247
-	$grpHideAndroid = GUICtrlCreateGroup("Android Options", $x - 20, $y - 20, 438, 73)
+	Local $x = 20, $y = 223
+	$grpHideAndroid = GUICtrlCreateGroup("Android Options", $x - 20, $y - 20, 438, 68)
 		$cmbAndroid = GUICtrlCreateCombo("", $x - 10, $y - 5, 130, 18, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
 			$txtTip = "Use this to select the Android Emulator to use with this profile."
 			_GUICtrlSetTip(-1, $txtTip)
