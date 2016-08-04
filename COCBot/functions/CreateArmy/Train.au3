@@ -164,6 +164,11 @@ Func Train()
 	If _Sleep($iDelayRunBot6) Then Return ; wait for window to open
 	If Not (IsTrainPage()) Then Return ; exit if I'm not in train page
 
+	;Chalicucu get remain train time
+	$iRemainTrainTime = RemainTrainTime(True, False, False)
+	SetLog("Training remain: " & $iRemainTrainTime & " minute(s)", $COLOR_GREEN)
+	SetCurTrainTime($iRemainTrainTime)
+
 	checkAttackDisable($iTaBChkIdle) ; Check for Take-A-Break after opening train page
 
 	; CHECK IF NEED TO MAKE TROOPS
@@ -1112,7 +1117,7 @@ If $IsWaitingForHeroesSpells = 0 Then
 						$BarrackDarkFull[$brrDarkNum - 1] = False ; Dark barrack isn't full
 					EndIf
 					If $debugsetlogTrain = 1 Then SetLog("Available Dark BARRACK " & $brrDarkNum & " Full: " & $BarrackDarkFull[$brrDarkNum - 1], $COLOR_PURPLE)
-					
+
 					;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 					;;;;;;;;;;;;; If The remaining capacity is lower then the Housing Space of training troop , delete the remaining training troop and train 10 Minions;;;;;;;;;;;

@@ -711,6 +711,7 @@ Func applyConfig($bRedrawAtExit = True) ;Applies the data from config to the con
 		GUICtrlSetState($chkCloseWaitEnable, $GUI_UNCHECKED)
 		_GUI_Value_STATE("DISABLE", $groupCloseWaitTrain)
 	EndIf
+	chkCloseWaitEnable()
 	If $ichkCloseWaitTrain = 1 Then
 		GUICtrlSetState($chkCloseWaitTrain, $GUI_CHECKED)
 	ElseIf $ichkCloseWaitTrain = 0 Then
@@ -1749,7 +1750,7 @@ Func applyConfig($bRedrawAtExit = True) ;Applies the data from config to the con
 	EndIf
 	GUICtrlSetData($PushBulletTokenValue, $PushBulletToken)
 	GUICtrlSetData($OrigPushBullet, $iOrigPushBullet)
-	
+
 	; Pushbullet Stuff
 	If $VillageStatIncrement = 1 Then
 		GUICtrlSetState($chkVillageStatIncrement, $GUI_CHECKED)
@@ -2466,16 +2467,16 @@ Func applyConfig($bRedrawAtExit = True) ;Applies the data from config to the con
 	EndIf
 	_GUICtrlComboBox_SetCurSel($cmbScriptNameAB, $tempindex)
 
-	
+
 	cmbScriptNameDB()
 	cmbScriptNameAB()
-	
+
 	; CSV Deployment Speed Mod
 	GUICtrlSetData($sldSelectedSpeedDB, $isldSelectedCSVSpeed[$DB])
 	GUICtrlSetData($sldSelectedSpeedAB, $isldSelectedCSVSpeed[$LB])
 	sldSelectedSpeedDB()
 	sldSelectedSpeedAB()
-	
+
 	If $devmode = 1 Then GUICtrlSetState($chkmakeIMGCSV, $GUI_SHOW)
 	If $makeIMGCSV = 1 Then
 		GUICtrlSetState($chkmakeIMGCSV, $GUI_CHECKED)
@@ -2571,7 +2572,7 @@ Func applyConfig($bRedrawAtExit = True) ;Applies the data from config to the con
 	_GUICtrlComboBox_SetCurSel($cmbTHSnipeBeforeDBScript, _GUICtrlComboBox_FindStringExact($cmbTHSnipeBeforeDBScript, $THSnipeBeforeDBScript))
 	LoadABSnipeAttacks() ; recreate combo box values
 	_GUICtrlComboBox_SetCurSel($cmbTHSnipeBeforeLBScript, _GUICtrlComboBox_FindStringExact($cmbTHSnipeBeforeLBScript, $THSnipeBeforeLBScript))
-	
+
 	; SmartZap Settings - Added by LunaEclipse
 	If $ichkSmartZap = 1 Then
 		GUICtrlSetState($chkExtLightSpell, $GUI_DISABLE)
@@ -2597,7 +2598,7 @@ Func applyConfig($bRedrawAtExit = True) ;Applies the data from config to the con
 		GUICtrlSetState($chkSmartZapSaveHeroes, $GUI_UNCHECKED)
 	EndIf
 	GUICtrlSetData($txtMinDark, $itxtMinDE)
-	
+
 	; ExtremeZap - Added by TheRevenor
 	If $ichkExtLightSpell = 1 Then
 		GUICtrlSetState($chkSmartLightSpell, $GUI_DISABLE)
@@ -2607,9 +2608,9 @@ Func applyConfig($bRedrawAtExit = True) ;Applies the data from config to the con
 		GUICtrlSetState($chkExtLightSpell, $GUI_UNCHECKED)
 	EndIf
 	ExtLightSpell()
-	
+
 	GUICtrlSetData($txtMinDark, $itxtMinDE)
-	
+
 	; Android Settings - Added by LunaEclipse
 	If _GUICtrlComboBox_FindStringExact($cmbAndroid, String($sAndroid)) <> -1 Then
 		_GUICtrlComboBox_SelectString($cmbAndroid, String($sAndroid))
@@ -2618,7 +2619,7 @@ Func applyConfig($bRedrawAtExit = True) ;Applies the data from config to the con
 	EndIf
 	GUICtrlSetData($txtAndroidInstance, $sAndroidInstance)
 	modifyAndroid()
-	
+
 	; Misc Battle Settings - Added by LunaEclipse
 	If $AndroidAdbClicksEnabled = 1 Then
 		GUICtrlSetState($chkFastADBClicks, $GUI_CHECKED)
@@ -2627,7 +2628,7 @@ Func applyConfig($bRedrawAtExit = True) ;Applies the data from config to the con
 		GUICtrlSetState($chkFastADBClicks, $GUI_UNCHECKED)
 		$AndroidAdbClicksEnabled = False
 	EndIf
-	
+
 	;Wait For Spells
 	If $iEnableSpellsWait[$DB] = 1 Then
 		GUICtrlSetState($chkDBSpellsWait, $GUI_CHECKED)
@@ -2648,7 +2649,7 @@ Func applyConfig($bRedrawAtExit = True) ;Applies the data from config to the con
 	Else
 		GUICtrlSetState($chkConnection, $GUI_UNCHECKED)
 	EndIf
-	
+
 	; Check Collectors Outside
 	If $ichkDBMeetCollOutside = 1 Then
 		GUICtrlSetState($chkDBMeetCollOutside, $GUI_CHECKED)
@@ -2664,7 +2665,7 @@ Func applyConfig($bRedrawAtExit = True) ;Applies the data from config to the con
 	Else
 		GUICtrlSetState($chkCloseTakeBreak, $GUI_UNCHECKED)
 	EndIf
-	
+
 	; Multi Farming Settings - Added by TheRevenor
 	If $ichkSwitchDonate = 1 Then
 		GUICtrlSetState($chkSwitchDonate, $GUI_CHECKED)
@@ -2680,17 +2681,17 @@ Func applyConfig($bRedrawAtExit = True) ;Applies the data from config to the con
 	EndIf
 		GUICtrlSetData($Account, $iAccount)
 	MultiFarming()
-	
+
 	; ChatBot by TheRevenor
 	GUICtrlSetData($chkchatdelay, $ichkchatdelay)
-	
+
 	; Donate Stats - Added by cutidudz
 	If $ichkDStats = 1 Then
 		GUICtrlSetState($chkDStats, $GUI_CHECKED)
 	Else
 		GUICtrlSetState($chkDStats, $GUI_UNCHECKED)
 	EndIf
-	
+
 	If $ichkLimitDStats = 1 Then
 		GUICtrlSetState($chkLimitDStats, $GUI_CHECKED)
 	Else
@@ -2703,16 +2704,16 @@ Func applyConfig($bRedrawAtExit = True) ;Applies the data from config to the con
 	Else
 		GUICtrlSetState($chkDontRemove, $GUI_UNCHECKED)
 	EndIf
-	
+
 	If $iChkBarrackSpell = 1 Then
 		GUICtrlSetState($chkBarrackSpell, $GUI_CHECKED)
 	Else
 		GUICtrlSetState($chkBarrackSpell, $GUI_UNCHECKED)
 	EndIf
-	
+
 	; Telegram Notify - Added by CDudz
 	GUICtrlSetData($TelegramTokenValue, $TelegramToken)
-	
+
 	If $TelegramEnabled = 1 Then
 		GUICtrlSetState($chkPBenabled2, $GUI_CHECKED)
 		chkPBenabled2()
@@ -2720,13 +2721,13 @@ Func applyConfig($bRedrawAtExit = True) ;Applies the data from config to the con
 		GUICtrlSetState($chkPBenabled2, $GUI_UNCHECKED)
 		chkPBenabled2()
 	EndIf
-	
+
 	If $ichkAlertBuilderIdle = 1 Then
 		GUICtrlSetState($chkAlertBuilderIdle, $GUI_CHECKED)
 	ElseIf $ichkAlertBuilderIdle = 0 Then
 		GUICtrlSetState($chkAlertBuilderIdle, $GUI_UNCHECKED)
 	EndIf
-	
+
 	; Profile Switch
 	If $ichkGoldSwitchMax = 1 Then
 		GUICtrlSetState($chkGoldSwitchMax, $GUI_CHECKED)
@@ -2787,7 +2788,7 @@ Func applyConfig($bRedrawAtExit = True) ;Applies the data from config to the con
 	EndIf
 	_GUICtrlComboBox_SetCurSel($cmbTrophyMinProfile, $icmbTrophyMinProfile)
 	GUICtrlSetData($txtMinTrophyAmount, $itxtMinTrophyAmount)
-	
+
 	;Apply to switch Attack Standard after THSnipe End ==>
 	If $ichkTSActivateCamps2 = 1 Then
 		GUICtrlSetState($chkTSActivateCamps2, $GUI_CHECKED)
@@ -2800,4 +2801,35 @@ Func applyConfig($bRedrawAtExit = True) ;Applies the data from config to the con
 	; Reenabling window redraw - Keep this last....
 	If $bRedrawAtExit Then SetRedrawBotWindow(True)
 
+	;=> chalicucu & demen:  switchcocacc
+	If $ichkSwitchAcc = 1 Then
+	   GUICtrlSetState($chkSwitchAcc, $GUI_CHECKED)
+	   GUICtrlSetState($chkCloseWaitEnable, $GUI_UNCHECKED)
+	   GUICtrlSetState($chkCloseWaitEnable, $GUI_DISABLE)
+		For $i = $chkCloseWaitTrain To $lblCloseWaitRdmPercent
+			GUICtrlSetState($i, $GUI_HIDE)
+		Next
+		For $i = $lbSwitchMode To $lbMapHelp
+			GUICtrlSetState($i, $GUI_SHOW)
+		Next
+    Else
+	   GUICtrlSetState($chkSwitchAcc, $GUI_UNCHECKED)
+		For $i = $lbSwitchMode To $lbMapHelp
+ 			GUICtrlSetState($i, $GUI_HIDE)
+ 		Next
+    EndIf
+	If $AccRelaxTogether = 1 Then
+	   GUICtrlSetState($chkAccRelax, $GUI_CHECKED)
+    Else
+	   GUICtrlSetState($chkAccRelax, $GUI_UNCHECKED)
+    EndIf
+	If $iChkAtkPln Then
+	   GUICtrlSetState($chkAtkPln, $GUI_CHECKED)
+	Else
+	   GUICtrlSetState($chkAtkPln, $GUI_UNCHECKED)
+	EndIf
+
+	GUICtrlSetData($txtTotalCoCAcc, IniRead($profile, "switchcocacc" , "totalacc" ,"0"))
+	GUICtrlSetData($txtAccBottingOrder, IniRead($profile, "switchcocacc" , "order" ,"123"))
+	GUICtrlSetData($txtProfileIdxOrder, IniRead($profile, "switchcocacc" , "profile" ,"123"))
 EndFunc   ;==>applyConfig

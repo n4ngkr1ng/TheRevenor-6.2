@@ -123,6 +123,7 @@
 #include "functions\CreateArmy\TrainClick.au3"
 #include "functions\CreateArmy\Train.au3"
 #include "functions\CreateArmy\TrainIt.au3"
+#include "functions\CreateArmy\RemainTrainTime.au3"		;chalicucu add
 
 #include "functions\Image Search\ImageSearch.au3"
 #include "functions\Image Search\checkDeadBase.au3"
@@ -271,6 +272,7 @@
 #include "functions\Village\UpgradeHeroes.au3"
 #include "functions\Village\ClanLevel.au3"
 #include "functions\Village\StarBonus.au3"
+#include "functions\Village\SwitchCOCAcc.au3"		; Chalicucu Switch COC account
 #include "functions\Other\ClickZoneR.au3"
 
 ; TheRevenor

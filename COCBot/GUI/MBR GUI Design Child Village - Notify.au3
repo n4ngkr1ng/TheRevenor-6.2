@@ -37,7 +37,7 @@ $hGUI_NOTIFY_TAB_ITEM1 = GUICtrlCreateTabItem(GetTranslated(600,18,"PushBullet/T
 		$chkPBenabled = GUICtrlCreateCheckbox(GetTranslated(619, 3, "Enable Pushbullet"), $x + 40, $y)
 			GUICtrlSetOnEvent(-1, "chkPBenabled")
 			GUICtrlSetTip(-1, GetTranslated(619, 4, "Enable PushBullet notifications"))
-		
+
 		$chkPBenabled2 = GUICtrlCreateCheckbox("Enable Telegram", $x + 40, $y +21)
 	    GUICtrlSetOnEvent(-1, "chkPBenabled2")
 	    GUICtrlSetTip(-1, "Enable Telegram notifications")
@@ -75,7 +75,7 @@ $hGUI_NOTIFY_TAB_ITEM1 = GUICtrlCreateTabItem(GetTranslated(600,18,"PushBullet/T
 		$lblTelegramTokenValue = GUICtrlCreateLabel(GetTranslated(619, 14, "Access Token") & ":", $x, $y + 23, -1, -1, $SS_RIGHT)
 		$TelegramTokenValue = GUICtrlCreateInput("", $x + 85, $y +22, 315, 19)
 		GUICtrlSetState(-1, $GUI_DISABLE)
-		
+
 		$y += 30
 		$lblOrigPushBullet = GUICtrlCreateLabel(GetTranslated(619, 16, "Origin") & ":", $x, $y + 25, -1, -1, $SS_RIGHT)
 			$txtTip = GetTranslated(619,17, "Your Profile/Village name - Set this on the Misc Tab under Profiles.")
@@ -126,8 +126,8 @@ $hGUI_NOTIFY_TAB_ITEM1 = GUICtrlCreateTabItem(GetTranslated(600,18,"PushBullet/T
 			GUICtrlSetTip(-1, GetTranslated(619, 38, "Send an Alert when your village is connected to from another device."))
 			GUICtrlSetState(-1, $GUI_DISABLE)
 		GUICtrlCreateGroup("", -99, -99, 1, 1)
-		
-;Periodic village stats and Searchcount Nofications.		
+
+;Periodic village stats and Searchcount Nofications.
 $y += 20
 		$chkSearchNotifyCount = GUICtrlCreateCheckbox("Searchcount.  Increment:", $x + 10, $y, -1, -1)
 		GUICtrlSetTip(-1, "Searchcount Notification every ____ searches.  If getting pushbullet errors or acting funny, increase increment.  ")
@@ -149,7 +149,7 @@ $y += 20
 		GUICtrlSetState(-1, $GUI_DISABLE)
 $y += 20
 	$chkAlertTopGain = GUICtrlCreateCheckbox("Top Gain", $x + 10, $y, -1, -1)
-		GUICtrlSetTip(-1, "Send an Alert when a Top Gain is achived.") 
+		GUICtrlSetTip(-1, "Send an Alert when a Top Gain is achived.")
 		GUICtrlSetState(-1, $GUI_DISABLE)
 	GUICtrlCreateGroup("", -99, -99, 1, 1)
 GUICtrlCreateTabItem("")
@@ -167,7 +167,18 @@ $hGUI_NOTIFY_TAB_ITEM2 = GUICtrlCreateTabItem(GetTranslated(600, 19, "Instructio
 				GetTranslated(620, 1, -1) & " <" & GetTranslated(619, 16, -1) & "> " & GetTranslated(620, 21,"LOG") & GetTranslated(620, 9, " - send the current log file of <Village Name>") & @CRLF & _
 				GetTranslated(620, 1, -1) & " <" & GetTranslated(619, 16, -1) & "> " & GetTranslated(620, 22,"LASTRAID") & GetTranslated(620, 10, " - send the last raid loot screenshot of <Village Name>") & @CRLF & _
 				GetTranslated(620, 1, -1) & " <" & GetTranslated(619, 16, -1) & "> " & GetTranslated(620, 23,"LASTRAIDTXT") & GetTranslated(620, 11, " - send the last raid loot values of <Village Name>") & @CRLF & _
-				GetTranslated(620, 1, -1) & " <" & GetTranslated(619, 16, -1) & "> " & GetTranslated(620, 24,"SCREENSHOT") & GetTranslated(620, 12, " - send a screenshot of <Village Name>") & @CRLF & @CRLF & _ 
+				GetTranslated(620, 1, -1) & " <" & GetTranslated(619, 16, -1) & "> " & GetTranslated(620, 24,"SCREENSHOT") & GetTranslated(620, 12, " - send a screenshot of <Village Name>") & @CRLF & _
+				GetTranslated(620,1, -1) & " " & GetTranslated(638,21,"ACC <account list>") & GetTranslated(638,26, " - set new play list") & @CRLF & _
+				GetTranslated(620,1, -1) & " " & GetTranslated(638,22,"ADD <account number>") & GetTranslated(638,27, " - add an account to play list") & @CRLF & _
+			    GetTranslated(620,1, -1) & " " & GetTranslated(638,23,"REM <account number>") & GetTranslated(638,28, " - remove an account from play list") & @CRLF & _
+			    GetTranslated(620,1, -1) & " " & GetTranslated(638,24,"MAP <account number>-<profile number>") & GetTranslated(638,29, " - set profile to an account. eg: BOT MAP 1-3") & @CRLF & _
+			    GetTranslated(620,1, -1) & " " & GetTranslated(638,25,"MODE <mode ID>") & GetTranslated(638,30, " - set switching mode. Eg: BOT MODE 0") & @CRLF & _
+				GetTranslated(620,1, -1) & " " & GetTranslated(638,2,"PRO <profile number>") & GetTranslated(638,12, " - set new bot profiles") & @CRLF & _
+			    GetTranslated(620,1, -1) & " " & GetTranslated(638,3,"GETORDER") & GetTranslated(638,13, " - get current CoC account and bot profile") & @CRLF & _
+			    GetTranslated(620,1, -1) & " " & GetTranslated(638,4,"STOPSTART") & GetTranslated(638,14, " - stop then start bot again") & @CRLF & _
+			    GetTranslated(620,1, -1) & " " & GetTranslated(638,5,"ALLPRO <all profile number>") & GetTranslated(638,15, " - set up profiles correspond to all exists accounts") & @CRLF & _
+				GetTranslated(620,1, -1) & " " & GetTranslated(638,9,"HIDE") & GetTranslated(638,19, " - hide android emulator") & @CRLF & _
+				GetTranslated(620,1, -1) & " " & GetTranslated(638,10,"ATKP 1/0") & GetTranslated(638,20, " - 1-enable/0-disable attack plan") & @CRLF & _
 				GetTranslated(600, 19, "Instructions") & " ChatBot With PushBullet!" & @CRLF & _
 				GetTranslated(620, 1, -1) & " <" & GetTranslated(619, 16, -1) & "> SENDCHAT <Chat Message> - send Text in clan chat" & @CRLF & _
 				GetTranslated(620, 1, -1) & " <" & GetTranslated(619, 16, -1) & "> GETCHATS <STOP|NOW|INTERVAL> - select any of this three option" & @CRLF & @CRLF & _

@@ -347,18 +347,26 @@ EndFunc   ;==>chkBoostBarracksHoursE2
 
 Func chkCloseWaitEnable()
 	If GUICtrlRead($chkCloseWaitEnable) = $GUI_CHECKED Then
-		$ichkCloseWaitEnable = 1
+		For $i = $chkCloseWaitTrain To $lblCloseWaitRdmPercent
+			GUICtrlSetState($i, $GUI_SHOW)
+		Next
 		_GUI_Value_STATE("ENABLE", $groupCloseWaitTrain)
+		GUICtrlSetState($chkSwitchAcc, $GUI_DISABLE)
+		$ichkCloseWaitEnable = 1
 	Else
-		$ichkCloseWaitEnable = 0
+		For $i = $chkCloseWaitTrain To $lblCloseWaitRdmPercent
+			GUICtrlSetState($i, $GUI_HIDE)
+		Next
 		_GUI_Value_STATE("DISABLE", $groupCloseWaitTrain)
+		GUICtrlSetState($chkSwitchAcc, $GUI_ENABLE)
+		$ichkCloseWaitEnable = 0
 	EndIf
 	If GUICtrlRead($btnCloseWaitStopRandom) = $GUI_CHECKED Then
 		GUICtrlSetState($btnCloseWaitStop, BitOR($GUI_DISABLE, $GUI_UNCHECKED))
 	Else
 		If GUICtrlRead($chkCloseWaitEnable) = $GUI_CHECKED Then GUICtrlSetState($btnCloseWaitStop, $GUI_ENABLE)
 	EndIf
-EndFunc   ;==>chkCloseWaitEnable
+ EndFunc   ;==>chkCloseWaitEnable
 
 Func chkCloseWaitTrain()
 	If GUICtrlRead($chkCloseWaitTrain) = $GUI_CHECKED Then
