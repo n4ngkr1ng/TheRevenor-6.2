@@ -35,14 +35,12 @@ Local $hBotLaunchTime = TimerInit()
 
 Global $sGitHubModOwner = "TheRevenor"
 Global $sGitHubModRepo = "MyBot-v6.2-MyMod"
-Global $sGitHubModLatestReleaseTag = "v1.8.1"
+Global $sGitHubModLatestReleaseTag = "v1.8"
 Global $sModSupportUrl = "https://mybot.run/forums/index.php?/topic/20830-mybot-v6121-mod-therevenor-v10-18-06-2016"
 
 $sBotVersion = "v6.2.1" ;~ Don't add more here, but below. Version can't be longer than vX.y.z because it it also use on Checkversion()
 $sBotTitle = "My Bot " & $sBotVersion & " MOD TheRevenor " & $sGitHubModLatestReleaseTag & " " ;~ Don't use any non file name supported characters like \ / : * ? " < > |
 $sModversion = $sGitHubModLatestReleaseTag
-
-Global $sBotTitleDefault = $sBotTitle
 
 #include "COCBot\functions\Config\DelayTimes.au3"
 #include "COCBot\MBR Global Variables.au3"

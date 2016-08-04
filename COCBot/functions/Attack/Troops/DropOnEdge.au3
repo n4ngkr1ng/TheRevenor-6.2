@@ -1,3 +1,4 @@
+
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: DropOnEdge
 ; Description ...:
@@ -17,6 +18,7 @@
 ; Link ..........: https://github.com/MyBotRun/MyBot/wiki
 ; Example .......: No
 ; ===============================================================================================================================
+
 Func DropOnEdge($troop, $edge, $number, $slotsPerEdge = 0, $edge2 = -1, $x = -1, $FourFingers = 0)
 
 	If isProblemAffect(True) Then Return
@@ -58,12 +60,12 @@ Func DropOnEdge($troop, $edge, $number, $slotsPerEdge = 0, $edge2 = -1, $x = -1,
 			Local $maxX2 = $edge2[4][0]
 			Local $minY2 = $edge2[0][1]
 			Local $maxY2 = $edge2[4][1]
-			If $FourFingers = 5 Then ; if $nbSide = 5
-				Local $minX2TR = $TopRight[0][0]
-				Local $maxX2TR = $TopRight[4][0]
-				Local $minY2TR = $TopRight[0][1]
-				Local $maxY2TR = $TopRight[4][1]
-			EndIf
+		EndIf
+		If $FourFingers = 5 Then ; if $nbSide = 5
+			Local $minX2TR = $TopRight[0][0]
+			Local $maxX2TR = $TopRight[4][0]
+			Local $minY2TR = $TopRight[0][1]
+			Local $maxY2TR = $TopRight[4][1]
 		EndIf
 		Local $nbTroopsLeft = $number
 		For $i = 0 To $slotsPerEdge - 1
