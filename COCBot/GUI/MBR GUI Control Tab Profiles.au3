@@ -25,7 +25,7 @@ Func cmbProfile()
 	readConfig()
 	applyConfig()
 	saveConfig()
-	
+
 	;DonateStats ============================
 	InitDonateStats()
 
@@ -132,9 +132,9 @@ Func btnRecycle()
 	SaveConfig()
 	SetLog("Profile " & $sCurrProfile & " was recycled with success", $COLOR_GREEN)
 	SetLog("All unused settings were removed", $COLOR_GREEN)
-EndFunc   ;==>btnRecycle
-; IceCube (Misc v1.0)
+ EndFunc   ;==>btnRecycle
 
+; IceCube (Misc v1.0)
 Func btnRenameConfirm()
 	Switch @GUI_CtrlId
 		Case $btnRename
@@ -178,7 +178,8 @@ Func btnRenameConfirm()
 		Case Else
 			SetLog("If you are seeing this log message there is something wrong.", $COLOR_RED)
 	EndSwitch
-EndFunc   ;==>btnRenameConfirm
+ EndFunc   ;==>btnRenameConfirm
+
 Func setupProfileComboBoxswitch()
 		; Clear the combo box current data in case profiles were deleted
 		GUICtrlSetData($cmbGoldMaxProfile, "", "")
