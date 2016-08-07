@@ -207,11 +207,11 @@ Local $x = 20, $y = 162 ;150
 					  "Supporting maximum 8 Accounts."
 			GUICtrlSetTip(-1,$txtTip)
 		$lbAccBottingOrder = GUICtrlCreateLabel("Accounts Playing List:", $x - 10, $y + 25, 135, 20)
-		$txtAccBottingOrder = GUICtrlCreateInput("12345678", $x + 108, $y + 22, 70, 18,  BitOR($GUI_SS_DEFAULT_INPUT, $SS_LEFT, $ES_AUTOHSCROLL))
+		$txtAccBottingOrder = GUICtrlCreateInput("12345678", $x + 108, $y + 22, 70, 18,  BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER, $ES_AUTOHSCROLL))
 			$txtTip = "Input group of accounts you want to play."
 			GUICtrlSetTip(-1,$txtTip)
 		$lbProfileIdxOrder = GUICtrlCreateLabel("Mapping Profile Indexs:", $x + 195, $y + 25, 130, 20)
-		$txtProfileIdxOrder = GUICtrlCreateInput("12345678", $x + 320, $y + 22, 70, 18,  BitOR($GUI_SS_DEFAULT_INPUT, $SS_LEFT, $ES_AUTOHSCROLL))
+		$txtProfileIdxOrder = GUICtrlCreateInput("12345678", $x + 320, $y + 22, 70, 18,  BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER, $ES_AUTOHSCROLL))
 			GUICtrlSetLimit(-1, 8)
 			$txtTip = "Input the order of Profiles correspond to CoC Accounts order."
 			GUICtrlSetTip(-1,$txtTip)

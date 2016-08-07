@@ -157,6 +157,12 @@ $hGUI_NOTIFY_TAB_ITEM2 = GUICtrlCreateTabItem(GetTranslated(600, 19, "Instructio
 	Local $x = 25, $y = 45
 		$lblgrppushbullet = GUICtrlCreateGroup(GetTranslated(620, 0, "Remote Control Functions"), $x - 20, $y - 20, 430, 334)
 			$x -= 10
+			$btnHelpPushBullet = GUICtrlCreateButton("PushBullet HELP", $x + 200, $y - 12, 100, 20)
+				GUICtrlSetTip(-1, "PushBullet HELP - All commands")
+				GUICtrlSetOnEvent(-1, "btnHelpPushBullet")
+			$btnHelpTelegram = GUICtrlCreateButton("Telegram HELP", $x + 315, $y - 12, 100, 20)
+				GUICtrlSetTip(-1, "Telegram HELP - All commands")
+				GUICtrlSetOnEvent(-1, "btnHelpTelegram")
 			$lblPBdesc = GUICtrlCreateLabel(GetTranslated(620, 1, "BOT") & " " & GetTranslated(620, 14,"HELP") & GetTranslated(620,2, " - send this help message") & @CRLF & _
 				GetTranslated(620, 1, -1) & " " & GetTranslated(620, 15,"DELETE") & GetTranslated(620, 3, " - delete all your previous messages") & @CRLF & _
 				GetTranslated(620, 1, -1) & " <" & GetTranslated(619, 16, -1) & "> " & GetTranslated(620, 16,"RESTART") & GetTranslated(620, 4, " - restart the bot named <Village Name> and Android Emulator") & @CRLF & _
@@ -168,30 +174,23 @@ $hGUI_NOTIFY_TAB_ITEM2 = GUICtrlCreateTabItem(GetTranslated(600, 19, "Instructio
 				GetTranslated(620, 1, -1) & " <" & GetTranslated(619, 16, -1) & "> " & GetTranslated(620, 22,"LASTRAID") & GetTranslated(620, 10, " - send the last raid loot screenshot of <Village Name>") & @CRLF & _
 				GetTranslated(620, 1, -1) & " <" & GetTranslated(619, 16, -1) & "> " & GetTranslated(620, 23,"LASTRAIDTXT") & GetTranslated(620, 11, " - send the last raid loot values of <Village Name>") & @CRLF & _
 				GetTranslated(620, 1, -1) & " <" & GetTranslated(619, 16, -1) & "> " & GetTranslated(620, 24,"SCREENSHOT") & GetTranslated(620, 12, " - send a screenshot of <Village Name>") & @CRLF & _
-				GetTranslated(620,1, -1) & " " & GetTranslated(638,21,"ACC <account list>") & GetTranslated(638,26, " - set new play list") & @CRLF & _
-				GetTranslated(620,1, -1) & " " & GetTranslated(638,22,"ADD <account number>") & GetTranslated(638,27, " - add an account to play list") & @CRLF & _
-			    GetTranslated(620,1, -1) & " " & GetTranslated(638,23,"REM <account number>") & GetTranslated(638,28, " - remove an account from play list") & @CRLF & _
-			    GetTranslated(620,1, -1) & " " & GetTranslated(638,24,"MAP <account number>-<profile number>") & GetTranslated(638,29, " - set profile to an account. eg: BOT MAP 1-3") & @CRLF & _
-			    GetTranslated(620,1, -1) & " " & GetTranslated(638,25,"MODE <mode ID>") & GetTranslated(638,30, " - set switching mode. Eg: BOT MODE 0") & @CRLF & _
-				GetTranslated(620,1, -1) & " " & GetTranslated(638,2,"PRO <profile number>") & GetTranslated(638,12, " - set new bot profiles") & @CRLF & _
-			    GetTranslated(620,1, -1) & " " & GetTranslated(638,3,"GETORDER") & GetTranslated(638,13, " - get current CoC account and bot profile") & @CRLF & _
-			    ;GetTranslated(620,1, -1) & " " & GetTranslated(638,4,"STOPSTART") & GetTranslated(638,14, " - stop then start bot again") & @CRLF & _
-			    GetTranslated(620,1, -1) & " " & GetTranslated(638,5,"ALLPRO <all profile number>") & GetTranslated(638,15, " - set up profiles correspond to all exists accounts") & @CRLF & _
-				;GetTranslated(620,1, -1) & " " & GetTranslated(638,9,"HIDE") & GetTranslated(638,19, " - hide android emulator") & @CRLF & _
-				GetTranslated(620,1, -1) & " " & GetTranslated(638,10,"ATKP 1/0") & GetTranslated(638,20, " - 1-enable/0-disable attack plan") & @CRLF & _
 				GetTranslated(600, 19, "Instructions") & " ChatBot With PushBullet!" & @CRLF & _
 				GetTranslated(620, 1, -1) & " <" & GetTranslated(619, 16, -1) & "> SENDCHAT <Chat Message> - send Text in clan chat" & @CRLF & _
-				GetTranslated(620, 1, -1) & " <" & GetTranslated(619, 16, -1) & "> GETCHATS <STOP|NOW|INTERVAL> - select any of this three option" & @CRLF & @CRLF & _
+				GetTranslated(620, 1, -1) & " <" & GetTranslated(619, 16, -1) & "> GETCHATS <STOP|NOW|INTERVAL> - select any of this three option" & @CRLF & _
 				GetTranslated(600, 19, "Instructions") & " ChatBot With Telegram!" & @CRLF & _
 				GetTranslated(18, 112, "SENDCHAT <Chat Message> - send Text in clan chat") & @CRLF & _
-				GetTranslated(18, 111, "GETCHATS <STOP|NOW|INTERVAL> - to get the latest clan chat as an image"), $x, $y - 5, -1, -1, $SS_LEFT)
-			$y = 240
-			$btnHelpPushBullet = GUICtrlCreateButton("PushBullet HELP", $x + 200, $y + 90, 100, 20)
-				GUICtrlSetTip(-1, "PushBullet HELP - All commands")
-				GUICtrlSetOnEvent(-1, "btnHelpPushBullet")
-			$btnHelpTelegram = GUICtrlCreateButton("Telegram HELP", $x + 315, $y + 90, 100, 20)
-				GUICtrlSetTip(-1, "Telegram HELP - All commands")
-				GUICtrlSetOnEvent(-1, "btnHelpTelegram")
+				GetTranslated(18, 111, "GETCHATS <STOP|NOW|INTERVAL> - to get the latest clan chat as an image")& @CRLF & _
+				GetTranslated(620,1, -1) & " " & GetTranslated(638,21,"ACC <acc list>") & GetTranslated(638,26, " - set new play list") & @CRLF & _
+				GetTranslated(620,1, -1) & " " & GetTranslated(638,22,"ADD <acc number>") & GetTranslated(638,27, " - add an account to play list") & @CRLF & _
+			    GetTranslated(620,1, -1) & " " & GetTranslated(638,23,"REM <acc number>") & GetTranslated(638,28, " - remove an account from play list") & @CRLF & _
+			    GetTranslated(620,1, -1) & " " & GetTranslated(638,24,"MAP <acc number>-<pro number>") & GetTranslated(638,29, " - set profile to an account. eg: BOT MAP 1-3") & @CRLF & _
+			    GetTranslated(620,1, -1) & " " & GetTranslated(638,25,"MODE <mode ID>") & GetTranslated(638,30, " - set switching mode. Eg: BOT MODE 0") & @CRLF & _
+				GetTranslated(620,1, -1) & " " & GetTranslated(638,2,"PRO <pro number>") & GetTranslated(638,12, " - set new bot profiles") & @CRLF & _
+			    GetTranslated(620,1, -1) & " " & GetTranslated(638,3,"GETORDER") & GetTranslated(638,13, " - get current CoC account and bot profile") & @CRLF & _
+			    GetTranslated(620,1, -1) & " " & GetTranslated(638,4,"STOPSTART") & GetTranslated(638,14, " - stop then start bot again") & @CRLF & _
+			    GetTranslated(620,1, -1) & " " & GetTranslated(638,5,"ALLPRO <all pro number>") & GetTranslated(638,15, " - set up profiles correspond to all exists accounts") & @CRLF & _
+				GetTranslated(620,1, -1) & " " & GetTranslated(638,9,"HIDE") & GetTranslated(638,19, " - hide android emulator") & @CRLF & _
+				GetTranslated(620,1, -1) & " " & GetTranslated(638,10,"ATKP 1/0") & GetTranslated(638,20, " - 1-enable/0-disable attack plan"), $x, $y - 5, -1, -1, $SS_LEFT)
 	GUICtrlCreateGroup("", -99, -99, 1, 1)
 GUICtrlCreateTabItem("")
 
