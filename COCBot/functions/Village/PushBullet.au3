@@ -276,14 +276,14 @@ Func _RemoteControlPushBullet()
 							   EndIf
 							   _DeleteMessageOfPushBullet($iden[$x])
 						    EndIf
-							If StringInStr($body[$x], StringUpper($iOrigPushBullet) & " SENDCHAT ") Then
+							If StringInStr($body[$x], StringUpper($iOrigPushBullet) & " SENDCHAT") Then
 								$FoundChatMessage = 1
 								$chatMessage = StringRight($body[$x], StringLen($body[$x]) - StringLen("BOT " & StringUpper($iOrigPushBullet) & " SENDCHAT "))
 								$chatMessage = StringLower($chatMessage)
 								ChatbotPushbulletQueueChat($chatMessage)
 								_PushToPushBullet($iOrigPushBullet & " | Chat queued, will send on next idle")
 								_DeleteMessageOfPushBullet($iden[$x])
-							ElseIf StringInStr($body[$x], StringUpper($iOrigPushBullet) & " GETCHATS ") Then
+							ElseIf StringInStr($body[$x], StringUpper($iOrigPushBullet) & " GETCHATS") Then
 								$FoundChatMessage = 1
 								$Interval = StringRight($body[$x], StringLen($body[$x]) - StringLen("BOT " & StringUpper($iOrigPushBullet) & " GETCHATS "))
 								If $Interval = "STOP" Then
@@ -302,6 +302,11 @@ Func _RemoteControlPushBullet()
 									EndIf
 								EndIf
 									_DeleteMessageOfPushBullet($iden[$x])
+							ElseIf $body[$x] = "BOT START" Then ;TheRevenor Start
+								btnStart()
+								SetLog("Pushbullet: Your request has been received. Bot is now Started", $COLOR_BLUE)
+								_PushToPushBullet("Request to Start..." & "\n" & "Your bot is now Starting.")
+								_DeleteMessageOfPushBullet($iden[$x])
 							Else
 								Local $lenstr = StringLen(GetTranslated(620, 1, -1) & " " & StringUpper($iOrigPushBullet) & " " & "")
 								Local $teststr = StringLeft($body[$x], $lenstr)
@@ -645,6 +650,10 @@ Func _RemoteControlPushBullet()
 								_PushToPushBullet($iOrigPushBullet & " | " & GetTranslated(18, 130, "Switched to Profile") & ": " & $VillageSelect & GetTranslated(18, 131, " Success!"))
 								btnStart()
 							EndIf
+						ElseIf StringInStr($body2, "START") Then ;TheRevenor Start
+								btnStart()
+								SetLog("Telegram: Your request has been received. Bot is now Started", $COLOR_BLUE)
+								_PushToPushBullet("Request to Start..." & "\n" & "Your bot is now Starting.")
 						Else
 							SetLog("Telegram: received command '" & $body2 & "' syntax wrong, command ignored.", $COLOR_RED)
 							_PushToPushBullet($iOrigPushBullet & " | " & GetTranslated(18,46,"Command received '" & $body2 & "' not recognized") & "\n" & GetTranslated(18,47,"Please push BOT HELP to obtain a complete command list."))
@@ -961,7 +970,7 @@ Func PushMsgToPushBullet($Message, $Source = "")
 			If ($PushBulletEnabled = 1 Or $TelegramEnabled = 1) And $pAnotherDevice = 1 Then _PushToPushBullet($iOrigPushBullet & " | 3. " & GetTranslated(620, 65, "Another Device has connected") & "\n" & GetTranslated(620, 66, "Another Device has connected, waiting") & " " & Floor(Mod($sTimeWakeUp, 60)) & " " & GetTranslated(603, 8, "seconds"))
 		Case "TakeBreak"
 			If ($PushBulletEnabled = 1 Or $TelegramEnabled = 1) And $pTakeAbreak = 1 AND $PersonalBreakNotified = False Then
-				_PushToPushBullet(@HOUR & ":" & @MIN &" - " & $iOrigPushBullet & " - Personal Break")
+				_PushToPushBullet(@HOUR & ":" & @MIN &" - " & $iOrigPushBullet & " | " & GetTranslated(620, 67, "Chief, we need some rest!") & "\n" & GetTranslated(620, 68, "Village must take a break.." & "\n" & "Personal Break.."))
 				$PersonalBreakNotified = True
 			Endif
 		Case "CocError"
@@ -1024,6 +1033,9 @@ Func PushMsgToPushBullet($Message, $Source = "")
 				$Result = $oHTTP.ResponseText
 				$SearchNotifyCountMsgIden = _StringBetween($Result, '"iden":"', '"', "", False) ;store pushbullet IDEN so the msg can be deleted later
 				;SetLog("Pushbullet IDEN = " & $SearchNotifyCountMsgIden[0]) ;debugging purposes
+			ElseIf $TelegramEnabled = 1 Then
+				Local $Time = @HOUR & ":" & @MIN & ":" & @SEC
+				_PushToPushBullet($Time &" - " & $iOrigPushBullet & " - Searching - [S]"& _NumberFormat($SearchCount))
 			EndIf
 		Case "AttackCountStats" ;Send stats every xxx attacks
 				Local $Time = @HOUR & ":" & @MIN & ":" & @SEC

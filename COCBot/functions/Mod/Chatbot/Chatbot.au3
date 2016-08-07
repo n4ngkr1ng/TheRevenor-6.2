@@ -151,9 +151,9 @@ Func ChatGuiCheckboxUpdate()
    IniWrite($chatIni, "clan", "always",     $ChatbotClanAlwaysMsg)
    IniWrite($chatIni, "clan", "pushbullet", $ChatbotUsePushbullet)
    IniWrite($chatIni, "clan", "pbsendnew",  $ChatbotPbSendNew)
-   
+
    ChatGuiCheckboxUpdateAT()
-   
+
 EndFunc
 
 Func ChatGuiCheckboxUpdateAT()
@@ -291,7 +291,8 @@ Func ChatbotChatGlobalInput() ; select the textbox for global chat
 EndFunc
 
 Func ChatbotChatInput($message) ; input the text
-   SendText($message)
+   ;SendText($message)
+   AndroidSendText($message)
    Return True
 EndFunc
 
@@ -356,7 +357,7 @@ Func runHelper($msg, $isCleverbot) ; run a script to get a response from cleverb
 EndFunc
 
 Func ChatbotIsLastChatNew() ; returns true if the last chat was not by you, false otherwise
-   _CaptureRegion()  
+   _CaptureRegion()
 	If _ColorCheck(_GetPixelColor(26, 312 + $midOffsetY, True), Hex(0xf00810, 6), 20) Then Return True ; detect the new chat
 	Return False
 EndFunc
@@ -414,7 +415,7 @@ Func ChangeLanguageToEN()
    Click(165, 180, 1)  ;English
    If _Sleep(500) Then Return
    Click(513, 426, 1)  ;language
-   If _Sleep(10000) Then Return   
+   If _Sleep(10000) Then Return
 EndFunc
 
 Func ChangeLanguageToRU()
@@ -433,7 +434,7 @@ EndFunc
 ; MAIN SCRIPT ==============================================
 
 Func ChatbotMessage() ; run the chatbot
-If $FoundChatMessage = 1 Then
+If $FoundChatMessage = 1 Or $ChatbotChatGlobal Then
 	If $ChatbotChatGlobal Then
 		SetLog("==== Request Chatbot to Chat Global ====", $COLOR_GREEN)
 	ElseIf $ChatbotChatClan Then
@@ -465,7 +466,7 @@ If $FoundChatMessage = 1 Then
 		If Not ChatbotChatInput(_ArrayToString($Message, " ")) Then Return
 		If Not ChatbotChatSendGlobal() Then Return
 		If Not ChatbotChatClose() Then Return
-		
+
 		If $ChatbotSwitchLang Then
 			SetLog(GetTranslated(106, 42, "Chatbot: Switching languages"), $COLOR_GREEN)
 			ChangeLanguageToRU()
@@ -496,7 +497,7 @@ If $FoundChatMessage = 1 Then
 
 		If UBound($ChatbotQueuedChats) > 0 Then
 		SetLog(GetTranslated(106, 44, "Chatbot: Sending pushbullet/telegram chats"), $COLOR_GREEN)
-		
+
 		For $a = 0 To UBound($ChatbotQueuedChats) - 1
 			$ChatToSend = $ChatbotQueuedChats[$a]
 			If Not ChatbotChatClanInput() Then Return
@@ -513,7 +514,7 @@ If $FoundChatMessage = 1 Then
 			SetLog(GetTranslated(106, 45, "Chatbot: Done"), $COLOR_GREEN)
 			$FoundChatMessage = 0
 		Return
-		
+
 		If Not $SentMessage Then
 			If $ChatbotClanAlwaysMsg Then
 			   If Not ChatbotChatClanInput() Then Return
@@ -521,22 +522,22 @@ If $FoundChatMessage = 1 Then
 			   If Not ChatbotChatSendClan() Then Return
 			EndIf
 		EndIf
-		
+
 		; send it via pushbullet/telegram
 		If $ChatbotUsePushbullet Then
 			If Not $SentClanChat Then ChatbotPushbulletSendChat()
 			$FoundChatMessage = 0
 			EndIf
 		EndIf
-	
+
 	ElseIf $ChatbotClanAlwaysMsg Then
 		If Not ChatbotChatClanInput() Then Return
 		If Not ChatbotChatInput($ClanMessages[Random(0, UBound($ClanMessages) - 1, 1)]) Then Return
 		If Not ChatbotChatSendClan() Then Return
 	EndIf
-	
+
 	If Not ChatbotChatClose() Then Return
-	
+
 	If $ChatbotChatGlobal Then
 		SetLog(GetTranslated(106, 49, "Chatbot: Done chatting"), $COLOR_GREEN)
 		$FoundChatMessage = 0
@@ -544,7 +545,7 @@ If $FoundChatMessage = 1 Then
 		SetLog(GetTranslated(106, 50, "Chatbot: Done chatting"), $COLOR_GREEN)
 		$FoundChatMessage = 0
 	EndIf
-EndIf  
+EndIf
 EndFunc ;==>ChatbotMessage
 
 Func CheckNewChat()
@@ -569,7 +570,7 @@ If $ChatbotUsePushbullet And $ChatbotPbSendNew Then
 				$SentMessage = True
 			EndIf
 		EndIf
-		
+
 		If $ChatbotClanUseResponses And Not $SentMessage Then
 			;$FoundChatMessage = 1
 			For $a = 0 To UBound($ClanResponses) - 1
@@ -584,7 +585,7 @@ If $ChatbotUsePushbullet And $ChatbotPbSendNew Then
 				EndIf
 			Next
 		EndIf
-		
+
 		;If Not $SentMessage Then
 		;	If $ChatbotClanAlwaysMsg Then
 		;	   If Not ChatbotChatClanInput() Then Return
@@ -592,7 +593,7 @@ If $ChatbotUsePushbullet And $ChatbotPbSendNew Then
 		;	   If Not ChatbotChatSendClan() Then Return
 		;	EndIf
 		;EndIf
-		
+
 		$SentClanChat = False
 		; send it via pushbullet if it's new
 		; putting the code here makes sure the (cleverbot, specifically) response is sent as well :P
