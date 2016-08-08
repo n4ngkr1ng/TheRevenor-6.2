@@ -245,7 +245,7 @@ Func runBot() ;Bot that runs everything in order
 				ContinueLoop
 			ElseIf $ichkSwitchAcc = 1 Then
 				SwitchCOCAcc()
-				If _Sleep(20000) Then Return
+				If _Sleep(1000) Then Return
 			EndIf
         EndIf
 		checkMainScreen()
