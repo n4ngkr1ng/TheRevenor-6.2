@@ -204,6 +204,7 @@ Func _getDailyRandom()
 EndFunc   ;==>_getDailyRandom
 
 Func IsPlannedTimeNow()
+    If Not $iChkAtkPln Then Return True		;Chalicucu disable attack plan (can use with switch accounts)
 	Local $hour, $hourloot
 	If $iPlannedAttackWeekDays[@WDAY - 1] = 1 Then
 		$hour = StringSplit(_NowTime(4), ":", $STR_NOCOUNT)
@@ -212,6 +213,13 @@ Func IsPlannedTimeNow()
 			If $debugsetlog = 1 Then SetLog("Attack plan enabled for now..", $COLOR_PURPLE)
 			Return True
 		Else
+			If $iAtkPlan_HalfHour Then	; Chalicucu attack more half hour
+				If $hourLoot >0 Then
+					If $hour[1] < 30 And $iPlannedattackHours[$hourLoot -1] = 1 Then Return True
+				ElseIf $hour[1] < 30 And $iPlannedattackHours[23 - 1] = 1 Then
+					 Return True
+				EndIf
+			EndIf
 			SetLog("Attack plan enabled today, but not this hour", $COLOR_BLUE)
 			If _Sleep($iDelayRespond) Then Return False
 			Return False
