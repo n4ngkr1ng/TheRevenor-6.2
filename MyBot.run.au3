@@ -237,7 +237,7 @@ Func runBot() ;Bot that runs everything in order
 		$CommandStop = -1
 
 		If _Sleep($iDelayRunBot1) Then Return
-		If IsSearchAttackEnabled() = False And $CommandStop <> 0 Then    ;Chalicucu not start emulator. relax
+		If IsPlannedTimeNow() = False And $CommandStop <> 0 Then    ;Chalicucu not start emulator. relax
             If $ichkSwitchAcc = 1 And $AccRelaxTogether = 1 Then
 				CloseAndroid()
 				SetLog("Relax! Attack not planned...",$COLOR_RED)
