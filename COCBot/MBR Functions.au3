@@ -275,6 +275,9 @@
 #include "functions\Village\SwitchCOCAcc.au3"		; Chalicucu Switch COC account
 #include "functions\Other\ClickZoneR.au3"
 
+;MOD SLEEP HEROES:
+#include "functions\Village\SleepHeroes.au3"
+
 ; TheRevenor
 #include "functions\Village\ProfileSwitch.au3"
 

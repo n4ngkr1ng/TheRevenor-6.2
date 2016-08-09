@@ -120,6 +120,11 @@ Func WaitnOpenCoC($iWaitTime, $bFullRestart = False)
 	Else
 		waitMainScreen()
 	EndIf
+	;========MOD: Put Heroes To Sleep Due To Personal Break LogOff========
+	If $ichkPBSleepBK = 1 Then SleepHeroes("BK", False)
+	If $ichkPBSleepAQ = 1 Then SleepHeroes("AQ", False)
+	If $ichkPBSleepGW = 1 Then SleepHeroes("GW", False)
+	;========MOD: Put Heroes To Sleep Due To Personal Break LogOff========
 
 EndFunc   ;==>WaitnOpenCoC
 

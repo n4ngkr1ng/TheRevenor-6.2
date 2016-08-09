@@ -51,7 +51,7 @@ Func CheckVersion()
 			SetLog(" ")
 			_PrintLogVersion($lastmessage)
 		EndIf
-		CheckMODVersion()
+		;CheckMODVersion()
 	EndIf
 EndFunc   ;==>CheckVersion
 

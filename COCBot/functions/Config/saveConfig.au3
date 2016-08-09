@@ -13,7 +13,6 @@
 ; Example .......: No
 ; ===============================================================================================================================
 
-
 Func saveConfig() ;Saves the controls settings to the config
 
 	;from GUI donate fields to variables  ----------------------------------------
@@ -675,6 +674,27 @@ Func saveConfig() ;Saves the controls settings to the config
 	EndIf
 	$iValueSinglePBTimeForced = GUICtrlRead($txtSinglePBTimeForced)
 	$iValuePBTimeForcedExit = GUICtrlRead($txtPBTimeForcedExit)
+
+	;========MOD: Put Heroes To Sleep Due To Personal Break LogOff========
+	;- Barbarian King
+	If GUICtrlRead($chkPBSleepBK) = $GUI_CHECKED Then
+		$ichkPBSleepBK = 1
+	Else
+		$ichkPBSleepBK = 0
+	EndIf
+	;- Archer Queen
+	If GUICtrlRead($chkPBSleepAQ) = $GUI_CHECKED Then
+		$ichkPBSleepAQ = 1
+	Else
+		$ichkPBSleepAQ = 0
+	EndIf
+	;- Grand Warden
+	If GUICtrlRead($chkPBSleepGW) = $GUI_CHECKED Then
+		$ichkPBSleepGW = 1
+	Else
+		$ichkPBSleepGW = 0
+	EndIf
+	;========END MOD: Put Heroes To Sleep Due To Personal Break LogOff========
 
 	If GUICtrlRead($chkUseRandomClick) = $GUI_CHECKED Then
 		$iUseRandomClick = 1
@@ -2322,6 +2342,12 @@ Func saveConfig() ;Saves the controls settings to the config
 	IniWriteS($config, "other", "ValueSinglePBTimeForced", $iValueSinglePBTimeForced)
 	IniWriteS($config, "other", "ValuePBTimeForcedExit", $iValuePBTimeForcedExit)
 
+	;========MOD: Put Heroes To Sleep Due To Personal Break LogOff========
+	IniWriteS($config, "other", "chkPBSleepBK", $ichkPBSleepBK)
+	IniWriteS($config, "other", "chkPBSleepAQ", $ichkPBSleepAQ)
+	IniWriteS($config, "other", "chkPBSleepGW", $ichkPBSleepGW)
+	;========END MOD: Put Heroes To Sleep Due To Personal Break LogOff========
+
 	IniWriteS($config, "General", "ChkLanguage", $ichkLanguage)
 
 	IniWriteS($config, "General", "ChkDisableSplash", $ichkDisableSplash)
@@ -2460,11 +2486,11 @@ Func saveConfig() ;Saves the controls settings to the config
 	EndIf
 	IniWrite($config, "pushbullet", "SearchNotifyCountTXT", GUICtrlRead($txtSearchNotifyCount))
 	; End Pushbullet Stuff
-	
+
 	; CSV Deployment Speed Mod
 	IniWriteS($config, "attack", "CSVSpeedDB", $isldSelectedCSVSpeed[$DB])
 	IniWriteS($config, "attack", "CSVSpeedAB", $isldSelectedCSVSpeed[$LB])
-	
+
 	; SmartZap Settings - Added by LunaEclipse
 	If GUICtrlRead($chkSmartLightSpell) = $GUI_CHECKED Then
 		IniWrite($config, "SmartZap", "UseSmartZap", 1)
@@ -2482,7 +2508,7 @@ Func saveConfig() ;Saves the controls settings to the config
         IniWrite($config, "SmartZap", "THSnipeSaveHeroes", 0)
     EndIf
 	IniWrite($config, "SmartZap", "MinDE", GUICtrlRead($txtMinDark))
-	
+
 	;ExtremeZap - Added by TheRvenor
 	If GUICtrlRead($chkExtLightSpell) = $GUI_CHECKED Then
 		IniWrite($config, "MOD", "ExtLightSpell", "1")
@@ -2490,7 +2516,7 @@ Func saveConfig() ;Saves the controls settings to the config
 		IniWrite($config, "MOD", "ExtLightSpell", "0")
 	EndIf
 	IniWrite($config, "MOD", "MinDE", GUICtrlRead($txtMinDark))
-	
+
 	; Android Settings - Added by LunaEclipse
 	IniWrite($config, "Android", "Emulator", GUICtrlRead($cmbAndroid))
 	IniWrite($config, "Android", "Instance", GUICtrlRead($txtAndroidInstance))
@@ -2501,7 +2527,7 @@ Func saveConfig() ;Saves the controls settings to the config
 	Else
 		IniWrite($config, "Fast Clicks", "UseADBFastClicks", 0)
 	EndIf
-	
+
 	; Wait For Spells
 	If GUICtrlRead($chkDBSpellsWait) = $GUI_CHECKED Then
 		IniWriteS($config, "search", "ChkDBSpellsWait", 1)
@@ -2523,7 +2549,7 @@ Func saveConfig() ;Saves the controls settings to the config
 		IniWriteS($config, "search", "DBMeetCollOutside", 0)
 	EndIf
 	IniWriteS($config, "search", "DBMinCollOutsidePercent", GUICtrlRead($txtDBMinCollOutsidePercent))
-	
+
 	; Check Connections - Added by TheRevenor
 	If GUICtrlRead($chkConnection) = $GUI_CHECKED Then
 		$ichkConnection = 1
@@ -2531,10 +2557,10 @@ Func saveConfig() ;Saves the controls settings to the config
 		$ichkConnection = 0
 	EndIf
 	IniWriteS($config, "general", "ChkConnect", $ichkConnection)
-	
+
 	; ChatBot by TheRevenor
 	IniWrite($config, "global", "chdelay",  GUICtrlRead($chkchatdelay))
-	
+
 	; Close TakeBrake - Added by TheRevenor
 	If GUICtrlRead($chkCloseTakeBreak) = $GUI_CHECKED Then
 		$ichkCloseTakeBreak = 1
@@ -2542,7 +2568,7 @@ Func saveConfig() ;Saves the controls settings to the config
 		$ichkCloseTakeBreak = 0
 	EndIf
 	IniWriteS($config, "general", "ChkCloseEmuPB", $ichkCloseTakeBreak)
-	
+
 	; Multi Farming Setting - Added by TheRvenor
 	If GUICtrlRead($chkSwitchDonate) = $GUI_CHECKED Then
 		IniWrite($config, "Multy", "SwitchDonate", 1)
@@ -2562,8 +2588,8 @@ Func saveConfig() ;Saves the controls settings to the config
 		IniWrite($config, "donate", "chkDStats", 1)
 	Else
 		IniWrite($config, "donate", "chkDStats", 0)
-	EndIf	
-	
+	EndIf
+
 	If GUICtrlRead($chkLimitDStats) = $GUI_CHECKED Then
 		IniWrite($config, "stats", "chkLimitDStats", 1)
 	Else
@@ -2576,30 +2602,30 @@ Func saveConfig() ;Saves the controls settings to the config
 	Else
 		IniWrite($config, "troop", "DontRemove", 0)
 	EndIf
-	
+
 	If GUICtrlRead($chkBarrackSpell) = $GUI_CHECKED Then
 		IniWrite($config, "Spells", "BarrackSpell", 1)
 	Else
 		IniWrite($config, "Spells", "BarrackSpell", 0)
 	EndIf
-	
+
 	; Telegram Notify - Added by CDudz
 	$TelegramToken = GUICtrlRead($TelegramTokenValue)
 	IniWriteS($config, "pushbullet", "AccountToken2", $TelegramToken)
-	IniWriteS($config, "pushbullet", "PBEnabled2", $TelegramEnabled)	
-	
+	IniWriteS($config, "pushbullet", "PBEnabled2", $TelegramEnabled)
+
 	If GUICtrlRead($chkPBenabled2) = $GUI_CHECKED Then
 		$TelegramEnabled = 1
 	Else
 		$TelegramEnabled = 0
 	EndIf
-	
+
 	If GUICtrlRead($chkAlertBuilderIdle) = $GUI_CHECKED Then
 		IniWriteS($config, "pushbullet", "AlertBuilderIdle", "1")
 	Else
 		IniWriteS($config, "pushbullet", "AlertBuilderIdle", "0")
 	EndIf
-	
+
 	; Profile Switch Settings
 	If GUICtrlRead($chkGoldSwitchMax) = $GUI_CHECKED Then
 		IniWrite($config, "profiles", "chkGoldSwitchMax", 1)

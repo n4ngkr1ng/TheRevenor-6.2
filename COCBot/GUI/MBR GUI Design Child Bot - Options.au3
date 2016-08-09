@@ -167,33 +167,61 @@ $grpTimeWakeUp = GUICtrlCreateGroup(GetTranslated(636,85, "Remote Device"), $x -
 GUICtrlCreateGroup("", -99, -99, 1, 1)
 
 $y+= 51
-$grpOtherExpert = GUICtrlCreateGroup(GetTranslated(636,45, "Other Options"), $x - 20, $y - 20, 225, 110)
-$chkSinglePBTForced = GUICtrlCreateCheckbox(GetTranslated(636,61, "Force Single PB logoff"), $x-5, $y, -1, -1)
+$grpOtherExpert = GUICtrlCreateGroup(GetTranslated(636,45, "Other Options"), $x - 20, $y - 20, 225, 165)
+$chkSinglePBTForced = GUICtrlCreateCheckbox(GetTranslated(636,61, "Force Single PB logoff"), $x-5, $y-5, -1, -1)
 	GUICtrlSetOnEvent(-1, "chkSinglePBTForced")
 	_GUICtrlSetTip(-1, GetTranslated(636,62, "This forces bot to exit CoC only one time prior to normal start of PB"))
-$txtSinglePBTimeForced = GUICtrlCreateInput("18", $x + 130, $y-1, 30, 16, BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER, $ES_NUMBER))
+$txtSinglePBTimeForced = GUICtrlCreateInput("18", $x + 130, $y-6, 30, 16, BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER, $ES_NUMBER))
 	_GUICtrlSetTip(-1, GetTranslated(636,63, "Type in number of minutes to keep CoC closed. Set to 15 minimum to reset PB timer!"))
 	GUICtrlSetOnEvent(-1, "txtSinglePBTimeForced")
 	GUICtrlSetLimit(-1, 3)
 	GUICtrlSetState(-1, $GUI_DISABLE)
-$lblSinglePBTimeForced = GUICtrlCreateLabel( GetTranslated(603,9, "Min"), $x+162, $y+2, 27, 15)
+$lblSinglePBTimeForced = GUICtrlCreateLabel( GetTranslated(603,9, "Min"), $x+162, $y-3, 27, 15)
 $y += 20
-$lblPBTimeForcedExit = GUICtrlCreateLabel( GetTranslated(636,65, "Subtract time for early PB exit"), $x-10, $y+3)
+$lblPBTimeForcedExit = GUICtrlCreateLabel( GetTranslated(636,65, "Subtract time for early PB exit"), $x-10, $y-2)
 	$txtTip = GetTranslated(636,66, "Type in number of minutes to quit CoC early! Setting below 10 minutes may not function!")
 	_GUICtrlSetTip(-1, $txtTip)
-$txtPBTimeForcedExit = GUICtrlCreateInput("16", $x + 130, $y, 30, 16, BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER, $ES_NUMBER))
+$txtPBTimeForcedExit = GUICtrlCreateInput("16", $x + 130, $y-5, 30, 16, BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER, $ES_NUMBER))
 	_GUICtrlSetTip(-1, $txtTip)
 	GUICtrlSetOnEvent(-1, "txtSinglePBTimeForced")
 	GUICtrlSetLimit(-1, 3)
 	GUICtrlSetState(-1, $GUI_DISABLE)
-$lblPBTimeForcedExit1 = GUICtrlCreateLabel( GetTranslated(603,9, -1), $x+162, $y+1, 27, 15)
-$y +=24
+$lblPBTimeForcedExit1 = GUICtrlCreateLabel( GetTranslated(603,9, "Min"), $x+162, $y-2, 27, 15)
+	;========MOD: Put Heroes To Sleep Due To Personal Break LogOff========
+$y += 13
+$lblSleepHeroes = GuiCtrlCreateLabel("Put Heroes To Sleep:",$x-10, $y+3)
+	$txtTip = "You're able to Put Heroes To Sleep Before Closing CoC Due To Personal Break Logoff"
+	_GUICtrlSetTip(-1, $txtTip)
+	;-Barbarian King
+$IMGchkSleepBK = GUICtrlCreateIcon($pIconLib, $eIcnKing, $x+55 , $y+20, 24, 24)
+	$txtTip = "Barbarian King"
+	_GUICtrlSetTip(-1, $txtTip)
+$chkPBSleepBK = GUICtrlCreateCheckbox("",$x+60,$y+46,17, 17)
+	$txtTip = "Sleep Barbarian King Before Closing CoC Due To Personal Breake Logoff"
+	_GUICtrlSetTip(-1, $txtTip)
+	;-Archer Queen
+	$IMGchkSleepAQ = GUICtrlCreateIcon($pIconLib, $eIcnQueen, $x+84 , $y+20, 24, 24)
+	$txtTip = "Archer Queen"
+	_GUICtrlSetTip(-1, $txtTip)
+$chkPBSleepAQ = GUICtrlCreateCheckbox("",$x+89,$y+46,17, 17)
+	$txtTip = "Sleep Archer Queen Before Closing CoC Due To Personal Breake Logoff"
+	_GUICtrlSetTip(-1, $txtTip)
+	;-Grand Warden
+	$IMGchkSleepGW = GUICtrlCreateIcon($pIconLib, $eIcnWarden, $x+113 , $y+20, 24, 24)
+	$txtTip = "Grand Warden"
+	_GUICtrlSetTip(-1, $txtTip)
+$chkPBSleepGW = GUICtrlCreateCheckbox("",$x+118,$y+46,17, 17)
+	$txtTip = "Sleep Grand Warden Before Closing CoC Due To Personal Breake Logoff"
+	_GUICtrlSetTip(-1, $txtTip)
+$y +=45
+	;========END MOD: Put Heroes To Sleep Due To Personal Break LogOff========
+$y +=23
 $chkCloseTakeBreak = GUICtrlCreateCheckbox("Close Emulator When TakeBreak", $x-5, $y-5, -1, -1)
 	$txtTip = "This forces bot to Close Emulator only one time prior to normal start of PB"
 	_GUICtrlSetTip(-1, $txtTip)
 	GUICtrlSetOnEvent(-1, "chkClosePBEmu")
 	GUICtrlSetState(-1, $GUI_DISABLE)
-$y +=21
+$y +=25
 $chkTotalCampForced = GUICtrlCreateCheckbox(GetTranslated(636,46, "Force Total Army Camp")&":", $x-5, $y-5, -1, -1)
 	GUICtrlSetOnEvent(-1, "chkTotalCampForced")
 	_GUICtrlSetTip(-1, GetTranslated(636,47, "If not detected set army camp values (instead ask)"))

@@ -1163,6 +1163,13 @@ Global $iValueTotalCampForced = 200
 Global $ichkSinglePBTForced = 0
 Global $iValueSinglePBTimeForced = 18
 Global $iValuePBTimeForcedExit = 15
+
+	;========MOD: Put Heroes To Sleep Due To Personal Break LogOff========
+Global $ichkPBSleepBK = 0
+Global $ichkPBSleepAQ = 0
+Global $ichkPBSleepGW = 0
+	;========END MOD: Put Heroes To Sleep Due To Personal Break LogOff========
+
 Global $bWaitShield = False
 Global $bGForcePBTUpdate = False
 

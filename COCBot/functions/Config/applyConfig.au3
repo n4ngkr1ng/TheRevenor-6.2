@@ -2039,6 +2039,24 @@ Func applyConfig($bRedrawAtExit = True) ;Applies the data from config to the con
 	GUICtrlSetData($txtPBTimeForcedExit, $iValuePBTimeForcedExit)
 	chkSinglePBTForced()
 
+	;========MOD: Put Heroes To Sleep Due To Personal Break LogOff========
+	If $ichkPBSleepBK = 1 Then
+		GUICtrlSetState($chkPBSleepBK, $GUI_CHECKED)
+	Else
+		GUICtrlSetState($chkPBSleepBK, $GUI_UNCHECKED)
+	EndIf
+	If $ichkPBSleepAQ = 1 Then
+		GUICtrlSetState($chkPBSleepAQ, $GUI_CHECKED)
+	Else
+		GUICtrlSetState($chkPBSleepAQ, $GUI_UNCHECKED)
+	EndIf
+	If $ichkPBSleepGW = 1 Then
+		GUICtrlSetState($chkPBSleepGW, $GUI_CHECKED)
+	Else
+		GUICtrlSetState($chkPBSleepGW, $GUI_UNCHECKED)
+	EndIf
+	;========END MOD: Put Heroes To Sleep Due To Personal Break LogOff========
+
 	;multilanguage
 	LoadLanguagesComboBox() ; recreate combo box values
 	_GUICtrlComboBox_SetCurSel($cmbLanguage, _GUICtrlComboBox_FindStringExact($cmbLanguage, $aLanguageFile[_ArraySearch($aLanguageFile, $sLanguage)][1]))

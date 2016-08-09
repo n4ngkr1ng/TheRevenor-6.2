@@ -36,6 +36,11 @@ Func CheckBaseQuick()
 		EndIf
 
 		Collect() ; Empty Collectors
+	;========MOD: Put Heroes To Sleep Due To Personal Break LogOff========
+		If $ichkPBSleepBK = 1 Then SleepHeroes("BK")
+		If $ichkPBSleepAQ = 1 Then SleepHeroes("AQ")
+		If $ichkPBSleepGW = 1 Then SleepHeroes("GW")
+	;========MOD: Put Heroes To Sleep Due To Personal Break LogOff========
 		If _Sleep($iDelayRunBot1) Then Return
 
 	Else
