@@ -55,6 +55,12 @@ Func SwitchCOCAcc($FirstSwitch = False)     ;change COC account
 		SetLog("Account " & $nCurCOCAcc & " is next acc")
 	EndIf
 
+	;========MOD: Put Heroes To Sleep Due To Personal Break LogOff========
+						If $ichkPBSleepBK = 1 Then SleepHeroes("BK")
+						If $ichkPBSleepAQ = 1 Then SleepHeroes("AQ")
+						If $ichkPBSleepGW = 1 Then SleepHeroes("GW")
+	;========MOD: Put Heroes To Sleep Due To Personal Break LogOff========
+
     Local Const $XConnect = 431
     Local Const $YConnect = 434
     Local Const $ColorConnect = 4284458031      ;Connected Button: green
