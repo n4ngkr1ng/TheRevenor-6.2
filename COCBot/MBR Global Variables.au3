@@ -200,8 +200,8 @@ EndFunc
 ; Updated in UpdateAndroidConfig() and $Android&Init() as well
 Global $InitAndroidActive = False
 Func InitAndroidConfig($bRestart = False)
+Global $Android = $AndroidAppConfig[$AndroidConfig][0]
 	If $bRestart = False Then
-	   $Android = $AndroidAppConfig[$AndroidConfig][0]
 	   $AndroidInstance = $AndroidAppConfig[$AndroidConfig][1]
 	   $Title = $AndroidAppConfig[$AndroidConfig][2]
 	EndIf
@@ -467,10 +467,11 @@ Global $ichkAlertPBCampFullTest = 0
 
 ;Info Notify - Added By TheRevenor
 Global $pAlertTopGain
-Global $RequestBuilderInfo = 0
-Global $RequestShieldInfo = 0
 Global $ichkAlertBuilderIdle
+Global $RequestScreenshotHD = 0
+Global $RequestBuilderInfo = 0
 Global $iReportIdleBuilder = 0
+Global $RequestShieldInfo = 0
 
 ;Pushbullet Stuff
 Global $StartTime = @HOUR & ":" & @MIN &", " & @MON & "/" & @MDAY
@@ -1163,13 +1164,12 @@ Global $iValueTotalCampForced = 200
 Global $ichkSinglePBTForced = 0
 Global $iValueSinglePBTimeForced = 18
 Global $iValuePBTimeForcedExit = 15
-
-	;========MOD: Put Heroes To Sleep Due To Personal Break LogOff========
+ 	;========MOD: Put Heroes To Sleep Due To Personal Break LogOff========
+Global $ClosedDueToPB = False
 Global $ichkPBSleepBK = 0
 Global $ichkPBSleepAQ = 0
 Global $ichkPBSleepGW = 0
 	;========END MOD: Put Heroes To Sleep Due To Personal Break LogOff========
-
 Global $bWaitShield = False
 Global $bGForcePBTUpdate = False
 

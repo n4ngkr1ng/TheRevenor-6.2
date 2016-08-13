@@ -675,7 +675,7 @@ Func saveConfig() ;Saves the controls settings to the config
 	$iValueSinglePBTimeForced = GUICtrlRead($txtSinglePBTimeForced)
 	$iValuePBTimeForcedExit = GUICtrlRead($txtPBTimeForcedExit)
 
-	;========MOD: Put Heroes To Sleep Due To Personal Break LogOff========
+;========MOD: Put Heroes To Sleep Due To Personal Break LogOff========
 	;- Barbarian King
 	If GUICtrlRead($chkPBSleepBK) = $GUI_CHECKED Then
 		$ichkPBSleepBK = 1
@@ -2342,7 +2342,7 @@ Func saveConfig() ;Saves the controls settings to the config
 	IniWriteS($config, "other", "ValueSinglePBTimeForced", $iValueSinglePBTimeForced)
 	IniWriteS($config, "other", "ValuePBTimeForcedExit", $iValuePBTimeForcedExit)
 
-	;========MOD: Put Heroes To Sleep Due To Personal Break LogOff========
+    ;========MOD: Put Heroes To Sleep Due To Personal Break LogOff========
 	IniWriteS($config, "other", "chkPBSleepBK", $ichkPBSleepBK)
 	IniWriteS($config, "other", "chkPBSleepAQ", $ichkPBSleepAQ)
 	IniWriteS($config, "other", "chkPBSleepGW", $ichkPBSleepGW)

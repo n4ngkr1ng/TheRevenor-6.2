@@ -29,7 +29,7 @@ Local $hHBMP_Cropped = _GDIPlus_BitmapCreateHBITMAPFromBitmap($hBMP_Cropped)
 If  Not FileExists(@ScriptDir & "\images\Multyfarming\main.bmp") Then
 	 _GDIPlus_ImageSaveToFile($hBMP_Cropped, @ScriptDir & "\images\Multyfarming\main.bmp")
 ElseIf  Not FileExists(@ScriptDir & "\images\Multyfarming\Second.bmp") And ($iAccount = "2" Or $iAccount = "3" Or $iAccount = "4" Or $iAccount = "5" Or $iAccount = "6") Then
-	
+
 	_GDIPlus_ImageSaveToFile($hBMP_Cropped, @ScriptDir & "\images\Multyfarming\Second.bmp")
 ElseIf  Not FileExists(@ScriptDir & "\images\Multyfarming\Third.bmp") And ($iAccount = "3" Or $iAccount = "4" Or $iAccount = "5" Or $iAccount = "6") Then
 
@@ -704,7 +704,7 @@ Func SwitchAccount($bAccount)
 			If _Sleep(500) Then Return ;Not
 			PureClick(512, 433, 1, 0, "Click Load") ;Click Load Button
 			If _Sleep(1000) Then Return
-			
+
 			Local $Message = _PixelSearch(470, 249 + $midOffsetY, 478, 255 + $midOffsetY, Hex(0xE8E8E0, 6), 0)
 			If IsArray($Message) Then
 				$iConfirm = 1
@@ -744,7 +744,7 @@ Func SelectAccount($bAccount)
 	EndIf
 	If _Sleep(1500) Then Return
 		PureClick($XCon, $YCon, 1, 0, "Click Disconnected") ;Click Disconn
-	
+
 	$iSwCount = 0
 	If $iSwCount > 6 Then
 		SetLog(" Exit Now ...Cancel change account")
@@ -757,9 +757,9 @@ Func SelectAccount($bAccount)
 	EndIf
 		If _Sleep(5000) Then Return
 	While 1
-		Local $Message = _PixelSearch(230, 235 + $midOffsetY, 232, 455 + $midOffsetY, Hex(0xF5F5F5, 6), 0) ;(164, 45 + $midOffsetY, 166, 281 + $midOffsetY, Hex(0x689F38, 6), 0) 
+		Local $Message = _PixelSearch(230, 235 + $midOffsetY, 232, 455 + $midOffsetY, Hex(0xF5F5F5, 6), 0) ;(164, 45 + $midOffsetY, 166, 281 + $midOffsetY, Hex(0x689F38, 6), 0)
 		Local $Message1 = _PixelSearch(230, 235 + $midOffsetY, 232, 455 + $midOffsetY, Hex(0xF5F5F5, 6), 0) ;(164, 45 + $midOffsetY, 166, 281 + $midOffsetY, Hex(0xF5F5F5, 6), 0)
-		
+
 		If IsArray($Message) Then
 			SetLog("Searching " & $bAccount & " Account...", $COLOR_BLUE)
 			If _Sleep(1500) Then Return
@@ -776,10 +776,13 @@ Func SelectAccount($bAccount)
 
 		$iLoopCount += 1
 		ConsoleWrite($iLoopCount & @CRLF)
-		If $iLoopCount > 120 Then
+		If $iLoopCount > 60 Then
+			PureClick(778, 115, 1, 0, "Click Close") ;Click Close
 			SetLog("No Detect Account, Sory..", $COLOR_PURPLE)
+			If _Sleep(2000) Then Return
+			PureClick(778, 115, 1, 0, "Click Close") ;Click Close
 			If _Sleep(1500) Then Return
-			SelectAccount($bAccount)
+			SwitchAccount($bAccount)
 			ExitLoop
 		EndIf
 	WEnd
@@ -805,7 +808,7 @@ Func LoadAccount($bAccount)
 			If _Sleep(500) Then Return ;Not
 			PureClick(512, 433, 1, 0, "Click Load") ;Click Load Button
 			If _Sleep(1000) Then Return
-			
+
 			Local $Message = _PixelSearch(470, 249 + $midOffsetY, 478, 255 + $midOffsetY, Hex(0xE8E8E0, 6), 0)
 			If IsArray($Message) Then
 				$iConfirm = 1
@@ -853,7 +856,7 @@ Func LoadAccount2($bAccount)
 			If _Sleep(500) Then Return ;Not
 			PureClick(512, 433, 1, 0, "Click Load") ;Click Load Button
 			If _Sleep(1000) Then Return
-			
+
 			Local $Message = _PixelSearch(470, 249 + $midOffsetY, 478, 255 + $midOffsetY, Hex(0xE8E8E0, 6), 0)
 			If IsArray($Message) Then
 				$iConfirm = 1
@@ -878,9 +881,10 @@ Func LoadAccount2($bAccount)
 
 		$iLoopCount += 1
 		ConsoleWrite($iLoopCount & @CRLF)
-		If $iLoopCount > 5000 Then
+		If $iLoopCount > 4000 Then
 			SetLog("Not Open Window Msg Load, Please Wait..", $COLOR_PURPLE)
-			SelectAccount($bAccount)
+			$Restart = True
+			SwitchAccount($bAccount)
 			ExitLoop
 		EndIf
 	WEnd

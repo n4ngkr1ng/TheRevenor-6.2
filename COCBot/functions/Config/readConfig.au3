@@ -760,7 +760,7 @@ Func readConfig($inputfile = $config, $partial = False) ;Reads config and sets i
 		$iValueSinglePBTimeForced = IniRead($config, "other", "ValueSinglePBTimeForced", "18")
 		$iValuePBTimeForcedExit = IniRead($config, "other", "ValuePBTimeForcedExit", "15")
 
-		;========MOD: Put Heroes To Sleep Due To Personal Break LogOff========
+	    ;========MOD: Put Heroes To Sleep Due To Personal Break LogOff========
 		$ichkPBSleepBK = IniRead($config, "other", "chkPBSleepBK", "0")
 		$ichkPBSleepAQ = IniRead($config, "other", "chkPBSleepAQ", "0")
 		$ichkPBSleepGW = IniRead($config, "other", "chkPBSleepGW", "0")

@@ -1,4 +1,3 @@
-
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: CloseCoC
 ; Description ...: Kill then restart CoC
@@ -121,9 +120,7 @@ Func WaitnOpenCoC($iWaitTime, $bFullRestart = False)
 		waitMainScreen()
 	EndIf
 	;========MOD: Put Heroes To Sleep Due To Personal Break LogOff========
-	If $ichkPBSleepBK = 1 Then SleepHeroes("BK", False)
-	If $ichkPBSleepAQ = 1 Then SleepHeroes("AQ", False)
-	If $ichkPBSleepGW = 1 Then SleepHeroes("GW", False)
+ 	ToggleGuard(False)
 	;========MOD: Put Heroes To Sleep Due To Personal Break LogOff========
 
 EndFunc   ;==>WaitnOpenCoC
@@ -190,7 +187,7 @@ Func StartEmulatorCoC($iWaitTime, $bRestart = False)
 	If $iSec > 0 Then $sWaitTime &= $iSec & " seconds "
 	SetLog("Waiting " & $sWaitTime & "before starting Emulator and CoC", $COLOR_BLUE)
 	; Pushbullet Msg/Telegram
-	_PushToPushBullet($iOrigPushBullet & " | Remain Time Training..." & "\n" & "Close Emulator..." & "\n" & "Waiting " & $sWaitTime & " Minutes Before Starting Emulator and CoC")
+	_PushToPushBullet($iOrigPushBullet & " | Take Break..." & "\n" & "Close Emulator..." & "\n" & "Waiting " & $sWaitTime & " Minutes Before Starting Emulator and CoC")
 	If _SleepStatus($iWaitTime) Then Return False ; Wait for server to see log off
 
 	SendAdbCommand("shell am start -n " & $AndroidGamePackage & "/" & $AndroidGameClass)

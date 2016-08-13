@@ -35,7 +35,7 @@ Local $hBotLaunchTime = TimerInit()
 
 Global $sGitHubModOwner = "n4ngkr1ng"
 Global $sGitHubModRepo = "TheRevenor-6.2"
-Global $sGitHubModLatestReleaseTag = "v1.8.2"
+Global $sGitHubModLatestReleaseTag = "v1.8.3"
 Global $sModSupportUrl = "https://mybot.run/forums/index.php?/topic/20830-mybot-v6121-mod-therevenor-v10-18-06-2016"
 
 $sBotVersion = "v6.2.1" ;~ Don't add more here, but below. Version can't be longer than vX.y.z because it it also use on Checkversion()
@@ -228,7 +228,12 @@ Func runBot() ;Bot that runs everything in order
 	Local $iWaitTime
 	If $ichkSwitchAcc = 1 Then
 		RequestCC()		;Chalicucu
-		;Train()			;Chalicucu
+	;========MOD: Put Heroes To Sleep Due To Personal Break LogOff========
+    	$ClosedDueToPB = True
+		If $ClosedDueToPB = True Then
+			ToggleGuard()
+		EndIf
+	;========MOD: Put Heroes To Sleep Due To Personal Break LogOff========
 		SwitchCOCAcc(True)	;Chalicucu, first match acc and profile
 	EndIf
 	While 1
@@ -566,6 +571,12 @@ Func Idle() ;Sequence that runs until Full Army
             If $ichkSwitchAcc = 1 And ($iRemainTrainTime > 2 Or $CommandStop = 0) Then    	;Chalicucu
                 RequestCC()
 				If _Sleep(1000) Then Return
+	;========MOD: Put Heroes To Sleep Due To Personal Break LogOff========
+			    $ClosedDueToPB = True
+			    If $ClosedDueToPB = True Then
+					 ToggleGuard()
+			    EndIf
+	;========MOD: Put Heroes To Sleep Due To Personal Break LogOff========
 				SetLog("====== Switching COC account ======", $COLOR_GREEN)
 				If $CommandStop <> 0 And $iSwitchMode = 0 Then
 					Local $lRemainTrainTime = RemainTrainTime(True, False, True)

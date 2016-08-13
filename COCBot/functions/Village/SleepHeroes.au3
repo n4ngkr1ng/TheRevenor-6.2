@@ -1,9 +1,8 @@
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: Sleep Heroes
 ; Description ...: A Function To Put Heroes In Sleep Mode
-; Syntax ........: SleepHeroes($Hero)
-; Parameters ....: $Hero              - The Hero You want To Get Guard, Can Be: "BK" OR "AQ" OR "GW"
-;							$Guard              - [optional] Get Guard Or End The Guard? Default is True (Means Get Guard)
+; Syntax ........: ToggleGuard($ActivateGuard)
+; Parameters ....: $ActivateGuard              - [optional] If You Want To DeActivate Barbarian King/Archer Queen/Grand Warden Guard Set It False, Default value is TRUE
 ; Return values .: None
 ; Author ........: MR.ViPER
 ; Modified ......:
@@ -13,6 +12,15 @@
 ; Link ..........: https://github.com/MyBotRun/MyBot/wiki
 ; Example .......: No
 ; ===============================================================================================================================
+
+Func ToggleGuard($ActivateGuard = True)
+	If $ClosedDueToPB = True Then
+		If $ichkPBSleepBK = 1 Then SleepHeroes("BK", $ActivateGuard)
+		If $ichkPBSleepAQ = 1 Then SleepHeroes("AQ", $ActivateGuard)
+		If $ichkPBSleepGW = 1 Then SleepHeroes("GW", $ActivateGuard)
+		If $ActivateGuard = False Then $ClosedDueToPB = False
+	EndIf
+EndFunc   ;==>ToggleGuard
 
 Func SleepHeroes($Hero, $Guard = True)
 	Local $HeroFullName

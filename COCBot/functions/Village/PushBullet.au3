@@ -22,16 +22,16 @@
 ;Prevent crashes
 $oMyError = ObjEvent("AutoIt.Error","MyErrFunc")
 Func MyErrFunc()
-  SetLog("COM Error!"    & @CRLF  & @CRLF & _
-             "err.description is: " & @TAB & $oMyError.description  & @CRLF & _
-             "err.windescription:"   & @TAB & $oMyError.windescription & @CRLF & _
-             "err.number is: "       & @TAB & hex($oMyError.number,8)  & @CRLF & _
-             "err.lastdllerror is: "   & @TAB & $oMyError.lastdllerror   & @CRLF & _
-             "err.scriptline is: "   & @TAB & $oMyError.scriptline   & @CRLF & _
-             "err.source is: "       & @TAB & $oMyError.source       & @CRLF & _
-             "err.helpfile is: "       & @TAB & $oMyError.helpfile     & @CRLF & _
-             "err.helpcontext is: " & @TAB & $oMyError.helpcontext _
-            )
+  ;SetLog("COM Error!"    & @CRLF  & @CRLF & _
+  ;           "err.description is: " & @TAB & $oMyError.description  & @CRLF & _
+  ;           "err.windescription:"   & @TAB & $oMyError.windescription & @CRLF & _
+  ;           "err.number is: "       & @TAB & hex($oMyError.number,8)  & @CRLF & _
+  ;           "err.lastdllerror is: "   & @TAB & $oMyError.lastdllerror   & @CRLF & _
+  ;           "err.scriptline is: "   & @TAB & $oMyError.scriptline   & @CRLF & _
+  ;           "err.source is: "       & @TAB & $oMyError.source       & @CRLF & _
+  ;           "err.helpfile is: "       & @TAB & $oMyError.helpfile     & @CRLF & _
+  ;           "err.helpcontext is: " & @TAB & $oMyError.helpcontext _
+  ;          )
 Endfunc
 
 Func _RemoteControlPushBullet()
@@ -172,6 +172,11 @@ Func _RemoteControlPushBullet()
 								_PushToPushBullet($iOrigPushBullet & " | " & GetTranslated(620, 48, "Request to Stop") & "..." & "\n" & GetTranslated(620, 50, "Your bot is currently stopped, no action was taken"))
 							EndIf
 									;=================================== "TheRevenor Notify" ===================================
+						Case GetTranslated(620, 1, -1) & " " & StringUpper($iOrigPushBullet) & " SCREENSHOTHD"
+							SetLog("Pushbullet: ScreenShot HD request received", $COLOR_GREEN)
+							$RequestScreenshot = 1
+							$RequestScreenshotHD = 1
+							_DeleteMessageOfPushBullet($iden[$x])
 						Case GetTranslated(620, 1, -1) & " " & StringUpper($iOrigPushBullet) & " BUILDER"
 							SetLog("Pushbullet: Builder Status request received", $COLOR_GREEN)
 							$RequestBuilderInfo = 1
@@ -251,11 +256,11 @@ Func _RemoteControlPushBullet()
 									   ; & ": " & $iSkippedVillageCount)
 								   ; _DeleteMessageOfPushBullet($iden[$x])
 							   ; EndIf
-						    ElseIf $body[$x] = "BOT HIDE" Then		;Chalicucu Hide emulator
-							   myHide()
-							   SetLog("Receive hide emulator", $COLOR_RED)
-							   _PushToPushBullet("Received hide emulator")
-							   _DeleteMessageOfPushBullet($iden[$x])
+						    ; ElseIf $body[$x] = "BOT HIDE" Then		;Chalicucu Hide emulator
+								; myHide()
+								; SetLog("Receive hide emulator", $COLOR_RED)
+								; _PushToPushBullet("Received hide emulator")
+								; _DeleteMessageOfPushBullet($iden[$x])
 						    ElseIf $body[$x] = "BOT STOPSTART" Then		;Chalicucu Stop then start again
 							   btnStop()
 							   btnStart()
@@ -449,6 +454,7 @@ Func _RemoteControlPushBullet()
 					Case GetTranslated(18, 14, "Screenshot") & "\ud83c\udfa6"
 						SetLog("Telegram: ScreenShot request received", $COLOR_GREEN)
 						$RequestScreenshot = 1
+						$RequestScreenshotHD = 1
 					Case GetTranslated(18, 15, "Restart") & "\u21aa"
 						SetLog("Telegram: Your request has been received. Bot and BS restarting...", $COLOR_GREEN)
 						_PushToPushBullet($iOrigPushBullet & " | " & GetTranslated(18, 41, "Request to Restart...") & "\n" & GetTranslated(18, 42, "Your bot and BS are now restarting..."))
@@ -968,7 +974,7 @@ Func PushMsgToPushBullet($Message, $Source = "")
 			If ($PushBulletEnabled = 1 Or $TelegramEnabled = 1) And $pAnotherDevice = 1 Then _PushToPushBullet($iOrigPushBullet & " | 3. " & GetTranslated(620, 65, "Another Device has connected") & "\n" & GetTranslated(620, 66, "Another Device has connected, waiting") & " " & Floor(Mod($sTimeWakeUp, 60)) & " " & GetTranslated(603, 8, "seconds"))
 		Case "TakeBreak"
 			If ($PushBulletEnabled = 1 Or $TelegramEnabled = 1) And $pTakeAbreak = 1 AND $PersonalBreakNotified = False Then
-				_PushToPushBullet(@HOUR & ":" & @MIN &" - " & $iOrigPushBullet & " | " & GetTranslated(620, 67, "Chief, we need some rest!") & "\n" & GetTranslated(620, 68, "Village must take a break.." & "\n" & "Personal Break.."))
+				_PushToPushBullet(@HOUR & ":" & @MIN &" - " & $iOrigPushBullet & " | Personal Break.." & "\n" & GetTranslated(620, 67, "Chief, we need some rest!") & "\n" & GetTranslated(620, 68, "Village must take a break.."))
 				$PersonalBreakNotified = True
 			Endif
 		Case "CocError"
@@ -992,14 +998,19 @@ Func PushMsgToPushBullet($Message, $Source = "")
 		Case "RequestScreenshot"
 			Local $Date = @YEAR & "-" & @MON & "-" & @MDAY
 			Local $Time = @HOUR & "." & @MIN & "." & @SEC
-			_CaptureRegion(0, 0, $DEFAULT_WIDTH, $DEFAULT_HEIGHT)
+			_CaptureRegion(0, 0, $DEFAULT_WIDTH, $DEFAULT_HEIGHT - 45)
+			If $RequestScreenshotHD = 1 Then
+				$hBitmap_Scaled = $hBitmap
+			Else
 			$hBitmap_Scaled = _GDIPlus_ImageResize($hBitmap, _GDIPlus_ImageGetWidth($hBitmap) / 2, _GDIPlus_ImageGetHeight($hBitmap) / 2) ;resize image
+			EndIf
 			Local $Screnshotfilename = "Screenshot_" & $Date & "_" & $Time & ".jpg"
 			_GDIPlus_ImageSaveToFile($hBitmap_Scaled, $dirTemp & $Screnshotfilename)
 			_GDIPlus_ImageDispose($hBitmap_Scaled)
 			_PushFileToPushBullet($Screnshotfilename, "Temp", "image/jpeg", $iOrigPushBullet & " | " & GetTranslated(620, 84, "Screenshot of your village") & " " & "\n" & $Screnshotfilename)
 			SetLog("Pushbullet/Telegram: Screenshot sent!", $COLOR_GREEN)
 			$RequestScreenshot = 0
+			$RequestScreenshotHD = 0
 			;wait a second and then delete the file
 			If _Sleep($iDelayPushMsg2) Then Return
 			Local $iDelete = FileDelete($dirTemp & $Screnshotfilename)

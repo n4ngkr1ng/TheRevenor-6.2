@@ -3,8 +3,8 @@
 ; Description ...:
 ; Syntax ........: checkAttackDisable($iSource, [$Result = getAttackDisable(X,Y])
 ; Parameters ....: $Result              - [optional] previous saved string from OCR read. Default is getAttackDisable(346, 182) or getAttackDisable(180,167)
-;				   $iSource				- integer, 1 = called during search process (preparesearch/villagesearch)
-;												   2 = called during time when not trying to attack (all other idle times have different message)
+;					    $iSource				 - integer, 1 = called during search process (preparesearch/villagesearch)
+;																	2 = called during time when not trying to attack (all other idle times have different message)
 ; Return values .: None
 ; Author ........: KnowJack (Aug 2015)
 ; Modified ......: TheMaster (2015), MonkeyHunter (2015-12/2016-1,2), Hervidero (2015-12),
@@ -21,7 +21,7 @@ Func checkAttackDisable($iSource, $Result = "")
 
 	If $bDisableBreakCheck = True Then Return ; check Disable break flag, added to prevent recursion for CheckBaseQuick
 
-	If ($ichkSinglePBTForced Or $ichkSwitchAcc = 1) And _DateIsValid($sPBStartTime) Then
+	If $ichkSinglePBTForced And _DateIsValid($sPBStartTime) Then
 		Local $iTimeTillPBTstartSec = Int(_DateDiff('s', $sPBStartTime, _NowCalc())) ; time in seconds
 		If $debugSetlog = 1 Then Setlog("PB starts in: " & $iTimeTillPBTstartSec & " Seconds", $COLOR_PURPLE)
 		If $iTimeTillPBTstartSec >= 0 Then ; test if PBT date/time in past (positive value) or future (negative value
@@ -49,10 +49,11 @@ Func checkAttackDisable($iSource, $Result = "")
 						ReturnHome(False, False) ;If End battle is available
 					 Else
 	;========MOD: Put Heroes To Sleep Due To Personal Break LogOff========
-						If $ichkPBSleepBK = 1 Then SleepHeroes("BK")
-						If $ichkPBSleepAQ = 1 Then SleepHeroes("AQ")
-						If $ichkPBSleepGW = 1 Then SleepHeroes("GW")
-	;========MOD: Put Heroes To Sleep Due To Personal Break LogOff========
+						$ClosedDueToPB = True
+						If $ClosedDueToPB = True Then
+							ToggleGuard()
+						EndIf
+	;========END MOD: Put Heroes To Sleep Due To Personal Break LogOff========
 						CloseCoC()
 					EndIf
 				Else
@@ -133,15 +134,17 @@ Func checkAttackDisable($iSource, $Result = "")
 	; CoC is closed >>
 	If $iModSource = $iTaBChkTime And $aShieldStatus[0] <> "guard" Then
 		Setlog("Personal Break Reset log off: " & $iValueSinglePBTimeForced & " Minutes", $COLOR_BLUE)
-		If $chkCloseTakeBreak = 0 Then
-			WaitnOpenCoC($iValueSinglePBTimeForced * 60 * 1000, True) ; Log off CoC for user set time in expert tab
-		Else
+		If $ichkCloseTakeBreak = 1 Then
 			CloseAndroid()
 			; Pushbullet Msg/Telegram
-			_PushToPushBullet($iOrigPushBullet & " | Time To PersonalBreak - Close Emulator - Waiting " & $iValueSinglePBTimeForced & " Minutes")
+			_PushToPushBullet($iOrigPushBullet & " | Time To PersonalBreak - With Close Emulator - Waiting " & $iValueSinglePBTimeForced & " Minutes")
 			StartEmulatorCoC($iValueSinglePBTimeForced * 60 * 1000, True)
 			Setlog("Personal Break Finish..", $COLOR_BLUE)
 			_PushToPushBullet($iOrigPushBullet & " | Finish PersonalBreak - Start Emulator And CoC")
+		Else
+			WaitnOpenCoC($iValueSinglePBTimeForced * 60 * 1000, True) ; Log off CoC for user set time in expert tab
+			Setlog("Personal Break Finish..", $COLOR_BLUE)
+			_PushToPushBullet($iOrigPushBullet & " | Finish PersonalBreak - Started CoC")
 		EndIf
 	Else
 		WaitnOpenCoC(20000, True) ; close CoC for 20 seconds to ensure server logoff, True=call checkmainscreen to clean up if needed
@@ -152,4 +155,3 @@ Func checkAttackDisable($iSource, $Result = "")
 	Next
 
 EndFunc   ;==>checkAttackDisable
-
