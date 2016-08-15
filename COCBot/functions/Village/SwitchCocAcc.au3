@@ -280,7 +280,7 @@ EndFunc   ;==> AccGetStep
 
 Func AccGetOrder()
 	Local $orderstr = ""
-	For $i = 0 to $CoCAccNo - 1
+	For $i = 0 To $CoCAccNo - 1
 		$orderstr &= String($anCOCAccIdx[$i])
 	Next
 
@@ -289,12 +289,12 @@ EndFunc   ;==> AccGetOrder
 
 Func ProGetOrderName()
 	Local $orderstr = ""
-	For $i = 0 to $CoCAccNo - 1
+	For $i = 0 To $CoCAccNo - 1
 		$orderstr &= String($anBotProfileIdx[$anCOCAccIdx[$i] - 1])
 	Next
 	Local $comboBoxArray = _GUICtrlComboBox_GetListArray($cmbProfile)
 	$orderstr &= " (" & $comboBoxArray[$anBotProfileIdx[$anCOCAccIdx[0] - 1]]	; need check ubound
-	For $i = 1 to $CoCAccNo - 1
+	For $i = 1 To $CoCAccNo - 1
 		If $anBotProfileIdx[$anCOCAccIdx[$i] - 1] > Ubound($comboBoxArray) - 1 Then
 			$orderstr &= ", [Wrong profile index: " & $anBotProfileIdx[$anCOCAccIdx[$i] - 1] & "]"
 		Else
@@ -307,7 +307,7 @@ EndFunc   ;==> ProGetOrderName
 
 Func AccStartInit()
 	Local $initAccTrain[$nTotalCOCAcc]	; = [0,0,0]
-	For $i = 0 to $nTotalCOCAcc - 1
+	For $i = 0 To $nTotalCOCAcc - 1
 		$initAccTrain[$i] = 0
 	Next
 
@@ -343,7 +343,7 @@ Func ReorderAcc($cfgStr, $GUIconfig = False)
 	$CoCAccNo = StringLen($lsNewOrd)		;new number of step to switch
 	Redim $anCOCAccIdx[$CoCAccNo]
 
-	For $i = 0 to $CoCAccNo - 1
+	For $i = 0 To $CoCAccNo - 1
 		If Number(StringMid($lsNewOrd, $i + 1, 1)) > 0 And  Number(StringMid($lsNewOrd, $i + 1, 1)) <= $nTotalCOCAcc Then
 			$anCOCAccIdx[$i] = Number(StringMid($lsNewOrd, $i + 1, 1))
 		Else
@@ -408,7 +408,7 @@ EndFunc   ;==> AddAcc
 Func ReorderCurPro($cfgStr)
 	;reorder profile for current playing accounts
 	Local $reorderstr = "", $lsPlaying = ""
-	For $i = 1 to $CoCAccNo
+	For $i = 1 To $CoCAccNo
 		If Number(StringMid($cfgStr, $i, 1)) > 0 And Number(StringMid($cfgStr, $i, 1)) <= _GUICtrlComboBox_GetCount($cmbProfile) Then
 			$anBotProfileIdx[$anCOCAccIdx[$i - 1] - 1] = Number(StringMid($cfgStr, $i, 1))
 		Else
@@ -426,7 +426,7 @@ Func ReorderCurPro($cfgStr)
 	SetLog("Reordered Bot profile for playing: " & $lsPlaying, $COLOR_RED)
 	Local $comboBoxArray = _GUICtrlComboBox_GetListArray($cmbProfile)
 	$lsPlaying = "([" & $anCOCAccIdx[0] & "]" & $comboBoxArray[$anBotProfileIdx[$anCOCAccIdx[0] - 1]]
-	For $i = 1 to $CoCAccNo - 1
+	For $i = 1 To $CoCAccNo - 1
 		$lsPlaying &= ", [" & $anCOCAccIdx[$i] & "]" & $comboBoxArray[$anBotProfileIdx[$anCOCAccIdx[$i] - 1]]
 	Next
 	$lsPlaying &= ")"
@@ -439,7 +439,7 @@ EndFunc   ;==> ReorderCurPro
 Func ReorderAllPro($cfgStr, $GUIconfig = false)
 	;reorder profile for all accounts
 	Local $reorderstr = ""
-	For $i = 1 to $nTotalCOCAcc
+	For $i = 1 To $nTotalCOCAcc
 		If Number(StringMid($cfgStr, $i, 1)) > 0 And Number(StringMid($cfgStr, $i, 1)) <= _GUICtrlComboBox_GetCount($cmbProfile) Then
 			$anBotProfileIdx[$i - 1] = Number(StringMid($cfgStr, $i, 1))
 		Else
@@ -460,7 +460,7 @@ Func ReorderAllPro($cfgStr, $GUIconfig = false)
 	Local $comboBoxArray = _GUICtrlComboBox_GetListArray($cmbProfile)
 	If _GUICtrlComboBox_GetCount($cmbProfile) = 0 Then Return "Set up profiles!"
 	$reorderstr &= " ([1]" & $comboBoxArray[$anBotProfileIdx[0]]
-	For $i = 1 to $nTotalCOCAcc - 1
+	For $i = 1 To $nTotalCOCAcc - 1
 		$reorderstr &= ", [" & ($i + 1) & "]" & $comboBoxArray[$anBotProfileIdx[$i]]
 	Next
 	$reorderstr &= ")"
@@ -545,7 +545,7 @@ EndFunc
 
 Func AccSaveConfig()
 	Local $reorderstr = ""
-	For $i = 1 to $CoCAccNo
+	For $i = 1 To $CoCAccNo
 		$reorderstr &= String($anCOCAccIdx[$i - 1])
 	Next
 	IniWriteS($profile, "switchcocacc", "order", $reorderstr)
@@ -555,7 +555,7 @@ EndFunc   ;==> AccSaveConfig
 Func ProSaveConfig()
 	;save profiles for all accounts
 	Local $reorderstr = ""
-	For $i = 1 to $nTotalCOCAcc
+	For $i = 1 To $nTotalCOCAcc
 		$reorderstr &= String($anBotProfileIdx[$i - 1])
 	Next
 	IniWriteS($profile, "switchcocacc", "profile", $reorderstr)
@@ -720,7 +720,7 @@ Func ShowProMap()		;display mapped accounts - profile on help lable
 	Local $comboBoxArray = _GUICtrlComboBox_GetListArray($cmbProfile)
 	If _GUICtrlComboBox_GetCount($cmbProfile) = 0 Then Return "Set up profiles!"
 	Local $reorderstr = "[1] " & $comboBoxArray[$anBotProfileIdx[0]]
-	For $i = 1 to $nTotalCOCAcc - 1
+	For $i = 1 To $nTotalCOCAcc - 1
 		$reorderstr &= ", [" & ($i + 1) & "] " & $comboBoxArray[$anBotProfileIdx[$i]]
 	Next
 	GUICtrlSetData($lbMapHelp, $reorderstr)

@@ -132,18 +132,27 @@ Func Collect()
 		$tempGoldCollected = $iGoldCurrent - $tempGold
 		$iGoldFromMines += $tempGoldCollected
 		$iGoldTotal += $tempGoldCollected
+;###Applied with Modification Applier###ID: c54cd988fa58763526ffe9740cc72fcc###
+		If $ichkSwitchAcc = 1 Then $aGoldTotalAcc[$nCurCOCAcc - 1] += $tempGoldCollected ; Separate Stats per Each Account - SwitchAcc Mode - DEMEN
+;###End Applied with Modification Applier###ID: c54cd988fa58763526ffe9740cc72fcc###
 	EndIf
 
 	If $tempElixir <> "" And $iElixirCurrent <> "" Then
 		$tempElixirCollected = $iElixirCurrent - $tempElixir
 		$iElixirFromCollectors += $tempElixirCollected
 		$iElixirTotal += $tempElixirCollected
+;###Applied with Modification Applier###ID: 8758ca66c83621782e0a78e359550e91###
+		If $ichkSwitchAcc = 1 Then $aElixirTotalAcc[$nCurCOCAcc - 1] += $tempElixirCollected ; Separate Stats per Each Account - SwitchAcc Mode - DEMEN
+;###End Applied with Modification Applier###ID: 8758ca66c83621782e0a78e359550e91###
 	EndIf
 
 	If $tempDElixir <> "" And $iDarkCurrent <> "" Then
 		$tempDElixirCollected = $iDarkCurrent - $tempDElixir
 		$iDElixirFromDrills += $tempDElixirCollected
 		$iDarkTotal += $tempDElixirCollected
+;###Applied with Modification Applier###ID: 643998996440e360530f57241da730fd###
+		If $ichkSwitchAcc = 1 Then $aDarkTotalAcc[$nCurCOCAcc - 1] += $tempDElixirCollected  ; Separate Stats per Each Account - SwitchAcc Mode - DEMEN
+;###End Applied with Modification Applier###ID: 643998996440e360530f57241da730fd###
 	EndIf
 
 	UpdateStats()

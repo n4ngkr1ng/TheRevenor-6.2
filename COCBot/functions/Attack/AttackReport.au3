@@ -211,12 +211,15 @@ Func AttackReport()
 
 	If $FirstAttack = 0 Then $FirstAttack = 1
 	$iGoldTotal += $iGoldLast + $iGoldLastBonus
+	If $ichkSwitchAcc = 1 Then $aGoldTotalAcc[$nCurCOCAcc - 1] += $iGoldLast + $iGoldLastBonus ; Separate Stats per Each Account - SwitchAcc Mode - DEMEN
 	$iTotalGoldGain[$iMatchMode] += $iGoldLast + $iGoldLastBonus
 	$iElixirTotal += $iElixirLast + $iElixirLastBonus
 	$iTotalElixirGain[$iMatchMode] += $iElixirLast + $iElixirLastBonus
+	If $ichkSwitchAcc = 1 Then $aElixirTotalAcc[$nCurCOCAcc - 1] += $iElixirLast + $iElixirLastBonus ; Separate Stats per Each Account - SwitchAcc Mode - DEMEN
 	If $iDarkStart <> "" Then
 		$iDarkTotal += $iDarkLast + $iDarkLastBonus
 		$iTotalDarkGain[$iMatchMode] += $iDarkLast + $iDarkLastBonus
+		If $ichkSwitchAcc = 1 Then $aDarkTotalAcc[$nCurCOCAcc - 1] += $iDarkLast + $iDarkLastBonus ; Separate Stats per Each Account - SwitchAcc Mode - DEMEN
 	EndIf
 	$iTrophyTotal += $iTrophyLast
 	$iTotalTrophyGain[$iMatchMode] += $iTrophyLast
@@ -228,6 +231,7 @@ Func AttackReport()
 		EndIf
 	EndIf
 	$iAttackedVillageCount[$iMatchMode] += 1
+	If $ichkSwitchAcc = 1 Then $aAttackedCountAcc[$nCurCOCAcc - 1] += 1 ; SwitchAcc Mod - DEMEN
 	UpdateStats()
 
 EndFunc   ;==>AttackReport
