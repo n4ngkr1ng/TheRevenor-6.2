@@ -408,9 +408,10 @@ Func UpdateStats()
 		If $iOldNbrOfDetectedDrills[$i] <> $iNbrOfDetectedDrills[$i] Then
 			GUICtrlSetData($lblNbrOfDetectedDrills[$i], $iNbrOfDetectedDrills[$i])
 			$iOldNbrOfDetectedDrills[$i] = $iNbrOfDetectedDrills[$i]
-		EndIf
+		 EndIf
 
-	; SwitchAcc Mod - Demen
+	Next
+
     For $i = 0 To $nTotalCOCAcc - 1
 	   GUICtrlSetData($lblGoldLootAcc[$i], _NumberFormat($aGoldTotalAcc[$i]))
 	   GUICtrlSetData($lblHourlyStatsGoldAcc[$i], _NumberFormat(Round($aGoldTotalAcc[$i] / (Int(TimerDiff($sTimer) + $iTimePassed)) * 3600)) & "K / h")
@@ -432,8 +433,6 @@ Func UpdateStats()
 	   GUICtrlSetData($lblResultGemNowAcc[$i], _NumberFormat($aGemAmountAcc[$i], True))
 	   GUICtrlSetData($lblResultBuilderNowAcc[$i], $aFreeBuilderCountAcc[$i] & "/" & $aTotalBuilderCountAcc[$i])
 	Next
-; =============SwitchAcc Mod - Demen
-	Next
 
 	If $FirstAttack = 2 Then
 		GUICtrlSetData($lblHourlyStatsGold, _NumberFormat(Round($iGoldTotal / (Int(TimerDiff($sTimer) + $iTimePassed)) * 3600)) & "K / h")
@@ -449,12 +448,12 @@ Func UpdateStats()
 			  GUICtrlSetData($lblResultDEHourNow, _NumberFormat(Round($aDarkTotalAcc[$nCurCOCAcc - 1] / (Int(TimerDiff($sTimer) + $iTimePassed)) * 3600 * 1000)) & " / h") ;GUI BOTTOM -  Switch Acc Mod - Demen
 		   EndIf
 		Else
-		GUICtrlSetData($lblResultGoldHourNow, _NumberFormat(Round($iGoldTotal / (Int(TimerDiff($sTimer) + $iTimePassed)) * 3600)) & "K / h") ;GUI BOTTOM
-		GUICtrlSetData($lblResultElixirHourNow, _NumberFormat(Round($iElixirTotal / (Int(TimerDiff($sTimer) + $iTimePassed)) * 3600)) & "K / h") ;GUI BOTTOM
+		   GUICtrlSetData($lblResultGoldHourNow, _NumberFormat(Round($iGoldTotal / (Int(TimerDiff($sTimer) + $iTimePassed)) * 3600)) & "K / h") ;GUI BOTTOM
+		   GUICtrlSetData($lblResultElixirHourNow, _NumberFormat(Round($iElixirTotal / (Int(TimerDiff($sTimer) + $iTimePassed)) * 3600)) & "K / h") ;GUI BOTTOM
 		   If $iDarkStart <> "" Then
 			   GUICtrlSetData($lblResultDEHourNow, _NumberFormat(Round($iDarkTotal / (Int(TimerDiff($sTimer) + $iTimePassed)) * 3600 * 1000)) & " / h") ;GUI BOTTOM
 		   EndIf
-	    EndIf
+		EndIf
 	EndIf
 
 	If $ResetStats = 1 Then
@@ -492,8 +491,6 @@ Func UpdateStats()
 
 EndFunc   ;==>UpdateStats
 
-
-
 Func ResetStats()
 	$ResetStats = 1
 	$FirstAttack = 0
@@ -512,7 +509,6 @@ Func ResetStats()
 	$iGoldTotal = 0
 	$iElixirTotal = 0
 	$iDarkTotal = 0
-
 	For $i = 0 To $nTotalProfile-1 ; SwitchAcc Mod - Demen
 	   $aGoldTotalAcc[$i] = 0
 	   $aElixirTotalAcc[$i] = 0
@@ -520,7 +516,6 @@ Func ResetStats()
 	   $aAttackedCountAcc[$i] = 0
 	   $aSkippedVillageCountAcc[$i] = 0
 	Next
-
 	$iTrophyTotal = 0
 	$iGoldLast = 0
 	$iElixirLast = 0

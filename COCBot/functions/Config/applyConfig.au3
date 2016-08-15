@@ -2821,6 +2821,7 @@ Func applyConfig($bRedrawAtExit = True) ;Applies the data from config to the con
 
 	;=> chalicucu & demen:  switchcocacc
 	If $ichkSwitchAcc = 1 Then
+	   _GUICtrlComboBox_SetCurSel($cmbSwitchMode, $iSwitchMode)
 	   GUICtrlSetState($chkSwitchAcc, $GUI_CHECKED)
 	   GUICtrlSetState($chkCloseWaitEnable, $GUI_UNCHECKED)
 	   GUICtrlSetState($chkCloseWaitEnable, $GUI_DISABLE)

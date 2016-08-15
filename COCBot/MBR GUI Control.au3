@@ -58,9 +58,7 @@ Global $aTabControlsStrategies[3] = [$hGUI_STRATEGIES_TAB, $hGUI_STRATEGIES_TAB_
 
 Global $aTabControlsBot[4] = [$hGUI_BOT_TAB, $hGUI_BOT_TAB_ITEM1, $hGUI_BOT_TAB_ITEM2, $hGUI_BOT_TAB_ITEM3]
 Global $aTabControlsMOD[5] = [$hGUI_MOD_TAB, $hGUI_MOD_TAB_ITEM1, $hGUI_MOD_TAB_ITEM2, $hGUI_MOD_TAB_ITEM3, $hGUI_MOD_TAB_ITEM4]
-;###Applied with Modification Applier###ID: 703f11043f8f77a4aa805e9e0b66322c###
-Global $aTabControlsStats[5] = [$hGUI_STATS_TAB, $hGUI_STATS_TAB_ITEM1, $hGUI_STATS_TAB_ITEM2, $hGUI_STATS_TAB_ITEM3, $hGUI_STATS_TAB_ITEM4]
-;###End Applied with Modification Applier###ID: 703f11043f8f77a4aa805e9e0b66322c###
+Global $aTabControlsStats[5] = [$hGUI_STATS_TAB, $hGUI_STATS_TAB_ITEM1, $hGUI_STATS_TAB_ITEM2, $hGUI_STATS_TAB_ITEM3, $hGUI_STATS_TAB_ITEM4]	; Separate Stats - SwitchAcc Mode - DEMEN
 
 Global $aAlwaysEnabledControls[12] = [$chkUpdatingWhenMinimized, $chkHideWhenMinimized, $chkDebugClick, $chkDebugSetlog, $chkDebugOcr, $chkDebugImageSave, $chkdebugBuildingPos, $chkdebugTrain, $chkdebugOCRDonate,$btnTestTrain, $btnTestDonateCC, $btnTestAttackBar]
 
@@ -1309,9 +1307,7 @@ Func Bind_ImageList($nCtrl)
 
 		Case $hGUI_STATS_TAB
 			; the icons for stats tab
-;###Applied with Modification Applier###ID: 3c5ba797c0cd28a20e6a1f70d5e5bfd6###
 			Local $aIconIndex[4] = [$eIcnGoldElixir, $eIcnGoldElixir, $eIcnOptions, $eIcnCamp]		; - Add Icon for Tab Separate Stats - SwitchAcc Mode - DEMEN
-;###End Applied with Modification Applier###ID: 3c5ba797c0cd28a20e6a1f70d5e5bfd6###
 
 		Case Else
 			;do nothing

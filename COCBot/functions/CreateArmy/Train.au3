@@ -1193,18 +1193,14 @@ Func Train()
 		$tempElixirSpent = ($tempElixir - $iElixirCurrent)
 		$iTrainCostElixir += $tempElixirSpent
 		$iElixirTotal -= $tempElixirSpent
-;###Applied with Modification Applier###ID: e3e720e717344c0e1a3f157db4da2586###
 		If $ichkSwitchAcc = 1 Then $aElixirTotalAcc[$nCurCOCAcc-1] -= $tempElixirSpent ; Separate stats per account - SwitchAcc - DEMEN
-;###End Applied with Modification Applier###ID: e3e720e717344c0e1a3f157db4da2586###
 	EndIf
 
 	If $tempDElixir <> "" And $iDarkCurrent <> "" Then
 		$tempDElixirSpent = ($tempDElixir - $iDarkCurrent)
 		$iTrainCostDElixir += $tempDElixirSpent
 		$iDarkTotal -= $tempDElixirSpent
-;###Applied with Modification Applier###ID: 389be48e69e5e545f02c4d5609a9ff17###
 		If $ichkSwitchAcc = 1 Then $aDarkTotalAcc[$nCurCOCAcc - 1] -= $tempDElixirSpent ; Separate stats per account - SwitchAcc -  DEMEN
-;###End Applied with Modification Applier###ID: 389be48e69e5e545f02c4d5609a9ff17###
 	EndIf
 
 	UpdateStats()

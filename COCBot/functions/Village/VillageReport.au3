@@ -29,8 +29,13 @@ Func VillageReport($bBypass = False, $bSuppressLog = False)
 
 	getBuilderCount($bSuppressLog) ; update builder data
 	If _Sleep($iDelayRespond) Then Return
+	If $ichkSwitchAcc = 1 Then										; Separate Stats per Each Account - SwitchAcc Mode - DEMEN
+		$aFreeBuilderCountAcc[$nCurCOCAcc - 1] = $iFreeBuilderCount
+		$aTotalBuilderCountAcc[$nCurCOCAcc - 1] = $iTotalBuilderCount
+    EndIf
 
 	$iTrophyCurrent = getTrophyMainScreen($aTrophies[0], $aTrophies[1])
+	If $ichkSwitchAcc = 1 Then	$aTrophyCurrentAcc[$nCurCOCAcc - 1] = $iTrophyCurrent	; Separate Stats per Each Account - SwitchAcc Mode - DEMEN
 	If Not $bSuppressLog Then Setlog(" [T]: " & _NumberFormat($iTrophyCurrent), $COLOR_GREEN)
 
 	If _ColorCheck(_GetPixelColor(812, 141, True), Hex(0x000000, 6), 10) Then ; check if the village have a Dark Elixir Storage
@@ -38,11 +43,22 @@ Func VillageReport($bBypass = False, $bSuppressLog = False)
 		$iElixirCurrent = getResourcesMainScreen(696, 74)
 		$iDarkCurrent =  getResourcesMainScreen(728, 123)
 		$iGemAmount = getResourcesMainScreen(740, 171)
+		If $ichkSwitchAcc = 1 Then										; Separate Stats per Each Account - SwitchAcc Mode - DEMEN
+		   $aGoldCurrentAcc[$nCurCOCAcc - 1] = $iGoldCurrent
+		   $aElixirCurrentAcc[$nCurCOCAcc - 1] = $iElixirCurrent
+		   $aDarkCurrentAcc[$nCurCOCAcc - 1] = $iDarkCurrent
+		   $aGemAmountAcc[$nCurCOCAcc - 1] = $iGemAmount
+		EndIf
 		If Not $bSuppressLog Then SetLog(" [G]: " & _NumberFormat($iGoldCurrent) & " [E]: " & _NumberFormat($iElixirCurrent) & " [D]: " & _NumberFormat($iDarkCurrent) & " [GEM]: " & _NumberFormat($iGemAmount), $COLOR_GREEN)
 	Else
 		$iGoldCurrent = getResourcesMainScreen(701, 23)
 		$iElixirCurrent = getResourcesMainScreen(701, 74)
 		$iGemAmount = getResourcesMainScreen(719, 123)
+		If $ichkSwitchAcc = 1 Then										; Separate Stats per Each Account - SwitchAcc Mode - DEMEN
+		   $aGoldCurrentAcc[$nCurCOCAcc - 1] = $iGoldCurrent
+		   $aElixirCurrentAcc[$nCurCOCAcc - 1] = $iElixirCurrent
+		   $aGemAmountAcc[$nCurCOCAcc - 1] = $iGemAmount
+		EndIf
 		If Not $bSuppressLog Then SetLog(" [G]: " & _NumberFormat($iGoldCurrent) & " [E]: " & _NumberFormat($iElixirCurrent) & " [GEM]: " & _NumberFormat($iGemAmount), $COLOR_GREEN)
 	EndIf
 	If $bBypass = False Then ; update stats

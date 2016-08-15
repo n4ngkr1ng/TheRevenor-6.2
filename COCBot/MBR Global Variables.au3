@@ -1658,11 +1658,11 @@ Global $iAccAttacked[$nTotalCOCAcc], $iAccSkippedCount[$nTotalCOCAcc]
 Global $AccStatFlg[$nTotalCOCAcc]
 
 ; Demen separate stats
-   Global $aGoldTotalAcc[$nTotalCOCAcc], $aElixirTotalAcc[$nTotalCOCAcc], $aDarkTotalAcc[$nTotalCOCAcc], $aAttackedCountAcc[$nTotalCOCAcc], $aSkippedVillageCountAcc[$nTotalCOCAcc]
-   Global $aGoldCurrentAcc[$nTotalCOCAcc], $aElixirCurrentAcc[$nTotalCOCAcc], $aGoldCurrentAcc[$nTotalCOCAcc],$aDarkCurrentAcc[$nTotalCOCAcc], $aTrophyCurrentAcc[$nTotalCOCAcc], $aGemAmountAcc[$nTotalCOCAcc], $aFreeBuilderCountAcc[$nTotalCOCAcc], $aTotalBuilderCountAcc[$nTotalCOCAcc]
-   Global $lblGoldLootAcc[$nTotalCOCAcc], $lblElixirLootAcc[$nTotalCOCAcc], $lblDarkLootAcc[$nTotalCOCAcc], $lblHourlyStatsGoldAcc[$nTotalCOCAcc], $lblHourlyStatsElixirAcc[$nTotalCOCAcc], $lblHourlyStatsDarkAcc[$nTotalCOCAcc]
-   Global $grpVillageAcc[$nTotalCOCAcc], $lblResultGoldNowAcc[$nTotalCOCAcc], $lblResultElixirNowAcc[$nTotalCOCAcc], $lblResultDENowAcc[$nTotalCOCAcc], $lblResultTrophyNowAcc[$nTotalCOCAcc], $lblResultBuilderNowAcc[$nTotalCOCAcc], $lblResultGemNowAcc[$nTotalCOCAcc]
-   Global $aStartHide[$nTotalCOCAcc]
+Global $aGoldTotalAcc[$nTotalCOCAcc], $aElixirTotalAcc[$nTotalCOCAcc], $aDarkTotalAcc[$nTotalCOCAcc], $aAttackedCountAcc[$nTotalCOCAcc], $aSkippedVillageCountAcc[$nTotalCOCAcc]
+Global $aGoldCurrentAcc[$nTotalCOCAcc], $aElixirCurrentAcc[$nTotalCOCAcc], $aGoldCurrentAcc[$nTotalCOCAcc],$aDarkCurrentAcc[$nTotalCOCAcc], $aTrophyCurrentAcc[$nTotalCOCAcc], $aGemAmountAcc[$nTotalCOCAcc], $aFreeBuilderCountAcc[$nTotalCOCAcc], $aTotalBuilderCountAcc[$nTotalCOCAcc]
+Global $lblGoldLootAcc[$nTotalCOCAcc], $lblElixirLootAcc[$nTotalCOCAcc], $lblDarkLootAcc[$nTotalCOCAcc], $lblHourlyStatsGoldAcc[$nTotalCOCAcc], $lblHourlyStatsElixirAcc[$nTotalCOCAcc], $lblHourlyStatsDarkAcc[$nTotalCOCAcc]
+Global $grpVillageAcc[$nTotalCOCAcc], $lblResultGoldNowAcc[$nTotalCOCAcc], $lblResultElixirNowAcc[$nTotalCOCAcc], $lblResultDENowAcc[$nTotalCOCAcc], $lblResultTrophyNowAcc[$nTotalCOCAcc], $lblResultBuilderNowAcc[$nTotalCOCAcc], $lblResultGemNowAcc[$nTotalCOCAcc]
+Global $aStartHide[$nTotalCOCAcc]
 
 Global $iSwitchMode = Iniread($profile, "switchcocacc", "SwitchMode", 0)		;0: shortest training mode (STM), 1: fixed order mode
 Global $iRemainTrainTime = 0	;remain train time of current account

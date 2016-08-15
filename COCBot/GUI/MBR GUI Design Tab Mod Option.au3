@@ -224,7 +224,6 @@ Local $x = 20, $y = 162 ;150
 		$cmbSwitchMode = GUICtrlCreateCombo("", $x + 305, $y + 45, 90, 20, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
 			GUICtrlSetTip(-1, "Choose switching mode for play list")
 			GUICtrlSetData(-1, "Shortest Training" & "|" & "Ordered play list" & "|" & "Random")
-			_GUICtrlComboBox_SetCurSel($cmbSwitchMode, $iSwitchMode)
 			GUICtrlSetOnEvent(-1, "cmbSwitchMode")
 			GUICtrlSetState (-1, $GUI_ENABLE)
 		$chkAccRelax = GUICtrlCreateCheckbox("Attack relax together", $x + 100, $y + 44, -1, -1)
