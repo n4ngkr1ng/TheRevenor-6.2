@@ -364,6 +364,7 @@ Func ReorderAcc($cfgStr, $GUIconfig = False)
 	EndIf
 
 	ResetMinTrainMode()
+	UpdateStatsDisplay()
 	Return $reorderstr
 EndFunc   ;==> ReorderAcc
 
@@ -380,6 +381,7 @@ Func AddAcc($accIdx)		;add one account to order list
 		$anCOCAccIdx[$CoCAccNo - 1] = $newAcc
 		AccSaveConfig()
 		ResetMinTrainMode()
+		UpdateStatsDisplay()
 		Return "Account " & $newAcc & " was added to playing list"
 	EndIf
 EndFunc   ;==> AddAcc
@@ -398,6 +400,7 @@ Func RemAcc($accIdx)		;remove account from order list
 				Redim $anCOCAccIdx[$CoCAccNo]
 				AccSaveConfig()
 				ResetMinTrainMode()
+				UpdateStatsDisplay()
 				Return "Account " & $newAcc & " was removed from playing list"
 			EndIf
 		Next
@@ -433,10 +436,11 @@ Func ReorderCurPro($cfgStr)
 	SetLog($lsPlaying, $COLOR_RED)
 
 	ShowProMap()
+	UpdateStatsDisplay()
 	Return $lsPlaying
 EndFunc   ;==> ReorderCurPro
 
-Func ReorderAllPro($cfgStr, $GUIconfig = false)
+Func ReorderAllPro($cfgStr, $GUIconfig = False)
 	;reorder profile for all accounts
 	Local $reorderstr = ""
 	For $i = 1 To $nTotalCOCAcc
@@ -466,13 +470,14 @@ Func ReorderAllPro($cfgStr, $GUIconfig = false)
 	$reorderstr &= ")"
 	SetLog("Reordered Bot profile for all accounts: " & $reorderstr, $COLOR_RED)
 	ShowProMap()
+	UpdateStatsDisplay()
 
 	Return $reorderstr
 EndFunc   ;==> ReorderAllPro
 
 Func InitOrder()
-	Local $lsconfig, $lbWrongCfg = false
-	InireadS($lsconfig,$profile, "switchcocacc", "order", "000")
+	Local $lsconfig, $lbWrongCfg = False
+	IniReadS($lsconfig,$profile, "switchcocacc", "order", "000")
 	If $lsconfig = "000" Then	;first set up (if user not define)
 		$lsconfig = ""
 		For $i = 1 To $nTotalCOCAcc
@@ -485,7 +490,7 @@ Func InitOrder()
 	For $i = 1 To $CoCAccNo
 		If Number(StringMid($lsconfig, $i, 1)) > 0 And Number(StringMid($lsconfig, $i, 1)) <= $nTotalCOCAcc Then
 			$anCOCAccIdx[$i - 1] = Number(StringMid($lsconfig, $i, 1))
-		Else
+		 Else
 			SetLog("Wrong Config Account " & $i & ": " & StringMid($lsconfig, $i, 1) & ". Set as 1 [1st account]", $COLOR_RED)
 			$anCOCAccIdx[$i - 1] = 1		;set default
 			$lbWrongCfg = True
@@ -497,7 +502,7 @@ Func InitOrder()
 	Else
 		If IsDeclared("txtAccBottingOrder") Then GUICtrlSetData($txtAccBottingOrder, $lsconfig)
 	EndIf
-	InireadS($lsconfig,$profile, "switchcocacc", "profile", "00000000")
+	IniReadS($lsconfig,$profile, "switchcocacc", "profile", "00000000")
 	If $lsconfig = "00000000" Then	;first set up
 		$lsconfig = "11111111"
 		IniWriteS($profile, "switchcocacc", "profile", $lsconfig)
@@ -519,6 +524,7 @@ Func InitOrder()
 	EndIf
 
 	ShowProMap()
+	UpdateStatsDisplay()
 EndFunc   ;==> InitOrder
 
 Func MapAccPro($imapstr) ; $mapstr = <Account No>-<Profile No> , ie: 1-9, account 1 use profile 9 (digit only)
@@ -534,6 +540,7 @@ Func MapAccPro($imapstr) ; $mapstr = <Account No>-<Profile No> , ie: 1-9, accoun
 		SetLog("Mapping success account " & $lnAcno & " to profile " & $lnProNo, $COLOR_RED)
 		ProSaveConfig()
 		ShowProMap()
+		UpdateStatsDisplay()
 		If $lnAcno = $nCurCOCAcc Then 		;immediatly switch profile
 			MatchProfile()
 			$FirstStart= True		;set new training progress
@@ -583,8 +590,14 @@ Func ReCfgTotalAcc($anewTotal)
 		Redim $AccFirstStart[$nTotalCOCAcc]
 		Redim $AccTotalTrainedTroops[$nTotalCOCAcc]
 		Redim $AccStatFlg[$nTotalCOCAcc], $iAccAttacked[$nTotalCOCAcc], $iAccSkippedCount[$nTotalCOCAcc]
+		; Separate Stats - add nangkring
+		;Redim $aGoldTotalAcc[$nTotalCOCAcc], $aElixirTotalAcc[$nTotalCOCAcc], $aDarkTotalAcc[$nTotalCOCAcc], $aAttackedCountAcc[$nTotalCOCAcc], $aSkippedVillageCountAcc[$nTotalCOCAcc]
+		;Redim $aGoldCurrentAcc[$nTotalCOCAcc], $aElixirCurrentAcc[$nTotalCOCAcc], $aGoldCurrentAcc[$nTotalCOCAcc],$aDarkCurrentAcc[$nTotalCOCAcc], $aTrophyCurrentAcc[$nTotalCOCAcc], $aGemAmountAcc[$nTotalCOCAcc], $aFreeBuilderCountAcc[$nTotalCOCAcc], $aTotalBuilderCountAcc[$nTotalCOCAcc]
+		;Redim $lblGoldLootAcc[$nTotalCOCAcc], $lblElixirLootAcc[$nTotalCOCAcc], $lblDarkLootAcc[$nTotalCOCAcc], $lblHourlyStatsGoldAcc[$nTotalCOCAcc], $lblHourlyStatsElixirAcc[$nTotalCOCAcc], $lblHourlyStatsDarkAcc[$nTotalCOCAcc]
+		;Redim $grpVillageAcc[$nTotalCOCAcc], $lblResultGoldNowAcc[$nTotalCOCAcc], $lblResultElixirNowAcc[$nTotalCOCAcc], $lblResultDENowAcc[$nTotalCOCAcc], $lblResultTrophyNowAcc[$nTotalCOCAcc], $lblResultBuilderNowAcc[$nTotalCOCAcc], $lblResultGemNowAcc[$nTotalCOCAcc]
+		;Redim $aStartHide[$nTotalCOCAcc]
 	EndIf
-	IniWrite($profile, "switchcocacc" , "totalacc" , $nTotalCOCAcc)
+	IniWriteS($profile, "switchcocacc" , "totalacc" , $nTotalCOCAcc)
 	Return True
 EndFunc
 
@@ -725,3 +738,30 @@ Func ShowProMap()		;display mapped accounts - profile on help lable
 	Next
 	GUICtrlSetData($lbMapHelp, $reorderstr)
 EndFunc   ;==> ShowProMap
+
+Func UpdateStatsDisplay()		;==> updateStatsDisplay
+	Local $lsconfigord, $lsconfigpro
+	IniReadS($lsconfigord, $profile, "switchcocacc", "profile", "00000000")
+	IniReadS($lsconfigpro, $profile, "switchcocacc", "order", "000")
+	$CoCAccNo = StringLen($lsconfigord)
+    $ProfileList = _GUICtrlComboBox_GetListArray($cmbProfile)
+	$nTotalProfile = _GUICtrlComboBox_GetCount($cmbProfile)
+    For $i = 0 To 7
+	  If Number(StringMid($lsconfigord, $i + 1, 1)) > 0 And Number(StringMid($lsconfigord, $i + 1, 1)) <= $CoCAccNo Then
+		 If $i <= 3 And $nTotalCOCAcc >= $CoCAccNo Then
+			For $j = $grpVillageAcc[$i] To $lblHourlyStatsDarkAcc[$i]
+			   GUICtrlSetState($j, $GUI_SHOW)
+			Next
+		 EndIf
+		 If Number(StringMid($lsconfigpro, $i + 1, 1)) > 0  And Number(StringMid($lsconfigpro, $i + 1, 1)) <= $nTotalProfile Then
+			If $i <= 3 And $nTotalCOCAcc >= $CoCAccNo Then GUICtrlSetData($grpVillageAcc[$i], "Village: " & $anCOCAccIdx[$i] & " - " & $ProfileList[$anBotProfileIdx[$i]])
+		 EndIf
+	  Else
+		 If $i <= 3 And $nTotalCOCAcc >= $CoCAccNo Then
+			For $j = $grpVillageAcc[$i] To $lblHourlyStatsDarkAcc[$i]
+			   GUICtrlSetState($j, $GUI_HIDE)
+			Next
+		 EndIf
+	  EndIf
+    Next
+EndFunc	;==> updateStatsDisplay

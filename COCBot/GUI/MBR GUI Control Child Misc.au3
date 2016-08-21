@@ -145,6 +145,7 @@ Func btnRenameConfirm()
 	EndSwitch
 EndFunc   ;==>btnRenameConfirm
 #Ce
+
 Func cmbBotCond()
 	If _GUICtrlComboBox_GetCurSel($cmbBotCond) = 15 Then
 		If _GUICtrlComboBox_GetCurSel($cmbHoursStop) = 0 Then _GUICtrlComboBox_SetCurSel($cmbHoursStop, 1)

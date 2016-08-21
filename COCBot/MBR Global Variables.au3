@@ -1658,11 +1658,13 @@ Global $iAccAttacked[$nTotalCOCAcc], $iAccSkippedCount[$nTotalCOCAcc]
 Global $AccStatFlg[$nTotalCOCAcc]
 
 ; Demen separate stats
-Global $aGoldTotalAcc[$nTotalCOCAcc], $aElixirTotalAcc[$nTotalCOCAcc], $aDarkTotalAcc[$nTotalCOCAcc], $aAttackedCountAcc[$nTotalCOCAcc], $aSkippedVillageCountAcc[$nTotalCOCAcc]
-Global $aGoldCurrentAcc[$nTotalCOCAcc], $aElixirCurrentAcc[$nTotalCOCAcc], $aGoldCurrentAcc[$nTotalCOCAcc],$aDarkCurrentAcc[$nTotalCOCAcc], $aTrophyCurrentAcc[$nTotalCOCAcc], $aGemAmountAcc[$nTotalCOCAcc], $aFreeBuilderCountAcc[$nTotalCOCAcc], $aTotalBuilderCountAcc[$nTotalCOCAcc]
-Global $lblGoldLootAcc[$nTotalCOCAcc], $lblElixirLootAcc[$nTotalCOCAcc], $lblDarkLootAcc[$nTotalCOCAcc], $lblHourlyStatsGoldAcc[$nTotalCOCAcc], $lblHourlyStatsElixirAcc[$nTotalCOCAcc], $lblHourlyStatsDarkAcc[$nTotalCOCAcc]
-Global $grpVillageAcc[$nTotalCOCAcc], $lblResultGoldNowAcc[$nTotalCOCAcc], $lblResultElixirNowAcc[$nTotalCOCAcc], $lblResultDENowAcc[$nTotalCOCAcc], $lblResultTrophyNowAcc[$nTotalCOCAcc], $lblResultBuilderNowAcc[$nTotalCOCAcc], $lblResultGemNowAcc[$nTotalCOCAcc]
-Global $aStartHide[$nTotalCOCAcc]
+Global $ProfileList
+Global $nTotalProfile = 1
+Global $aGoldTotalAcc[8], $aElixirTotalAcc[8], $aDarkTotalAcc[8], $aAttackedCountAcc[8], $aSkippedVillageCountAcc[8]
+Global $aGoldCurrentAcc[8], $aElixirCurrentAcc[8], $aGoldCurrentAcc[8],$aDarkCurrentAcc[8], $aTrophyCurrentAcc[8], $aGemAmountAcc[8], $aFreeBuilderCountAcc[8], $aTotalBuilderCountAcc[8]
+Global $lblGoldLootAcc[8], $lblElixirLootAcc[8], $lblDarkLootAcc[8], $lblHourlyStatsGoldAcc[8], $lblHourlyStatsElixirAcc[8], $lblHourlyStatsDarkAcc[8]
+Global $grpVillageAcc[8], $lblResultGoldNowAcc[8], $lblResultElixirNowAcc[8], $lblResultDENowAcc[8], $lblResultTrophyNowAcc[8], $lblResultBuilderNowAcc[8], $lblResultGemNowAcc[8]
+Global $aStartHide[8]
 
 Global $iSwitchMode = Iniread($profile, "switchcocacc", "SwitchMode", 0)		;0: shortest training mode (STM), 1: fixed order mode
 Global $iRemainTrainTime = 0	;remain train time of current account

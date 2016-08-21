@@ -29,8 +29,11 @@ Func cmbProfile()
 	;DonateStats ============================
 	InitDonateStats()
 
+	;Separate Stats add by - Demen
+    UpdateStatsDisplay()
+
 	SetLog("Profile " & $sCurrProfile & " loaded from " & $config, $COLOR_GREEN)
-EndFunc   ;==>cmbProfile
+ EndFunc   ;==>cmbProfile
 
 Func btnAddConfirm()
 	Switch @GUI_CtrlId

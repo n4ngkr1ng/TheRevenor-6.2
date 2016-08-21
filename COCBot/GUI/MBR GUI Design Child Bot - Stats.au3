@@ -257,7 +257,7 @@ $hGUI_STATS_TAB_ITEM4 = GUICtrlCreateTabItem("Profile Stats")
 	$x = $xStart
 	$y = $yStart
    $grpProfileStats = GUICtrlCreateGroup("Gain stats per Profile", $x - 22, $y - 15, 427, 330)
-   For $i = 0 To $nTotalCOCAcc - 1
+   For $i = 0 To 3
 	   $x = $xStart - 60
 	   $y = $yStart
 

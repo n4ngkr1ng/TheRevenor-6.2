@@ -728,7 +728,7 @@ Func Idle() ;Sequence that runs until Full Army
 		If $OutOfGold = 1 Or $OutOfElixir = 1 Then Return  ; Halt mode due low resources, only 1 idle loop
 		If $iChkSnipeWhileTrain = 1 Then SnipeWhileTrain()  ;snipe while train
 
-		If $CommandStop = -1 AND $ichkSwitchAcc = 0 Then SmartWait4Train()  ; Check if closing bot/emulator while training and not in halt & switch coc account mode
+		If $CommandStop = -1 AND $ichkSwitchAcc <> 1 Then SmartWait4Train()  ; Check if closing bot/emulator while training and not in halt & switch coc account mode
 	WEnd
 EndFunc   ;==>Idle
 
