@@ -143,7 +143,7 @@ Func chkSwitchAcc()
 		Next
 		$ichkSwitchAcc = 0
 	EndIf
-	IniWrite($profile, "switchcocacc", "Enable", $ichkSwitchAcc)
+	IniWriteS($profile, "switchcocacc", "Enable", $ichkSwitchAcc)
 EndFunc   ;==>chkSwitchAcc
 
 Func chkAccRelaxTogether()	;chalicucu
@@ -152,7 +152,7 @@ Func chkAccRelaxTogether()	;chalicucu
 	Else
 		$AccRelaxTogether = 0
 	EndIf
-	IniWrite($profile, "switchcocacc", "AttackRelax", $AccRelaxTogether)
+	IniWriteS($profile, "switchcocacc", "AttackRelax", $AccRelaxTogether)
 EndFunc   ;==>chkAccRelaxTogether
 
 Func chkAtkPln()	;chalicucu enable/disable attack plan
@@ -164,7 +164,7 @@ Func chkAtkPln()	;chalicucu enable/disable attack plan
 		$iChkAtkPln = False
 		$cfg = 0
 	EndIf
-	IniWrite($profile, "switchcocacc", "CheckAtkPln", $cfg)
+	IniWriteS($profile, "switchcocacc", "CheckAtkPln", $cfg)
 EndFunc   ;==>chkAtkPln
 
 Func cmbSwitchMode()		;chalicucu switch account mode
@@ -176,5 +176,5 @@ Func cmbSwitchMode()		;chalicucu switch account mode
 		Case 2	; random mode
 			$iSwitchMode = 2
 	EndSwitch
-	IniWrite($profile, "switchcocacc", "SwitchMode", $iSwitchMode)
+	IniWriteS($profile, "switchcocacc", "SwitchMode", $iSwitchMode)
 EndFunc   ;==> cmbSwitchMode

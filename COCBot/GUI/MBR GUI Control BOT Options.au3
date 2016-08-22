@@ -351,5 +351,3 @@ Func btnTestAttackBar()
 		$debugOcr = $currentOCR
 		$RunState = $currentRunState
 EndFunc
-
-
