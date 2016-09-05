@@ -590,12 +590,6 @@ Func ReCfgTotalAcc($anewTotal)
 		Redim $AccFirstStart[$nTotalCOCAcc]
 		Redim $AccTotalTrainedTroops[$nTotalCOCAcc]
 		Redim $AccStatFlg[$nTotalCOCAcc], $iAccAttacked[$nTotalCOCAcc], $iAccSkippedCount[$nTotalCOCAcc]
-		; Separate Stats - add nangkring
-		;Redim $aGoldTotalAcc[$nTotalCOCAcc], $aElixirTotalAcc[$nTotalCOCAcc], $aDarkTotalAcc[$nTotalCOCAcc], $aAttackedCountAcc[$nTotalCOCAcc], $aSkippedVillageCountAcc[$nTotalCOCAcc]
-		;Redim $aGoldCurrentAcc[$nTotalCOCAcc], $aElixirCurrentAcc[$nTotalCOCAcc], $aGoldCurrentAcc[$nTotalCOCAcc],$aDarkCurrentAcc[$nTotalCOCAcc], $aTrophyCurrentAcc[$nTotalCOCAcc], $aGemAmountAcc[$nTotalCOCAcc], $aFreeBuilderCountAcc[$nTotalCOCAcc], $aTotalBuilderCountAcc[$nTotalCOCAcc]
-		;Redim $lblGoldLootAcc[$nTotalCOCAcc], $lblElixirLootAcc[$nTotalCOCAcc], $lblDarkLootAcc[$nTotalCOCAcc], $lblHourlyStatsGoldAcc[$nTotalCOCAcc], $lblHourlyStatsElixirAcc[$nTotalCOCAcc], $lblHourlyStatsDarkAcc[$nTotalCOCAcc]
-		;Redim $grpVillageAcc[$nTotalCOCAcc], $lblResultGoldNowAcc[$nTotalCOCAcc], $lblResultElixirNowAcc[$nTotalCOCAcc], $lblResultDENowAcc[$nTotalCOCAcc], $lblResultTrophyNowAcc[$nTotalCOCAcc], $lblResultBuilderNowAcc[$nTotalCOCAcc], $lblResultGemNowAcc[$nTotalCOCAcc]
-		;Redim $aStartHide[$nTotalCOCAcc]
 	EndIf
 	IniWriteS($profile, "switchcocacc" , "totalacc" , $nTotalCOCAcc)
 	Return True
