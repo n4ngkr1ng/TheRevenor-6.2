@@ -215,6 +215,7 @@ $chkPBSleepGW = GUICtrlCreateCheckbox("", $x + 118, $y + 41, 17, 17)
 	_GUICtrlSetTip(-1, $txtTip)
 $y +=45
 	;========END MOD: Put Heroes To Sleep Due To Personal Break LogOff========
+$y +=20
 $chkCloseTakeBreak = GUICtrlCreateCheckbox("Close Emulator When TakeBreak", $x-5, $y-5, -1, -1)
 	$txtTip = "This forces bot to Close Emulator only one time prior to normal start of PB"
 	_GUICtrlSetTip(-1, $txtTip)

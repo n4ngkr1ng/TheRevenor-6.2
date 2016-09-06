@@ -151,8 +151,8 @@ Local $x = 20, $y = 177 ;150
 		GUICtrlCreateGroup("", -99, -99, 1, 1)
 
 	; Chalicucu & demen: switch CoC Acc GUI
-	Local $x = 20, $y = 291
-	GUICtrlCreateGroup(GetTranslated(636,2, "Switch CoC Accounts"), $x - 20, $y - 20, 440, 90)
+	Local $x = 20, $y = 250
+	GUICtrlCreateGroup(GetTranslated(636,2, "Switch CoC Accounts"), $x - 20, $y - 20, 440, 115)
 		$chkSwitchAcc = GUICtrlCreateCheckbox("Enable Switch Account", $x - 10, $y - 5, -1, -1)
 			$txtTip = "Switch to another account & profile when remain train time >=3 minutes" & @CRLF & _
 			          "This function supports maximum 8 CoC accounts & 9 Bot profiles" & @CRLF & _
@@ -160,37 +160,37 @@ Local $x = 20, $y = 177 ;150
 			GUICtrlSetTip(-1, $txtTip)
 			GUICtrlSetOnEvent(-1, "chkSwitchAcc")
 			GUICtrlSetState(-1, $GUI_UNCHECKED)
-		$lbMapHelpAccPro = GUICtrlCreateLabel("Mapped Acc - Profile:", $x + 100, $y - 20, 130, 20)
+		$lbMapHelpAccPro = GUICtrlCreateLabel("Mapped Acc - Profile:", $x + 135, $y - 20, 130, 20)
 			GUICtrlSetColor(-1, $COLOR_BLUE)
-	    $lbMapHelp = GUICtrlCreateLabel("", $x + 201, $y - 20, 190, 30)
+	    $lbMapHelp = GUICtrlCreateLabel("", $x + 236, $y - 20, 135, 30)
 			GUICtrlSetColor(-1, $COLOR_BLUE)
-		$lbTotalCoCAcc = GUICtrlCreateLabel("Total CoC Accounts:", $x + 138, $y, 100, 20)
-		$txtTotalCoCAcc = GUICtrlCreateInput("0", $x + 240, $y, 18, 18, BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER, $ES_NUMBER, $ES_AUTOHSCROLL))
+		$lbTotalCoCAcc = GUICtrlCreateLabel("Total CoC Accounts:", $x - 10, $y + 18, 100, 20)
+		$txtTotalCoCAcc = GUICtrlCreateInput("0", $x + 92, $y + 18, 18, 18, BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER, $ES_NUMBER, $ES_AUTOHSCROLL))
 			GUICtrlSetLimit(-1, 1)
 			$txtTip = "Number of Google Accounts on emulator" & @CRLF & _
 					  "Supporting maximum 8 Accounts."
 			GUICtrlSetTip(-1,$txtTip)
-		$lbAccBottingOrder = GUICtrlCreateLabel("Accounts Playing List:", $x - 10, $y + 25, 135, 20)
-		$txtAccBottingOrder = GUICtrlCreateInput("12345678", $x + 108, $y + 22, 70, 18,  BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER, $ES_AUTOHSCROLL))
+		$lbAccBottingOrder = GUICtrlCreateLabel("Accounts Playing List:", $x - 10, $y + 46, 135, 20)
+		$txtAccBottingOrder = GUICtrlCreateInput("12345678", $x + 108, $y + 43, 70, 18,  BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER, $ES_AUTOHSCROLL))
 			$txtTip = "Input group of accounts you want to play."
 			GUICtrlSetTip(-1,$txtTip)
-		$lbProfileIdxOrder = GUICtrlCreateLabel("Mapping Profile Indexs:", $x + 195, $y + 25, 130, 20)
-		$txtProfileIdxOrder = GUICtrlCreateInput("12345678", $x + 320, $y + 22, 70, 18,  BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER, $ES_AUTOHSCROLL))
+		$lbProfileIdxOrder = GUICtrlCreateLabel("Mapping Profile Indexs:", $x + 195, $y + 46, 130, 20)
+		$txtProfileIdxOrder = GUICtrlCreateInput("12345678", $x + 320, $y + 43, 70, 18,  BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER, $ES_AUTOHSCROLL))
 			GUICtrlSetLimit(-1, 8)
 			$txtTip = "Input the order of Profiles correspond to CoC Accounts order."
 			GUICtrlSetTip(-1,$txtTip)
-		$chkAtkPln = GUICtrlCreateCheckbox("Check attack plan", $x - 10, $y + 44, -1, -1)
+		$chkAtkPln = GUICtrlCreateCheckbox("Check attack plan", $x - 10, $y + 65, -1, -1)
 			$txtTip = "Enable/Disable attack plan."
 			GUICtrlSetTip(-1, $txtTip)
 			GUICtrlSetState(-1, $GUI_UNCHECKED)
 			GUICtrlSetOnEvent(-1, "chkAtkPln")
-		$lbSwitchMode = GUICtrlCreateLabel("Switching Mode", $x + 220, $y + 48, 130, 20)
-		$cmbSwitchMode = GUICtrlCreateCombo("", $x + 305, $y + 45, 90, 20, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
+		$lbSwitchMode = GUICtrlCreateLabel("Switching Mode", $x + 220, $y + 69, 130, 20)
+		$cmbSwitchMode = GUICtrlCreateCombo("", $x + 305, $y + 66, 90, 20, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
 			GUICtrlSetTip(-1, "Choose switching mode for play list")
 			GUICtrlSetData(-1, "Shortest Training" & "|" & "Ordered play list" & "|" & "Random")
 			GUICtrlSetOnEvent(-1, "cmbSwitchMode")
 			GUICtrlSetState (-1, $GUI_ENABLE)
-		$chkAccRelax = GUICtrlCreateCheckbox("Attack relax together", $x + 100, $y + 44, -1, -1)
+		$chkAccRelax = GUICtrlCreateCheckbox("Attack relax together", $x + 100, $y + 64, -1, -1)
 			$txtTip = "If attack is not planned for current profile" & @CRLF & _
 			          "Then bot stop emulator and relax!"
 			GUICtrlSetTip(-1, $txtTip)

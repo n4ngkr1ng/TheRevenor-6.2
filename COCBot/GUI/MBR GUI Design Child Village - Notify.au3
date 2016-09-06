@@ -178,7 +178,7 @@ $hGUI_NOTIFY_TAB_ITEM2 = GUICtrlCreateTabItem(GetTranslated(600, 19, "Instructio
 				GetTranslated(620, 1, -1) & " <" & GetTranslated(619, 16, -1) & "> GETCHATS <STOP|NOW|INTERVAL> - select any of this three option" & @CRLF & @CRLF & _
 				GetTranslated(600, 19, "Instructions") & " Chat Bot With Telegram!" & @CRLF & _
 				GetTranslated(18, 112, "SENDCHAT <Chat Message> - send Text in clan chat") & @CRLF & _
-				GetTranslated(18, 111, "GETCHATS <STOP|NOW|INTERVAL> - to get the latest clan chat as an image")
+				GetTranslated(18, 111, "GETCHATS <STOP|NOW|INTERVAL> - to get the latest clan chat as an image") & @CRLF & _
 				GetTranslated(620,1, -1) & " " & GetTranslated(638,21,"ACC <acc list>") & GetTranslated(638,26, " - set new play list") & @CRLF & _
                 GetTranslated(620,1, -1) & " " & GetTranslated(638,22,"ADD <acc number>") & GetTranslated(638,27, " - add an account to play list") & @CRLF & _
                 GetTranslated(620,1, -1) & " " & GetTranslated(638,23,"REM <acc number>") & GetTranslated(638,28, " - remove an account from play list") & @CRLF & _
