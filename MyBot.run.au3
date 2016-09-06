@@ -244,8 +244,7 @@ Func runBot() ;Bot that runs everything in order
 		$CommandStop = -1
 		If _Sleep($iDelayRunBot1) Then Return
 		checkMainScreen()
-        ;If IsPlannedTimeNow() = False And $CommandStop <> 0 Then    ;Chalicucu not start emulator. relax
-        If $CommandStop <> 0 Then    ;Chalicucu not start emulator. relax
+        If IsPlannedTimeNow() = False And $CommandStop <> 0 Then    ;Chalicucu not start emulator. relax
             If $ichkSwitchAcc = 1 And $AccRelaxTogether = 1 Then
                 CloseAndroid()
                 SetLog("Relax! Attack not planned...",$COLOR_RED)
@@ -771,11 +770,11 @@ Func AttackMain() ;Main control for attack functions
 		Else
 			Setlog("No one of search condition match:", $COLOR_BLUE)
 			Setlog("Waiting on troops, heroes and/or spells according to search settings", $COLOR_BLUE)
-			BotCommand()			;Chalicucu
 			GetReadTimeHeroesAndSpell()
 			ClickP($aAway, 1, 0, "#0000") ;Click Away
 			Sleep(1500)
 			$iMultyFarming = 0
+			BotCommand()			;Chalicucu
 		EndIf
 	Else
 		SetLog("Attacking Not Planned, Skipped..", $COLOR_RED)
