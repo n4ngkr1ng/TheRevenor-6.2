@@ -1,3 +1,4 @@
+
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: checkAttackDisable
 ; Description ...:
@@ -48,12 +49,12 @@ Func checkAttackDisable($iSource, $Result = "")
 					If _CheckPixel($aSurrenderButton, $bCapturePixel) Then ; village search requires end battle 1s, so check for surrender/endbattle button
 						ReturnHome(False, False) ;If End battle is available
 					 Else
-	;========MOD: Put Heroes To Sleep Due To Personal Break LogOff========
-						$ClosedDueToPB = True
-						If $ClosedDueToPB = True Then
-							ToggleGuard()
-						EndIf
-	;========END MOD: Put Heroes To Sleep Due To Personal Break LogOff========
+						;========MOD: Put Heroes To Sleep Due To Personal Break LogOff========
+                        $ClosedDueToPB = True
+                        If $ClosedDueToPB = True Then
+                            ToggleGuard()
+						 EndIf
+						;========END MOD: Put Heroes To Sleep Due To Personal Break LogOff========
 						CloseCoC()
 					EndIf
 				Else
@@ -135,6 +136,10 @@ Func checkAttackDisable($iSource, $Result = "")
 	If $iModSource = $iTaBChkTime And $aShieldStatus[0] <> "guard" Then
 		Setlog("Personal Break Reset log off: " & $iValueSinglePBTimeForced & " Minutes", $COLOR_BLUE)
 		If $ichkCloseTakeBreak = 1 Then
+			If $AndroidEmbedded = True Then
+				AndroidEmbed(Not $AndroidEmbedded)
+			EndIf
+			If _Sleep(4000) Then Return
 			CloseAndroid()
 			; Pushbullet Msg/Telegram
 			_PushToPushBullet($iOrigPushBullet & " | Time To PersonalBreak - With Close Emulator - Waiting " & $iValueSinglePBTimeForced & " Minutes")
@@ -155,3 +160,4 @@ Func checkAttackDisable($iSource, $Result = "")
 	Next
 
 EndFunc   ;==>checkAttackDisable
+

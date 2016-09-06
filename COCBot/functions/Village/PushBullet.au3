@@ -71,6 +71,7 @@ Func _RemoteControlPushBullet()
 							Local $txtHelp = GetTranslated(620, 13, "You can remotely control your bot sending commands following this syntax:")
 							$txtHelp &= '\n' & GetTranslated(620, 1, -1) & " " & GetTranslated(620, 14, -1) & GetTranslated(620, 2, " - send this help message")
 							$txtHelp &= '\n' & GetTranslated(620, 1, -1) & " " & GetTranslated(620, 15, "DELETE") & GetTranslated(620, 3, " - delete all your previous PushBullet messages")
+							$txtHelp &= '\n' & GetTranslated(620, 1, -1) & " START - start the bot named"
 							$txtHelp &= '\n' & GetTranslated(620, 1, -1) & " <" & $iOrigPushBullet & "> " & GetTranslated(620, 16, "RESTART") & GetTranslated(620, 4, " - restart the bot named <Village Name> and Android Emulator")
 							$txtHelp &= '\n' & GetTranslated(620, 1, -1) & " <" & $iOrigPushBullet & "> " & GetTranslated(620, 17, "STOP") & GetTranslated(620, 5, " - stop the bot named <Village Name>")
 							$txtHelp &= '\n' & GetTranslated(620, 1, -1) & " <" & $iOrigPushBullet & "> " & GetTranslated(620, 18, "PAUSE") & GetTranslated(620, 6, " - pause the bot named <Village Name>")
@@ -91,6 +92,11 @@ Func _RemoteControlPushBullet()
 						    $txtHelp &= '\n' & GetTranslated(620,1, -1) & " " & GetTranslated(638,5,"ALLPRO <all pro number>") & GetTranslated(638,15, " - set up profiles correspond to all exists accounts")
 						    $txtHelp &= '\n' & GetTranslated(620,1, -1) & " " & GetTranslated(638,9,"HIDE") & GetTranslated(638,19, " - hide android emulator")
 						    $txtHelp &= '\n' & GetTranslated(620,1, -1) & " " & GetTranslated(638,10,"ATKP 1/0") & GetTranslated(638,20, " - 1-enable/0-disable attack plan")
+							$txtHelp &= '\n' & GetTranslated(620, 1, -1) & " <" & $iOrigPushBullet & "> SCREENSHOTHD - send a screenshot in high resolution of <Village Name>"
+							$txtHelp &= '\n' & GetTranslated(620, 1, -1) & " <" & $iOrigPushBullet & "> BUILDER - send a screenshot of builder status of <Village Name>"
+							$txtHelp &= '\n' & GetTranslated(620, 1, -1) & " <" & $iOrigPushBullet & "> SHIELD - send a screenshot of shield status of <Village Name>"
+							$txtHelp &= '\n' & GetTranslated(620, 1, -1) & " <" & $iOrigPushBullet & "> TOP - send a top gain & zap statistics of <Village Name>"
+							$txtHelp &= '\n' & GetTranslated(620, 1, -1) & " <" & $iOrigPushBullet & "> SWITCHPROFILE <PROFILENAME> - Swap Profile Village and restart bot"
 							$txtHelp &= '\n' & GetTranslated(620, 1, -1) & " <" & $iOrigPushBullet & "> SENDCHAT <TEXT> - send TEXT in clan chat of <Village Name>"
 							$txtHelp &= '\n' & GetTranslated(620, 1, -1) & " <" & $iOrigPushBullet & "> GETCHATS <STOP|NOW|INTERVAL> - select any of this three option to do"
 							$txtHelp &= '\n'
@@ -98,6 +104,9 @@ Func _RemoteControlPushBullet()
 							$txtHelp &= '\n' & GetTranslated(620, 1, -1) & " " & $iOrigPushBullet & " " & GetTranslated(620, 18, "PAUSE")
 							$txtHelp &= '\n' & GetTranslated(620, 1, -1) & " " & GetTranslated(620, 15, "DELETE")
 							$txtHelp &= '\n' & GetTranslated(620, 1, -1) & " " & $iOrigPushBullet & " " & GetTranslated(620, 24, "SCREENSHOT")
+							$txtHelp &= '\n' & "Etc"
+							_PushToPushBullet($iOrigPushBullet & " | " & GetTranslated(620,26, "Request for Help") & "\n" & $txtHelp)
+							;_PushToPushBullet($iOrigPushBullet & " | " & GetTranslated(620,26, "Request for Help") & "\n")
 							SetLog("Pushbullet: Your request has been received from ' " & $iOrigPushBullet & ". Help has been sent", $COLOR_GREEN)
 							_DeleteMessageOfPushBullet($iden[$x])
 						Case GetTranslated(620, 1, -1) & " " & StringUpper($iOrigPushBullet) & " " & GetTranslated(620, 18, -1) ;"PAUSE"
@@ -172,6 +181,14 @@ Func _RemoteControlPushBullet()
 								_PushToPushBullet($iOrigPushBullet & " | " & GetTranslated(620, 48, "Request to Stop") & "..." & "\n" & GetTranslated(620, 50, "Your bot is currently stopped, no action was taken"))
 							EndIf
 									;=================================== "TheRevenor Notify" ===================================
+						Case GetTranslated(620, 1, -1) & " " & StringUpper($iOrigPushBullet) & " HALTATTACKON"
+							GUICtrlSetState($chkBotStop, $GUI_CHECKED)
+							btnStop()
+							btnStart()
+						Case GetTranslated(620, 1, -1) & " " & StringUpper($iOrigPushBullet) & " HALTATTACKOFF"
+							GUICtrlSetState($chkBotStop, $GUI_UNCHECKED)
+							btnStop()
+							btnStart()
 						Case GetTranslated(620, 1, -1) & " " & StringUpper($iOrigPushBullet) & " SCREENSHOTHD"
 							SetLog("Pushbullet: ScreenShot HD request received", $COLOR_GREEN)
 							$RequestScreenshot = 1
@@ -187,98 +204,98 @@ Func _RemoteControlPushBullet()
 							_DeleteMessageOfPushBullet($iden[$x])
 						Case GetTranslated(620, 1, -1) & " " & StringUpper($iOrigPushBullet) & " TOP"
 							SetLog("Pushbullet: Your request has been received. Top Gain & Zap Statistics sent", $COLOR_GREEN)
-							Local $txtStats = " | Top Gain & Zap Stats Village Report" & "\n" & "\n[G]: " & _NumberFormat($topgoldloot) & "\n[E]: "
-							  $txtStats & = _NumberFormat($topelixirloot) & "\n[D]: " & _NumberFormat($topdarkloot) & "\n[T]: " & $toptrophyloot
-							  $txtStats & = "\n[Z]: " & _NumberFormat($smartZapGain) & "\n[S]: " & _NumberFormat($numLSpellsUsed)
+							Local $txtStats = " | Top Gain & Zap Stats Village Report" & "\n" & "\n[Gold]: " & _NumberFormat($topgoldloot)
+							$txtStats &= "\n[Elixir]: " & _NumberFormat($topelixirloot) & "\n[Dark]: " & _NumberFormat($topdarkloot) & "\n[Trophy]: " & _NumberFormat($toptrophyloot)
+							$txtStats &= "\n[Zap]: " & _NumberFormat($smartZapGain) & "\n[Spells]: " & _NumberFormat($numLSpellsUsed)
 							_PushToPushBullet($iOrigPushBullet & $txtStats)
 							_DeleteMessageOfPushBullet($iden[$x])
 									;=================================== "Chat Bot" ===================================
 						Case Else
-						    Local $lsNewOrd
-						    If StringLeft($body[$x], 7) = "BOT ACC" Then		;Chalicucu order switch COC Account
-							   $lsNewOrd = ReorderAcc(StringMid($body[$x], 9))
-							   _PushToPushBullet("Reordered COC account: " & $lsNewOrd & " (" & AccGetStep() & ")")
-							   _DeleteMessageOfPushBullet($iden[$x])
-						    ElseIf StringLeft($body[$x], 7) = "BOT PRO" Then		;Chalicucu order switch bot profile
-							   $lsNewOrd = ReorderCurPro(StringMid($body[$x], 9))
-							   _PushToPushBullet("Reordered bot profile: " & $lsNewOrd )
-							   _DeleteMessageOfPushBullet($iden[$x])
-						    ElseIf StringLeft($body[$x], 10) = "BOT ALLPRO" Then		;Chalicucu order switch bot profile
-							   $lsNewOrd = ReorderAllPro(StringMid($body[$x], 12))
-							   _PushToPushBullet("Reordered bot profile for all acc: " & $lsNewOrd )
-							   _DeleteMessageOfPushBullet($iden[$x])
-						    ElseIf StringLeft($body[$x], 7) = "BOT MAP" Then		;Chalicucu Mapping Account & Profile
-							   MapAccPro(StringMid($body[$x], 9))
-							   _PushToPushBullet("Mapping success: " & StringMid($body[$x], 9) )
-							   _DeleteMessageOfPushBullet($iden[$x])
-						    ElseIf $body[$x] = "BOT GETORDER" Then		;Chalicucu inquiry acc order
-							   SetLog("Get order: [" & $body[$x] & "]", $COLOR_RED)
-							   _PushToPushBullet("Ordered COC acc: " & AccGetOrder() & " (" & AccGetStep() _
-												   & ")\nCurrent:  " & $nCurCOCAcc _
-												   & "\nBot profile: " & ProGetOrderName() _
-												   & "\nSwitch Mode: " & $iSwitchMode & " - " & GUICtrlRead($cmbSwitchMode))
-							   _DeleteMessageOfPushBullet($iden[$x])
-						    ElseIf StringLeft($body[$x], 7) = "BOT ADD" Then		;Chalicucu Add Account to Playing list
-							   $lsNewOrd = AddAcc(StringMid($body[$x], 9))
-							   _PushToPushBullet($lsNewOrd)
-							   _DeleteMessageOfPushBullet($iden[$x])
-						    ElseIf StringLeft($body[$x], 7) = "BOT REM" Then		;Chalicucu Remove Account from Playing list
-							   $lsNewOrd = RemAcc(StringMid($body[$x], 9))
-							   _PushToPushBullet($lsNewOrd)
-							   _DeleteMessageOfPushBullet($iden[$x])
-						    ElseIf StringLeft($body[$x], 8) = "BOT MODE" Then		;Chalicucu Change Switching Mode
-							   $lsNewOrd = SwitchMode(StringMid($body[$x], 10))
-							   SetLog($lsNewOrd, $COLOR_RED)
-							   _PushToPushBullet($lsNewOrd)
-							   _DeleteMessageOfPushBullet($iden[$x])
-						    ; ElseIf StringLeft($body[$x], 11) = "BOT ACSTATS" Then		;Chalicucu account stats
-							   ; Local $idx = Number(StringMid($body[$x], 13)) - 1
-							   ; If 0 > $idx Or $idx >= $nTotalCOCAcc Then
-								   ; _DeleteMessageOfPushBullet($iden[$x])
-							   ; Else
-								   ; SetLog("Pushbullet: Your request has been received. Statistics sent", $COLOR_GREEN)
-								   ; _PushToPushBullet("[Account " & ($idx+1) & "]" & " | " & GetTranslated(620,39, "Stats Village Report") & "\n" _
-									   ; & GetTranslated(620,91, "At Start") & "\n[" & GetTranslated(620,35, "G") & "]: " _
-									   ; & _NumberFormat($iAccGoldStart[$idx]) & " [" & GetTranslated(620,36, "E") & "]: " _
-									   ; & _NumberFormat($iAccElixirStart[$idx]) & " [" & GetTranslated(620,37, "D") & "]: " _
-									   ; & _NumberFormat($iAccDarkStart[$idx]) & " [" & GetTranslated(620,38, "T") & "]: " _
-									   ; & $iTrophyStart & "\n\n" & GetTranslated(620,40, "Now (Current Resources)") _
-									   ; &"\n[" & GetTranslated(620,35, "G") & "]: " & _NumberFormat($iGoldCurrent) _
-									   ; & " [" & GetTranslated(620,36, "E") & "]: " & _NumberFormat($iElixirCurrent) _
-									   ; & " [" & GetTranslated(620,37, "D") & "]: " & _NumberFormat($iDarkCurrent) _
-									   ; & " [" & GetTranslated(620,38, "T") & "]: " & $iTrophyCurrent & " [" _
-									   ; & GetTranslated(620,41, "GEM") & "]: " & $iGemAmount & "\n \n [" _
-									   ; & GetTranslated(620,42, "No. of Free Builders") & "]: " & $iFreeBuilderCount _
-									   ; & "\n " & GetTranslated(620,43, "[No. of Wall Up]") & ": " & GetTranslated(620,35, "G") _
-									   ; & ": " & $iNbrOfWallsUppedGold & "/ " & GetTranslated(620,36, "E") & ": " _
-									   ; & $iNbrOfWallsUppedElixir & "\n\n" & GetTranslated(620,44, "Attacked") & ": " _
-									   ; & GUICtrlRead($lblresultvillagesattacked) & "\n" & GetTranslated(620,45, "Skipped") _
-									   ; & ": " & $iSkippedVillageCount)
-								   ; _DeleteMessageOfPushBullet($iden[$x])
-							   ; EndIf
-						    ; ElseIf $body[$x] = "BOT HIDE" Then		;Chalicucu Hide emulator
-								; myHide()
-								; SetLog("Receive hide emulator", $COLOR_RED)
-								; _PushToPushBullet("Received hide emulator")
-								; _DeleteMessageOfPushBullet($iden[$x])
-						    ElseIf $body[$x] = "BOT STOPSTART" Then		;Chalicucu Stop then start again
-							   btnStop()
-							   btnStart()
-							   SetLog("Receive STOPSTART", $COLOR_RED)
-							   _PushToPushBullet("Received STOPSTART")
-							   _DeleteMessageOfPushBullet($iden[$x])
-						    ElseIf StringLeft($body[$x],8) = "BOT ATKP" Then	;Chalicucu Option to enable/disable Attack Plan
-							   $iChkAtkPln = (Number(StringMid($body[$x],10))=1)
-							   IniWrite($profile, "switchcocacc" , "CheckAtkPln" , Number(StringMid($body[$x],10)))
-							   If $iChkAtkPln Then
-								   GUICtrlSetState($chkAtkPln, $GUI_CHECKED)
-								   _PushToPushBullet("Enabled attack scheduler!")
-							   Else
-								   GUICtrlSetState($chkAtkPln, $GUI_UNCHECKED)
-								   _PushToPushBullet("Disabled attack scheduler!")
-							   EndIf
-							   _DeleteMessageOfPushBullet($iden[$x])
-						    EndIf
+                            Local $lsNewOrd
+                            If StringLeft($body[$x], 7) = "BOT ACC" Then        ;Chalicucu order switch COC Account
+                               $lsNewOrd = ReorderAcc(StringMid($body[$x], 9))
+                               _PushToPushBullet("Reordered COC account: " & $lsNewOrd & " (" & AccGetStep() & ")")
+                               _DeleteMessageOfPushBullet($iden[$x])
+                            ElseIf StringLeft($body[$x], 7) = "BOT PRO" Then        ;Chalicucu order switch bot profile
+                               $lsNewOrd = ReorderCurPro(StringMid($body[$x], 9))
+                               _PushToPushBullet("Reordered bot profile: " & $lsNewOrd )
+                               _DeleteMessageOfPushBullet($iden[$x])
+                            ElseIf StringLeft($body[$x], 10) = "BOT ALLPRO" Then        ;Chalicucu order switch bot profile
+                               $lsNewOrd = ReorderAllPro(StringMid($body[$x], 12))
+                               _PushToPushBullet("Reordered bot profile for all acc: " & $lsNewOrd )
+                               _DeleteMessageOfPushBullet($iden[$x])
+                            ElseIf StringLeft($body[$x], 7) = "BOT MAP" Then        ;Chalicucu Mapping Account & Profile
+                               MapAccPro(StringMid($body[$x], 9))
+                               _PushToPushBullet("Mapping success: " & StringMid($body[$x], 9) )
+                               _DeleteMessageOfPushBullet($iden[$x])
+                            ElseIf $body[$x] = "BOT GETORDER" Then        ;Chalicucu inquiry acc order
+                               SetLog("Get order: [" & $body[$x] & "]", $COLOR_RED)
+                               _PushToPushBullet("Ordered COC acc: " & AccGetOrder() & " (" & AccGetStep() _
+                                                   & ")\nCurrent:  " & $nCurCOCAcc _
+                                                   & "\nBot profile: " & ProGetOrderName() _
+                                                   & "\nSwitch Mode: " & $iSwitchMode & " - " & GUICtrlRead($cmbSwitchMode))
+                               _DeleteMessageOfPushBullet($iden[$x])
+                            ElseIf StringLeft($body[$x], 7) = "BOT ADD" Then        ;Chalicucu Add Account to Playing list
+                               $lsNewOrd = AddAcc(StringMid($body[$x], 9))
+                               _PushToPushBullet($lsNewOrd)
+                               _DeleteMessageOfPushBullet($iden[$x])
+                            ElseIf StringLeft($body[$x], 7) = "BOT REM" Then        ;Chalicucu Remove Account from Playing list
+                               $lsNewOrd = RemAcc(StringMid($body[$x], 9))
+                               _PushToPushBullet($lsNewOrd)
+                               _DeleteMessageOfPushBullet($iden[$x])
+                            ElseIf StringLeft($body[$x], 8) = "BOT MODE" Then        ;Chalicucu Change Switching Mode
+                               $lsNewOrd = SwitchMode(StringMid($body[$x], 10))
+                               SetLog($lsNewOrd, $COLOR_RED)
+                               _PushToPushBullet($lsNewOrd)
+                               _DeleteMessageOfPushBullet($iden[$x])
+                            ; ElseIf StringLeft($body[$x], 11) = "BOT ACSTATS" Then        ;Chalicucu account stats
+                               ; Local $idx = Number(StringMid($body[$x], 13)) - 1
+                               ; If 0 > $idx Or $idx >= $nTotalCOCAcc Then
+                                   ; _DeleteMessageOfPushBullet($iden[$x])
+                               ; Else
+                                   ; SetLog("Pushbullet: Your request has been received. Statistics sent", $COLOR_GREEN)
+                                   ; _PushToPushBullet("[Account " & ($idx+1) & "]" & " | " & GetTranslated(620,39, "Stats Village Report") & "\n" _
+                                       ; & GetTranslated(620,91, "At Start") & "\n[" & GetTranslated(620,35, "G") & "]: " _
+                                       ; & _NumberFormat($iAccGoldStart[$idx]) & " [" & GetTranslated(620,36, "E") & "]: " _
+                                       ; & _NumberFormat($iAccElixirStart[$idx]) & " [" & GetTranslated(620,37, "D") & "]: " _
+                                       ; & _NumberFormat($iAccDarkStart[$idx]) & " [" & GetTranslated(620,38, "T") & "]: " _
+                                       ; & $iTrophyStart & "\n\n" & GetTranslated(620,40, "Now (Current Resources)") _
+                                       ; &"\n[" & GetTranslated(620,35, "G") & "]: " & _NumberFormat($iGoldCurrent) _
+                                       ; & " [" & GetTranslated(620,36, "E") & "]: " & _NumberFormat($iElixirCurrent) _
+                                       ; & " [" & GetTranslated(620,37, "D") & "]: " & _NumberFormat($iDarkCurrent) _
+                                       ; & " [" & GetTranslated(620,38, "T") & "]: " & $iTrophyCurrent & " [" _
+                                       ; & GetTranslated(620,41, "GEM") & "]: " & $iGemAmount & "\n \n [" _
+                                       ; & GetTranslated(620,42, "No. of Free Builders") & "]: " & $iFreeBuilderCount _
+                                       ; & "\n " & GetTranslated(620,43, "[No. of Wall Up]") & ": " & GetTranslated(620,35, "G") _
+                                       ; & ": " & $iNbrOfWallsUppedGold & "/ " & GetTranslated(620,36, "E") & ": " _
+                                       ; & $iNbrOfWallsUppedElixir & "\n\n" & GetTranslated(620,44, "Attacked") & ": " _
+                                       ; & GUICtrlRead($lblresultvillagesattacked) & "\n" & GetTranslated(620,45, "Skipped") _
+                                       ; & ": " & $iSkippedVillageCount)
+                                   ; _DeleteMessageOfPushBullet($iden[$x])
+                               ; EndIf
+                            ; ElseIf $body[$x] = "BOT HIDE" Then        ;Chalicucu Hide emulator
+                                ; myHide()
+                                ; SetLog("Receive hide emulator", $COLOR_RED)
+                                ; _PushToPushBullet("Received hide emulator")
+                                ; _DeleteMessageOfPushBullet($iden[$x])
+                            ElseIf $body[$x] = "BOT STOPSTART" Then        ;Chalicucu Stop then start again
+                               btnStop()
+                               btnStart()
+                               SetLog("Receive STOPSTART", $COLOR_RED)
+                               _PushToPushBullet("Received STOPSTART")
+                               _DeleteMessageOfPushBullet($iden[$x])
+                            ElseIf StringLeft($body[$x],8) = "BOT ATKP" Then    ;Chalicucu Option to enable/disable Attack Plan
+                               $iChkAtkPln = (Number(StringMid($body[$x],10))=1)
+                               IniWrite($profile, "switchcocacc" , "CheckAtkPln" , Number(StringMid($body[$x],10)))
+                               If $iChkAtkPln Then
+                                   GUICtrlSetState($chkAtkPln, $GUI_CHECKED)
+                                   _PushToPushBullet("Enabled attack scheduler!")
+                               Else
+                                   GUICtrlSetState($chkAtkPln, $GUI_UNCHECKED)
+                                   _PushToPushBullet("Disabled attack scheduler!")
+                               EndIf
+                               _DeleteMessageOfPushBullet($iden[$x])
+                            EndIf
 							If StringInStr($body[$x], StringUpper($iOrigPushBullet) & " SENDCHAT") Then
 								$FoundChatMessage = 1
 								$chatMessage = StringRight($body[$x], StringLen($body[$x]) - StringLen("BOT " & StringUpper($iOrigPushBullet) & " SENDCHAT "))
@@ -309,6 +326,22 @@ Func _RemoteControlPushBullet()
 								btnStart()
 								SetLog("Pushbullet: Your request has been received. Bot is now Started", $COLOR_BLUE)
 								_PushToPushBullet("Request to Start..." & "\n" & "Your bot is now Starting.")
+								_DeleteMessageOfPushBullet($iden[$x])
+							ElseIf StringInStr($body[$x], StringUpper($iOrigPushBullet) & " SWITCHPROFILE") Then
+								$VillageSelect = StringRight($body[$x], StringLen($body[$x]) - StringLen("BOT " & StringUpper($iOrigPushBullet) & " SWITCHPROFILE "))
+								Local $iIndex = _GUICtrlComboBox_FindString($cmbProfile, $VillageSelect)
+								If $iIndex = -1 Then
+								SetLog("PushBullet: Profile Switch failed", $COLOR_RED)
+								$profileString = StringReplace(_GUICtrlComboBox_GetList($cmbProfile), "|", "\n")
+								_PushToPushBullet($iOrigPushBullet & " | " & GetTranslated(18, 128, "Error Switch Profile") & ":\n" & GetTranslated(18, 129, "Available Profiles") & ":\n" & $profileString)
+							Else
+								btnStop()
+								_GUICtrlComboBox_SetCurSel($cmbProfile, $iIndex)
+								cmbProfile()
+								SetLog("PushBullet: Profile Switch success!", $COLOR_GREEN)
+								_PushToPushBullet($iOrigPushBullet & " | " & GetTranslated(18, 130, "Switched to Profile") & ": " & $VillageSelect & GetTranslated(18, 131, " Success!"))
+								btnStart()
+							EndIf
 								_DeleteMessageOfPushBullet($iden[$x])
 							Else
 								Local $lenstr = StringLen(GetTranslated(620, 1, -1) & " " & StringUpper($iOrigPushBullet) & " " & "")
@@ -477,10 +510,13 @@ Func _RemoteControlPushBullet()
 						Local $txtTroopStats = " | " & GetTranslated(18, 114, "Troops/Spells set to Train") & ":\n" & "Barbs:" & $BarbComp & " Arch:" & $ArchComp & " Gobl:" & $GoblComp
 						$txtTroopStats &= "\n" & "Giant:" & $GiantComp & " WallB:" & $WallComp & " Wiza:" & $WizaComp
 						$txtTroopStats &= "\n" & "Balloon:" & $BallComp & " Heal:" & $HealComp & " Dragon:" & $DragComp & " Pekka:" & $PekkComp
+						$txtTroopStats &= "\n" & "BabyD:" & $BabyDComp & " Miner:" & $MineComp
 						$txtTroopStats &= "\n" & "Mini:" & $MiniComp & " Hogs:" & $HogsComp & " Valks:" & $ValkComp
 						$txtTroopStats &= "\n" & "Golem:" & $GoleComp & " Witch:" & $WitcComp & " Lava:" & $LavaComp
+						$txtTroopStats &= "\n" & "Bowler:" & $BowlComp
 						$txtTroopStats &= "\n" & "LSpell:" & $iLightningSpellComp & " HeSpell:" & $iHealSpellComp & " RSpell:" & $iRageSpellComp & " JSpell:" & $iJumpSpellComp
-						$txtTroopStats &= "\n" & "FSpell:" & $iFreezeSpellComp & " PSpell:" & $iPoisonSpellComp & " ESpell:" & $iEarthSpellComp & " HaSpell:" & $iHasteSpellComp & "\n"
+						$txtTroopStats &= "\n" & "FSpell:" & $iFreezeSpellComp & " PSpell:" & $iPoisonSpellComp & " ESpell:" & $iEarthSpellComp & " HaSpell:" & $iHasteSpellComp
+						$txtTroopStats &= "\n" & "CSpell:" & $iCloneSpellComp & " SSpell:" & $iSkeletonSpellComp & "\n"
 						$txtTroopStats &= "\n" & GetTranslated(18, 115, "Current Trained Troops & Spells") & ":"
 						For $i = 0 To UBound($TroopSpellStats) - 1
 							If $TroopSpellStats[$i][0] <> "" Then

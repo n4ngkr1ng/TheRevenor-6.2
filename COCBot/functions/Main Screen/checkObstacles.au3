@@ -1,3 +1,4 @@
+
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: checkObstacles
 ; Description ...: Checks whether something is blocking the pixel for mainscreen and tries to unblock
@@ -22,11 +23,11 @@ Func checkObstacles() ;Checks if something is in the way for mainscreen
 		Return True
 	EndIf
 
-	;Chalicucu click Cancel Button while load other village
-	; If _ColorCheck(_GetPixelColor(443, 430, True), Hex(4284390935, 6), 20) Then
-	If _GetPixelColor(443, 430, True) = Hex(4284390935, 6) Then
-		PureClick(383, 430, 1, 0, "Click Cancel")      ;Click Cancel
-		If _Sleep(250) Then Return
+    ;Chalicucu click Cancel Button while load other village
+    ; If _ColorCheck(_GetPixelColor(443, 430, True), Hex(4284390935, 6), 20) Then
+    If _GetPixelColor(443, 430, True) = Hex(4284390935, 6) Then
+        PureClick(383, 430, 1, 0, "Click Cancel")      ;Click Cancel
+        If _Sleep(250) Then Return
     EndIf
 
 	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -139,7 +140,10 @@ Func checkObstacles() ;Checks if something is in the way for mainscreen
 	If _CheckPixel($aIsMainGrayed, $bNoCapturePixel) Then
 		PureClickP($aAway, 1, 0, "#0133") ;Click away If things are open
 		If _Sleep(1000) Then Return
-		PureClick(354, 435, 1, 0, "Click Cancel") ;Click Cancel Button
+		If _ColorCheck(_GetPixelColor(383, 405), Hex(0xF0BE70, 6), 20) Then
+			SetLog("Found Window Load Click Cancel", $COLOR_RED)
+			PureClick(354, 435, 1, 0, "Click Cancel") ;Click Cancel Button
+		EndIf
 		$MinorObstacle = True
 		If _Sleep($iDelaycheckObstacles1) Then Return
 		Return False

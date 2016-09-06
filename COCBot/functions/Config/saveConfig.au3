@@ -13,6 +13,7 @@
 ; Example .......: No
 ; ===============================================================================================================================
 
+
 Func saveConfig() ;Saves the controls settings to the config
 
 	;from GUI donate fields to variables  ----------------------------------------
@@ -675,7 +676,7 @@ Func saveConfig() ;Saves the controls settings to the config
 	$iValueSinglePBTimeForced = GUICtrlRead($txtSinglePBTimeForced)
 	$iValuePBTimeForcedExit = GUICtrlRead($txtPBTimeForcedExit)
 
-;========MOD: Put Heroes To Sleep Due To Personal Break LogOff========
+    ;========MOD: Put Heroes To Sleep Due To Personal Break LogOff========
 	;- Barbarian King
 	If GUICtrlRead($chkPBSleepBK) = $GUI_CHECKED Then
 		$ichkPBSleepBK = 1
@@ -725,6 +726,10 @@ Func saveConfig() ;Saves the controls settings to the config
 	; boost barracks gui -> variables -------------------------------------------------
 	$icmbQuantBoostBarracks = GUICtrlRead($cmbQuantBoostBarracks)
 	$icmbBoostBarracks = GUICtrlRead($cmbBoostBarracks)
+	; boost dark barrack
+	$icmbQuantBoostDarkBarracks = GUICtrlRead($cmbQuantBoostDarkBarracks)
+	$icmbBoostDarkBarracks = GUICtrlRead($cmbBoostDarkBarracks)
+
 	$icmbBoostSpellFactory = GUICtrlRead($cmbBoostSpellFactory)
 	$icmbBoostDarkSpellFactory = GUICtrlRead($cmbBoostDarkSpellFactory)
 	$icmbBoostBarbarianKing = GUICtrlRead($cmbBoostBarbarianKing)
@@ -2152,6 +2157,13 @@ Func saveConfig() ;Saves the controls settings to the config
 	IniWriteS($building, "other", "xBarrack4", $barrackPos[3][0])
 	IniWriteS($building, "other", "yBarrack4", $barrackPos[3][1])
 
+	;--- START Dark Barrack ---
+	IniWriteS($building, "other", "xDarkBarrack1", $DarkbarrackPos[0][0])
+	IniWriteS($building, "other", "yDarkBarrack1", $DarkbarrackPos[0][1])
+
+	IniWriteS($building, "other", "xDarkBarrack2", $DarkbarrackPos[1][0])
+	IniWriteS($building, "other", "yDarkBarrack2", $DarkbarrackPos[1][1])
+	;--- END Dark Barrack ---
 
 	IniWriteS($building, "other", "xspellfactory", $SFPos[0])
 	IniWriteS($building, "other", "yspellfactory", $SFPos[1])
@@ -2342,12 +2354,6 @@ Func saveConfig() ;Saves the controls settings to the config
 	IniWriteS($config, "other", "ValueSinglePBTimeForced", $iValueSinglePBTimeForced)
 	IniWriteS($config, "other", "ValuePBTimeForcedExit", $iValuePBTimeForcedExit)
 
-    ;========MOD: Put Heroes To Sleep Due To Personal Break LogOff========
-	IniWriteS($config, "other", "chkPBSleepBK", $ichkPBSleepBK)
-	IniWriteS($config, "other", "chkPBSleepAQ", $ichkPBSleepAQ)
-	IniWriteS($config, "other", "chkPBSleepGW", $ichkPBSleepGW)
-	;========END MOD: Put Heroes To Sleep Due To Personal Break LogOff========
-
 	IniWriteS($config, "General", "ChkLanguage", $ichkLanguage)
 
 	IniWriteS($config, "General", "ChkDisableSplash", $ichkDisableSplash)
@@ -2517,17 +2523,6 @@ Func saveConfig() ;Saves the controls settings to the config
 	EndIf
 	IniWrite($config, "MOD", "MinDE", GUICtrlRead($txtMinDark))
 
-	; Android Settings - Added by LunaEclipse
-	IniWrite($config, "Android", "Emulator", GUICtrlRead($cmbAndroid))
-	IniWrite($config, "Android", "Instance", GUICtrlRead($txtAndroidInstance))
-
-	; Misc Battle Settings - Added by LunaEclipse
-	If GUICtrlRead($chkFastADBClicks) = $GUI_CHECKED Then
-		IniWrite($config, "Fast Clicks", "UseADBFastClicks", 1)
-	Else
-		IniWrite($config, "Fast Clicks", "UseADBFastClicks", 0)
-	EndIf
-
 	; Wait For Spells
 	If GUICtrlRead($chkDBSpellsWait) = $GUI_CHECKED Then
 		IniWriteS($config, "search", "ChkDBSpellsWait", 1)
@@ -2625,6 +2620,29 @@ Func saveConfig() ;Saves the controls settings to the config
 	Else
 		IniWriteS($config, "pushbullet", "AlertBuilderIdle", "0")
 	EndIf
+
+	; Notify Top Gain Loot - Added by TheRevenor
+	If GUICtrlRead($chkAlertTopGain) = $GUI_CHECKED Then
+		IniWrite($config, "pushbullet", "AlertTopGain", 1)
+	Else
+		IniWrite($config, "pushbullet", "AlertTopGain", 0)
+	EndIf
+
+	; SmartUpgrade - Added by Roro-Titi
+	IniWrite($config, "upgrade", "chkSmartUpgrade", $ichkSmartUpgrade)
+	IniWrite($config, "upgrade", "chkIgnoreTH", $ichkIgnoreTH)
+	IniWrite($config, "upgrade", "chkIgnoreKing", $ichkIgnoreKing)
+	IniWrite($config, "upgrade", "chkIgnoreQueen", $ichkIgnoreQueen)
+	IniWrite($config, "upgrade", "chkIgnoreWarden", $ichkIgnoreWarden)
+	IniWrite($config, "upgrade", "chkIgnoreCC", $ichkIgnoreCC)
+	IniWrite($config, "upgrade", "chkIgnoreLab", $ichkIgnoreLab)
+	IniWrite($config, "upgrade", "chkIgnoreBarrack", $ichkIgnoreBarrack)
+	IniWrite($config, "upgrade", "chkIgnoreDBarrack", $ichkIgnoreDBarrack)
+	IniWrite($config, "upgrade", "chkIgnoreFactory", $ichkIgnoreFactory)
+	IniWrite($config, "upgrade", "chkIgnoreDFactory", $ichkIgnoreDFactory)
+	IniWrite($config, "upgrade", "chkIgnoreGColl", $ichkIgnoreGColl)
+	IniWrite($config, "upgrade", "chkIgnoreEColl", $ichkIgnoreEColl)
+	IniWrite($config, "upgrade", "chkIgnoreDColl", $ichkIgnoreDColl)
 
 	; Profile Switch Settings
 	If GUICtrlRead($chkGoldSwitchMax) = $GUI_CHECKED Then

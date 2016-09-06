@@ -12,12 +12,14 @@
 ; Link ..........: https://github.com/MyBotRun/MyBot/wiki
 ; Example .......: No
 ; ===============================================================================================================================
-#Cs
+
 Func cmbProfile()
 	saveConfig()
 
 	FileClose($hLogFileHandle)
+	$hLogFileHandle = ""        ;- Writing log for each profile in SwitchAcc Mode - DEMEN (Special thanks to ezeck0001)
 	FileClose($hAttackLogFileHandle)
+    $hAttackLogFileHandle = ""    ;- Writing log for each profile in SwitchAcc Mode - DEMEN (Special thanks to ezeck0001)
 
 	; Setup the profile in case it doesn't exist.
 	setupProfile()
@@ -26,9 +28,15 @@ Func cmbProfile()
 	applyConfig()
 	saveConfig()
 
+	;DonateStats ============================
+	InitDonateStats()
+
+    ;Separate Stats add by - Demen
+    UpdateStatsDisplay()
+
 	SetLog("Profile " & $sCurrProfile & " loaded from " & $config, $COLOR_GREEN)
 EndFunc   ;==>cmbProfile
-
+#Cs
 Func btnAddConfirm()
 	Switch @GUI_CtrlId
 		Case $btnAdd
@@ -145,7 +153,6 @@ Func btnRenameConfirm()
 	EndSwitch
 EndFunc   ;==>btnRenameConfirm
 #Ce
-
 Func cmbBotCond()
 	If _GUICtrlComboBox_GetCurSel($cmbBotCond) = 15 Then
 		If _GUICtrlComboBox_GetCurSel($cmbHoursStop) = 0 Then _GUICtrlComboBox_SetCurSel($cmbHoursStop, 1)
@@ -173,6 +180,17 @@ Func btnLocateBarracks()
 	$RunState = $wasRunState
 	AndroidShield("btnLocateBarracks") ; Update shield status due to manual $RunState
 EndFunc   ;==>btnLocateBarracks
+
+
+Func btnLocateDarkBarracks()
+	Local $wasRunState = $RunState
+	$RunState = True
+	ZoomOut()
+	LocateDarkBarrack()
+	$RunState = $wasRunState
+	AndroidShield("btnLocateBarracks") ; Update shield status due to manual $RunState
+EndFunc   ;==>btnLocateDarkBarracks
+
 
 Func btnLocateArmyCamp()
 	Local $wasRunState = $RunState

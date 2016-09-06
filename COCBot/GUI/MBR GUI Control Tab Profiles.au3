@@ -12,14 +12,12 @@
 ; Link ..........: https://github.com/MyBotRun/MyBot/wiki
 ; Example .......: No
 ; ===============================================================================================================================
-
+#Cs
 Func cmbProfile()
 	saveConfig()
 
 	FileClose($hLogFileHandle)
-	$hLogFileHandle = ""		;- Writing log for each profile in SwitchAcc Mode - DEMEN (Special thanks to ezeck0001)
 	FileClose($hAttackLogFileHandle)
-    $hAttackLogFileHandle = ""	;- Writing log for each profile in SwitchAcc Mode - DEMEN (Special thanks to ezeck0001)
 
 	; Setup the profile in case it doesn't exist.
 	setupProfile()
@@ -27,16 +25,13 @@ Func cmbProfile()
 	readConfig()
 	applyConfig()
 	saveConfig()
-
+	
 	;DonateStats ============================
 	InitDonateStats()
 
-	;Separate Stats add by - Demen
-    UpdateStatsDisplay()
-
 	SetLog("Profile " & $sCurrProfile & " loaded from " & $config, $COLOR_GREEN)
- EndFunc   ;==>cmbProfile
-
+EndFunc   ;==>cmbProfile
+#Ce
 Func btnAddConfirm()
 	Switch @GUI_CtrlId
 		Case $btnAdd
@@ -137,9 +132,9 @@ Func btnRecycle()
 	SaveConfig()
 	SetLog("Profile " & $sCurrProfile & " was recycled with success", $COLOR_GREEN)
 	SetLog("All unused settings were removed", $COLOR_GREEN)
- EndFunc   ;==>btnRecycle
-
+EndFunc   ;==>btnRecycle
 ; IceCube (Misc v1.0)
+
 Func btnRenameConfirm()
 	Switch @GUI_CtrlId
 		Case $btnRename
@@ -183,8 +178,7 @@ Func btnRenameConfirm()
 		Case Else
 			SetLog("If you are seeing this log message there is something wrong.", $COLOR_RED)
 	EndSwitch
- EndFunc   ;==>btnRenameConfirm
-
+EndFunc   ;==>btnRenameConfirm
 Func setupProfileComboBoxswitch()
 		; Clear the combo box current data in case profiles were deleted
 		GUICtrlSetData($cmbGoldMaxProfile, "", "")

@@ -1,3 +1,4 @@
+
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: CloseCoC
 ; Description ...: Kill then restart CoC
@@ -89,7 +90,7 @@ EndFunc   ;==>OpenCoC
 ; Example .......: No
 ; ===============================================================================================================================
 
-Func WaitnOpenCoC($iWaitTime, $bFullRestart = False)
+Func WaitnOpenCoC($iWaitTime, $bFullRestart = False, $CloseCoC = True)
 	ResumeAndroid()
 	If Not $RunState Then Return
 
@@ -97,7 +98,7 @@ Func WaitnOpenCoC($iWaitTime, $bFullRestart = False)
 	Local $sWaitTime = ""
 	Local $iMin, $iSec, $iHour, $iWaitSec
 	WinGetAndroidHandle()
-	AndroidHomeButton()
+	If $CloseCoC Then AndroidHomeButton()
 	$iWaitSec = Round($iWaitTime / 1000)
 	$iHour = Floor(Floor($iWaitSec / 60) / 60)
 	$iMin = Floor(Mod(Floor($iWaitSec / 60), 60))
@@ -119,9 +120,6 @@ Func WaitnOpenCoC($iWaitTime, $bFullRestart = False)
 	Else
 		waitMainScreen()
 	EndIf
-	;========MOD: Put Heroes To Sleep Due To Personal Break LogOff========
- 	ToggleGuard(False)
-	;========MOD: Put Heroes To Sleep Due To Personal Break LogOff========
 
 EndFunc   ;==>WaitnOpenCoC
 

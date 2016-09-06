@@ -18,8 +18,8 @@ GUISetBkColor($COLOR_WHITE, $hGUI_ModOption)
 GUISwitch($hGUI_ModOption)
 
 	; SmartZap Settings
-	Local $x = 20, $y = 23
-    $grpStatsMisc = GUICtrlCreateGroup("Smart Zap && Extreme Zap", $x - 20, $y - 20, 438, 138)
+	Local $x = 20, $y = 25
+    $grpStatsMisc = GUICtrlCreateGroup("Smart Zap && Extreme Zap", $x - 20, $y - 20, 438, 148)
 		GUICtrlCreateIcon($pIconLib, $eIcnLightSpell, $x - 10, $y + 20, 24, 24)
 		GUICtrlCreateIcon($pIconLib, $eIcnDrill, $x - 10, $y - 7, 24, 24)
 		$chkSmartLightSpell = GUICtrlCreateCheckbox("Use Lightning Spells to SmartZap Drills", $x + 20, $y - 5, -1, -1)
@@ -91,8 +91,8 @@ GUISwitch($hGUI_ModOption)
 ; Example .......: No
 ; ===============================================================================================================================
 
-Local $x = 20, $y = 162 ;150
-	$grpMultyFarming = GUICtrlCreateGroup( "Multy-Farming With Smart Switch", $x - 20, $y - 20, 438, 62)
+Local $x = 20, $y = 177 ;150
+	$grpMultyFarming = GUICtrlCreateGroup( "Multy-Farming With Smart Switch", $x - 20, $y - 20, 438, 65)
 	;$x -= 10
 		$chkMultyFarming = GUICtrlCreateCheckbox(GetTranslated(17,1, "Multy-Farming"), $x - 10, $y -7, -1 , -1)
 			$txtTip = GetTranslated(17,3, "Will switch account and attack, then switch back")
@@ -149,42 +149,6 @@ Local $x = 20, $y = 162 ;150
 			GUICtrlSetOnEvent(-1, "btnmultyDetectAcc")
 			GUICtrlSetState(-1, $GUI_ENABLE)
 		GUICtrlCreateGroup("", -99, -99, 1, 1)
-
-; #FUNCTION# ====================================================================================================================
-; Name ..........: Android Settings
-; Description ...: This file Includes GUI Design
-; Syntax ........:
-; Parameters ....: None
-; Return values .: None
-; Author ........: LunaEclipse(February, 2016)
-; Modified ......: TheRevenor (Jul, 2016)
-; Remarks .......: This file is part of MyBot, previously known as ClashGameBot. Copyright 2015
-;                  MyBot is distributed under the terms of the GNU GPL
-; Related .......:
-; Link ..........: https://github.com/MyBotRun/MyBot/wiki
-; Example .......: No
-; ===============================================================================================================================
-
-	Local $x = 20, $y = 223
-	$grpHideAndroid = GUICtrlCreateGroup("Android Options", $x - 20, $y - 20, 438, 68)
-		$cmbAndroid = GUICtrlCreateCombo("", $x - 10, $y - 5, 130, 18, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
-			$txtTip = "Use this to select the Android Emulator to use with this profile."
-			_GUICtrlSetTip(-1, $txtTip)
-			setupAndroidComboBox()
-			GUICtrlSetState(-1, $GUI_SHOW)
-			GUICtrlSetOnEvent(-1, "cmbAndroid")
-		$lblAndroidInstance = GUICtrlCreateLabel("Instance:", $x + 130, $y - 2 , 60, 21, $SS_RIGHT)
-		$txtAndroidInstance = GUICtrlCreateInput("", $x + 200, $y - 5, 210, 20, BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER))
-			$txtTip = "Enter the Instance to use with this profile."
-			_GUICtrlSetTip(-1, $txtTip)
-			GUICtrlSetOnEvent(-1, "txtAndroidInstance")
-			GUICtrlSetState(-1, $GUI_DISABLE)
-		$chkFastADBClicks = GUICtrlCreateCheckbox("Enable Fast ADB Clicks", $x - 10, $y + 20, -1, -1)
-			$txtTip = "Tick this to enable faster ADB deployment of Troops for MEmu and Droid4x" & @CRLF & @CRLF & _
-				      "     WARNING:  This is experimental, if you have issues with deployment, disable it."
-			_GUICtrlSetTip(-1, $txtTip)
-			GUICtrlSetOnEvent(-1, "chkFastADBClicks")
-	GUICtrlCreateGroup("", -99, -99, 1, 1)
 
 	; Chalicucu & demen: switch CoC Acc GUI
 	Local $x = 20, $y = 291

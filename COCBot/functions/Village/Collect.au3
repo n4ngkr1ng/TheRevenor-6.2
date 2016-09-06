@@ -1,3 +1,4 @@
+
 ; #FUNCTION# ====================================================================================================================
 ; Name ..........: Collect
 ; Description ...:
@@ -39,6 +40,8 @@ Func Collect()
 	; Setup arrays, including default return values for $return
 	Local $Filename = ""
 	Local $CollectXY
+
+	IsWaitingForConnection()
 
 	Local $aResult = returnMultipleMatchesOwnVillage($directory)
 	If UBound($aResult) > 1 Then
@@ -132,21 +135,21 @@ Func Collect()
 		$iGoldFromMines += $tempGoldCollected
 		$iGoldTotal += $tempGoldCollected
 		If $ichkSwitchAcc = 1 Then $aGoldTotalAcc[$nCurCOCAcc - 1] += $tempGoldCollected ; Separate Stats per Each Account - SwitchAcc Mode - DEMEN
-    EndIf
+	EndIf
 
 	If $tempElixir <> "" And $iElixirCurrent <> "" Then
 		$tempElixirCollected = $iElixirCurrent - $tempElixir
 		$iElixirFromCollectors += $tempElixirCollected
 		$iElixirTotal += $tempElixirCollected
 		If $ichkSwitchAcc = 1 Then $aElixirTotalAcc[$nCurCOCAcc - 1] += $tempElixirCollected ; Separate Stats per Each Account - SwitchAcc Mode - DEMEN
-    EndIf
+	EndIf
 
 	If $tempDElixir <> "" And $iDarkCurrent <> "" Then
 		$tempDElixirCollected = $iDarkCurrent - $tempDElixir
 		$iDElixirFromDrills += $tempDElixirCollected
 		$iDarkTotal += $tempDElixirCollected
-		If $ichkSwitchAcc = 1 Then $aDarkTotalAcc[$nCurCOCAcc - 1] += $tempDElixirCollected  ; Separate Stats per Each Account - SwitchAcc Mode - DEMEN
-    EndIf
+        If $ichkSwitchAcc = 1 Then $aDarkTotalAcc[$nCurCOCAcc - 1] += $tempDElixirCollected  ; Separate Stats per Each Account - SwitchAcc Mode - DEMEN
+	EndIf
 
 	UpdateStats()
 EndFunc   ;==>Collect

@@ -711,7 +711,6 @@ Func applyConfig($bRedrawAtExit = True) ;Applies the data from config to the con
 		GUICtrlSetState($chkCloseWaitEnable, $GUI_UNCHECKED)
 		_GUI_Value_STATE("DISABLE", $groupCloseWaitTrain)
 	EndIf
-	chkCloseWaitEnable()
 	If $ichkCloseWaitTrain = 1 Then
 		GUICtrlSetState($chkCloseWaitTrain, $GUI_CHECKED)
 	ElseIf $ichkCloseWaitTrain = 0 Then
@@ -2039,23 +2038,23 @@ Func applyConfig($bRedrawAtExit = True) ;Applies the data from config to the con
 	GUICtrlSetData($txtPBTimeForcedExit, $iValuePBTimeForcedExit)
 	chkSinglePBTForced()
 
-	;========MOD: Put Heroes To Sleep Due To Personal Break LogOff========
-	If $ichkPBSleepBK = 1 Then
-		GUICtrlSetState($chkPBSleepBK, $GUI_CHECKED)
-	Else
-		GUICtrlSetState($chkPBSleepBK, $GUI_UNCHECKED)
-	EndIf
-	If $ichkPBSleepAQ = 1 Then
-		GUICtrlSetState($chkPBSleepAQ, $GUI_CHECKED)
-	Else
-		GUICtrlSetState($chkPBSleepAQ, $GUI_UNCHECKED)
-	EndIf
-	If $ichkPBSleepGW = 1 Then
-		GUICtrlSetState($chkPBSleepGW, $GUI_CHECKED)
-	Else
-		GUICtrlSetState($chkPBSleepGW, $GUI_UNCHECKED)
-	EndIf
-	;========END MOD: Put Heroes To Sleep Due To Personal Break LogOff========
+    ;========MOD: Put Heroes To Sleep Due To Personal Break LogOff========
+    If $ichkPBSleepBK = 1 Then
+        GUICtrlSetState($chkPBSleepBK, $GUI_CHECKED)
+    Else
+        GUICtrlSetState($chkPBSleepBK, $GUI_UNCHECKED)
+    EndIf
+    If $ichkPBSleepAQ = 1 Then
+        GUICtrlSetState($chkPBSleepAQ, $GUI_CHECKED)
+    Else
+        GUICtrlSetState($chkPBSleepAQ, $GUI_UNCHECKED)
+    EndIf
+    If $ichkPBSleepGW = 1 Then
+        GUICtrlSetState($chkPBSleepGW, $GUI_CHECKED)
+    Else
+        GUICtrlSetState($chkPBSleepGW, $GUI_UNCHECKED)
+    EndIf
+    ;========END MOD: Put Heroes To Sleep Due To Personal Break LogOff========
 
 	;multilanguage
 	LoadLanguagesComboBox() ; recreate combo box values
@@ -2110,6 +2109,10 @@ Func applyConfig($bRedrawAtExit = True) ;Applies the data from config to the con
 	; boost barracks ---------------------------------------------------------------------
 	_GUICtrlComboBox_SetCurSel($cmbQuantBoostBarracks, $icmbQuantBoostBarracks)
 	_GUICtrlComboBox_SetCurSel($cmbBoostBarracks, $icmbBoostBarracks)
+	; boost dark barrack
+	_GUICtrlComboBox_SetCurSel($cmbQuantBoostDarkBarracks, $icmbQuantBoostDarkBarracks)
+	_GUICtrlComboBox_SetCurSel($cmbBoostDarkBarracks, $icmbBoostDarkBarracks)
+
 	_GUICtrlComboBox_SetCurSel($cmbBoostSpellFactory, $icmbBoostSpellFactory)
 	_GUICtrlComboBox_SetCurSel($cmbBoostDarkSpellFactory, $icmbBoostDarkSpellFactory)
 	_GUICtrlComboBox_SetCurSel($cmbBoostBarbarianKing, $icmbBoostBarbarianKing)
@@ -2629,24 +2632,6 @@ Func applyConfig($bRedrawAtExit = True) ;Applies the data from config to the con
 
 	GUICtrlSetData($txtMinDark, $itxtMinDE)
 
-	; Android Settings - Added by LunaEclipse
-	If _GUICtrlComboBox_FindStringExact($cmbAndroid, String($sAndroid)) <> -1 Then
-		_GUICtrlComboBox_SelectString($cmbAndroid, String($sAndroid))
-	Else
-		_GUICtrlComboBox_SetCurSel($cmbAndroid, 0)
-	EndIf
-	GUICtrlSetData($txtAndroidInstance, $sAndroidInstance)
-	modifyAndroid()
-
-	; Misc Battle Settings - Added by LunaEclipse
-	If $AndroidAdbClicksEnabled = 1 Then
-		GUICtrlSetState($chkFastADBClicks, $GUI_CHECKED)
-		$AndroidAdbClicksEnabled = True
-	Else
-		GUICtrlSetState($chkFastADBClicks, $GUI_UNCHECKED)
-		$AndroidAdbClicksEnabled = False
-	EndIf
-
 	;Wait For Spells
 	If $iEnableSpellsWait[$DB] = 1 Then
 		GUICtrlSetState($chkDBSpellsWait, $GUI_CHECKED)
@@ -2746,6 +2731,13 @@ Func applyConfig($bRedrawAtExit = True) ;Applies the data from config to the con
 		GUICtrlSetState($chkAlertBuilderIdle, $GUI_UNCHECKED)
 	EndIf
 
+	; Notify Top Gain Loot - Added by TheRevenor
+	If $pAlertTopGain = 1 Then
+		GUICtrlSetState($chkAlertTopGain, $GUI_CHECKED)
+	ElseIf $pAlertTopGain = 0 Then
+		GUICtrlSetState($chkAlertTopGain, $GUI_UNCHECKED)
+	EndIf
+
 	; Profile Switch
 	If $ichkGoldSwitchMax = 1 Then
 		GUICtrlSetState($chkGoldSwitchMax, $GUI_CHECKED)
@@ -2806,6 +2798,93 @@ Func applyConfig($bRedrawAtExit = True) ;Applies the data from config to the con
 	EndIf
 	_GUICtrlComboBox_SetCurSel($cmbTrophyMinProfile, $icmbTrophyMinProfile)
 	GUICtrlSetData($txtMinTrophyAmount, $itxtMinTrophyAmount)
+
+	; SmartUpgrade - Added by Roro-Titi
+	If $ichkSmartUpgrade = 1 Then
+		GUICtrlSetState($chkSmartUpgrade, $GUI_CHECKED)
+	Else
+		GUICtrlSetState($chkSmartUpgrade, $GUI_UNCHECKED)
+	EndIf
+
+	If $ichkIgnoreTH = 1 Then
+		GUICtrlSetState($chkIgnoreTH, $GUI_CHECKED)
+	Else
+		GUICtrlSetState($chkIgnoreTH, $GUI_UNCHECKED)
+	EndIf
+
+	If $ichkIgnoreKing = 1 Then
+		GUICtrlSetState($chkIgnoreKing, $GUI_CHECKED)
+	Else
+		GUICtrlSetState($chkIgnoreKing, $GUI_UNCHECKED)
+	EndIf
+
+	If $ichkIgnoreQueen = 1 Then
+		GUICtrlSetState($chkIgnoreQueen, $GUI_CHECKED)
+	Else
+		GUICtrlSetState($chkIgnoreQueen, $GUI_UNCHECKED)
+	EndIf
+
+	If $ichkIgnoreWarden = 1 Then
+		GUICtrlSetState($chkIgnoreWarden, $GUI_CHECKED)
+	Else
+		GUICtrlSetState($chkIgnoreWarden, $GUI_UNCHECKED)
+	EndIf
+
+	If $ichkIgnoreCC = 1 Then
+		GUICtrlSetState($chkIgnoreCC, $GUI_CHECKED)
+	Else
+		GUICtrlSetState($chkIgnoreCC, $GUI_UNCHECKED)
+	EndIf
+
+	If $ichkIgnoreLab = 1 Then
+		GUICtrlSetState($chkIgnoreLab, $GUI_CHECKED)
+	Else
+		GUICtrlSetState($chkIgnoreLab, $GUI_UNCHECKED)
+	EndIf
+
+	If $ichkIgnoreBarrack = 1 Then
+		GUICtrlSetState($chkIgnoreBarrack, $GUI_CHECKED)
+	Else
+		GUICtrlSetState($chkIgnoreBarrack, $GUI_UNCHECKED)
+	EndIf
+
+	If $ichkIgnoreDBarrack = 1 Then
+		GUICtrlSetState($chkIgnoreDBarrack, $GUI_CHECKED)
+	Else
+		GUICtrlSetState($chkIgnoreDBarrack, $GUI_UNCHECKED)
+	EndIf
+
+	If $ichkIgnoreFactory = 1 Then
+		GUICtrlSetState($chkIgnoreFactory, $GUI_CHECKED)
+	Else
+		GUICtrlSetState($chkIgnoreFactory, $GUI_UNCHECKED)
+	EndIf
+
+	If $ichkIgnoreDFactory = 1 Then
+		GUICtrlSetState($chkIgnoreDFactory, $GUI_CHECKED)
+	Else
+		GUICtrlSetState($chkIgnoreDFactory, $GUI_UNCHECKED)
+	EndIf
+
+	If $ichkIgnoreGColl = 1 Then
+		GUICtrlSetState($chkIgnoreGColl, $GUI_CHECKED)
+	Else
+		GUICtrlSetState($chkIgnoreGColl, $GUI_UNCHECKED)
+	EndIf
+
+	If $ichkIgnoreEColl = 1 Then
+		GUICtrlSetState($chkIgnoreEColl, $GUI_CHECKED)
+	Else
+		GUICtrlSetState($chkIgnoreEColl, $GUI_UNCHECKED)
+	EndIf
+
+	If $ichkIgnoreDColl = 1 Then
+		GUICtrlSetState($chkIgnoreDColl, $GUI_CHECKED)
+	Else
+		GUICtrlSetState($chkIgnoreDColl, $GUI_UNCHECKED)
+	EndIf
+
+	chkSmartUpgrade()
 
 	;Apply to switch Attack Standard after THSnipe End ==>
 	If $ichkTSActivateCamps2 = 1 Then
