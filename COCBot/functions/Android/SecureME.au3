@@ -12,7 +12,6 @@
 ; Link ..........: https://github.com/MyBotRun/MyBot/wiki
 ; Example .......: No
 ; ===============================================================================================================================
-
 DeleteOtherFoldersInSharedFolder()
 
 Func RemoveFolderFromInUseList()
