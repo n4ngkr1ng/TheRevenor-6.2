@@ -160,6 +160,12 @@ $hGUI_NOTIFY_TAB_ITEM2 = GUICtrlCreateTabItem(GetTranslated(600, 19, "Instructio
 	Local $x = 25, $y = 45
 		$lblgrppushbullet = GUICtrlCreateGroup(GetTranslated(620, 0, "Remote Control Functions"), $x - 20, $y - 20, 430, 334)
 			$x -= 10
+			$btnHelpPushBullet = GUICtrlCreateButton("PushBullet HELP", $x + 200, $y - 12, 100, 20)
+				_GUICtrlSetTip(-1, "PushBullet HELP - All commands")
+				GUICtrlSetOnEvent(-1, "btnHelpPushBullet")
+			$btnHelpTelegram = GUICtrlCreateButton("Telegram HELP", $x + 315, $y - 12, 100, 20)
+				_GUICtrlSetTip(-1, "Telegram HELP - All commands")
+				GUICtrlSetOnEvent(-1, "btnHelpTelegram")
 			$lblPBdesc = GUICtrlCreateLabel(GetTranslated(620, 1, "BOT") & " " & GetTranslated(620, 14,"HELP") & GetTranslated(620,2, " - send this help message") & @CRLF & _
 				GetTranslated(620, 1, -1) & " " & GetTranslated(620, 15,"DELETE") & GetTranslated(620, 3, " - delete all your previous messages") & @CRLF & _
 				GetTranslated(620, 1, -1) & " START - start the bot named" & @CRLF & _
@@ -190,13 +196,6 @@ $hGUI_NOTIFY_TAB_ITEM2 = GUICtrlCreateTabItem(GetTranslated(600, 19, "Instructio
                 GetTranslated(620,1, -1) & " " & GetTranslated(638,5,"ALLPRO <all pro number>") & GetTranslated(638,15, " - set up profiles correspond to all exists accounts") & @CRLF & _
                 GetTranslated(620,1, -1) & " " & GetTranslated(638,9,"HIDE") & GetTranslated(638,19, " - hide android emulator") & @CRLF & _
                 GetTranslated(620,1, -1) & " " & GetTranslated(638,10,"ATKP 1/0") & GetTranslated(638,20, " - 1-enable/0-disable attack plan"), $x, $y - 5, -1, -1, $SS_LEFT)
-			$y = 240
-			$btnHelpPushBullet = GUICtrlCreateButton("PushBullet HELP", $x + 200, $y + 90, 100, 20)
-				_GUICtrlSetTip(-1, "PushBullet HELP - All commands")
-				GUICtrlSetOnEvent(-1, "btnHelpPushBullet")
-			$btnHelpTelegram = GUICtrlCreateButton("Telegram HELP", $x + 315, $y + 90, 100, 20)
-				_GUICtrlSetTip(-1, "Telegram HELP - All commands")
-				GUICtrlSetOnEvent(-1, "btnHelpTelegram")
 	GUICtrlCreateGroup("", -99, -99, 1, 1)
 GUICtrlCreateTabItem("")
 
