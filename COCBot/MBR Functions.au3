@@ -284,10 +284,10 @@
 #include "functions\Attack\attackFunctions.au3"
 
 ; SmartUpgrade - Added by Roro-Titi
-#include "functions\MOD\SmartUpgrade\AutoUpgrade.au3"
+#include "functions\Mod\SmartUpgrade\AutoUpgrade.au3"
 
 ; SwitchCOCAcc - Added by Chalicucu
-#include "functions\MOD\SwitchCOCAcc\SwitchCOCAcc.au3"        ; Chalicucu Switch COC account
+#include "functions\Mod\SwitchCOCAcc\SwitchCOCAcc.au3"        ; Chalicucu Switch COC account
 
 ; ExtremeZap - Added by TheRevenor
 #include "functions\Mod\SmartZap\ExtremeZap.au3"
