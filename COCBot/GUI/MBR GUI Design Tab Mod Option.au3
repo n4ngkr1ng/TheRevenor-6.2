@@ -150,9 +150,40 @@ Local $x = 20, $y = 177 ;150
 			GUICtrlSetState(-1, $GUI_ENABLE)
 		GUICtrlCreateGroup("", -99, -99, 1, 1)
 
-	; Chalicucu & demen: switch CoC Acc GUI
-	Local $x = 20, $y = 248
-	GUICtrlCreateGroup(GetTranslated(636,2, "Switch CoC Accounts"), $x - 20, $y - 20, 440, 120)
+; #FUNCTION# ====================================================================================================================
+; Name ..........: Android Settings
+; Description ...: This file Includes GUI Design
+; Syntax ........:
+; Parameters ....: None
+; Return values .: None
+; Author ........: LunaEclipse(February, 2016)
+; Modified ......: TheRevenor (Jul, 2016)
+; Remarks .......: This file is part of MyBot, previously known as ClashGameBot. Copyright 2015
+;                  MyBot is distributed under the terms of the GNU GPL
+; Related .......:
+; Link ..........: https://github.com/MyBotRun/MyBot/wiki
+; Example .......: No
+; ===============================================================================================================================
+
+	Local $x = 20, $y = 247
+	$grpHideAndroid = GUICtrlCreateGroup("Android Options", $x - 20, $y - 20, 438, 43)
+		$cmbAndroid = GUICtrlCreateCombo("", $x - 10, $y - 5, 130, 18, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
+			$txtTip = "Use this to select the Android Emulator to use with this profile."
+			_GUICtrlSetTip(-1, $txtTip)
+			setupAndroidComboBox()
+			GUICtrlSetState(-1, $GUI_SHOW)
+			GUICtrlSetOnEvent(-1, "cmbAndroid")
+		$lblAndroidInstance = GUICtrlCreateLabel("Instance:", $x + 130, $y - 2 , 60, 21, $SS_RIGHT)
+		$txtAndroidInstance = GUICtrlCreateInput("", $x + 200, $y - 5, 210, 20, BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER))
+			$txtTip = "Enter the Instance to use with this profile."
+			_GUICtrlSetTip(-1, $txtTip)
+			GUICtrlSetOnEvent(-1, "txtAndroidInstance")
+			GUICtrlSetState(-1, $GUI_DISABLE)
+	GUICtrlCreateGroup("", -99, -99, 1, 1)
+
+    ; Chalicucu & demen: switch CoC Acc GUI
+	Local $x = 20, $y = 291
+	GUICtrlCreateGroup(GetTranslated(636,2, "Switch CoC Accounts"), $x - 20, $y - 20, 440, 90)
 		$chkSwitchAcc = GUICtrlCreateCheckbox("Enable Switch Account", $x - 10, $y - 5, -1, -1)
 			$txtTip = "Switch to another account & profile when remain train time >=3 minutes" & @CRLF & _
 			          "This function supports maximum 8 CoC accounts & 9 Bot profiles" & @CRLF & _
@@ -160,37 +191,37 @@ Local $x = 20, $y = 177 ;150
 			GUICtrlSetTip(-1, $txtTip)
 			GUICtrlSetOnEvent(-1, "chkSwitchAcc")
 			GUICtrlSetState(-1, $GUI_UNCHECKED)
-		$lbMapHelpAccPro = GUICtrlCreateLabel("Mapped Acc - Profile:", $x + 135, $y - 10, 130, 20)
+		$lbMapHelpAccPro = GUICtrlCreateLabel("Mapped Acc - Profile:", $x + 100, $y - 20, 130, 20)
 			GUICtrlSetColor(-1, $COLOR_BLUE)
-	    $lbMapHelp = GUICtrlCreateLabel("", $x + 240, $y - 10, 175, 30)
+	    $lbMapHelp = GUICtrlCreateLabel("", $x + 201, $y - 20, 190, 30)
 			GUICtrlSetColor(-1, $COLOR_BLUE)
-		$lbTotalCoCAcc = GUICtrlCreateLabel("Total CoC Accounts:", $x - 10, $y + 18, 100, 20)
-		$txtTotalCoCAcc = GUICtrlCreateInput("0", $x + 99, $y + 18, 18, 18, BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER, $ES_NUMBER, $ES_AUTOHSCROLL))
+		$lbTotalCoCAcc = GUICtrlCreateLabel("Total CoC Accounts:", $x + 138, $y, 100, 20)
+		$txtTotalCoCAcc = GUICtrlCreateInput("0", $x + 240, $y, 18, 18, BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER, $ES_NUMBER, $ES_AUTOHSCROLL))
 			GUICtrlSetLimit(-1, 1)
 			$txtTip = "Number of Google Accounts on emulator" & @CRLF & _
 					  "Supporting maximum 8 Accounts."
 			GUICtrlSetTip(-1,$txtTip)
-		$lbAccBottingOrder = GUICtrlCreateLabel("Accounts Playing List:", $x - 10, $y + 47, 135, 20)
-		$txtAccBottingOrder = GUICtrlCreateInput("12345678", $x + 108, $y + 44, 70, 18,  BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER, $ES_AUTOHSCROLL))
+		$lbAccBottingOrder = GUICtrlCreateLabel("Accounts Playing List:", $x - 10, $y + 25, 135, 20)
+		$txtAccBottingOrder = GUICtrlCreateInput("12345678", $x + 108, $y + 22, 70, 18,  BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER, $ES_AUTOHSCROLL))
 			$txtTip = "Input group of accounts you want to play."
 			GUICtrlSetTip(-1,$txtTip)
-		$lbProfileIdxOrder = GUICtrlCreateLabel("Mapping Profile Indexs:", $x + 195, $y + 47, 130, 20)
-		$txtProfileIdxOrder = GUICtrlCreateInput("12345678", $x + 320, $y + 44, 70, 18,  BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER, $ES_AUTOHSCROLL))
+		$lbProfileIdxOrder = GUICtrlCreateLabel("Mapping Profile Indexs:", $x + 195, $y + 25, 130, 20)
+		$txtProfileIdxOrder = GUICtrlCreateInput("12345678", $x + 320, $y + 22, 70, 18,  BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER, $ES_AUTOHSCROLL))
 			GUICtrlSetLimit(-1, 8)
 			$txtTip = "Input the order of Profiles correspond to CoC Accounts order."
 			GUICtrlSetTip(-1,$txtTip)
-		$chkAtkPln = GUICtrlCreateCheckbox("Check attack plan", $x - 10, $y + 66, -1, -1)
+		$chkAtkPln = GUICtrlCreateCheckbox("Check attack plan", $x - 10, $y + 44, -1, -1)
 			$txtTip = "Enable/Disable attack plan."
 			GUICtrlSetTip(-1, $txtTip)
 			GUICtrlSetState(-1, $GUI_UNCHECKED)
 			GUICtrlSetOnEvent(-1, "chkAtkPln")
-		$lbSwitchMode = GUICtrlCreateLabel("Switching Mode", $x + 220, $y + 70, 130, 20)
-		$cmbSwitchMode = GUICtrlCreateCombo("", $x + 305, $y + 67, 90, 20, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
+		$lbSwitchMode = GUICtrlCreateLabel("Switching Mode", $x + 220, $y + 48, 130, 20)
+		$cmbSwitchMode = GUICtrlCreateCombo("", $x + 305, $y + 45, 90, 20, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
 			GUICtrlSetTip(-1, "Choose switching mode for play list")
 			GUICtrlSetData(-1, "Shortest Training" & "|" & "Ordered play list" & "|" & "Random")
 			GUICtrlSetOnEvent(-1, "cmbSwitchMode")
 			GUICtrlSetState (-1, $GUI_ENABLE)
-		$chkAccRelax = GUICtrlCreateCheckbox("Attack relax together", $x + 100, $y + 65, -1, -1)
+		$chkAccRelax = GUICtrlCreateCheckbox("Attack relax together", $x + 100, $y + 44, -1, -1)
 			$txtTip = "If attack is not planned for current profile" & @CRLF & _
 			          "Then bot stop emulator and relax!"
 			GUICtrlSetTip(-1, $txtTip)

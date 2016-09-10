@@ -34,9 +34,6 @@ Func VillageSearch() ;Control for searching a village that meets conditions
 		Next
 	EndIf
 
-	_WinAPI_EmptyWorkingSet(GetAndroidPid()) ; Reduce Working Set of Android Process
-	_WinAPI_EmptyWorkingSet(@AutoItPID) ; Reduce Working Set of Bot
-
 	If _Sleep($iDelayVillageSearch1) Then Return
 	$Result = getAttackDisable(346, 182) ; Grab Ocr for TakeABreak check
 	checkAttackDisable($iTaBChkAttack, $Result) ;last check to see If TakeABreak msg on screen for fast PC from PrepareSearch click
@@ -103,7 +100,6 @@ Func VillageSearch() ;Control for searching a village that meets conditions
 		If $Restart = True Then Return ; exit func
 
 		If Mod(($iSkipped + 1), 100) = 0 Then
-			_WinAPI_EmptyWorkingSet(WinGetProcess($HWnD)) ; reduce Android memory
 			If _Sleep($iDelayRespond) Then Return
 			If CheckZoomOut() = False Then Return
 		EndIf
@@ -366,11 +362,9 @@ Func VillageSearch() ;Control for searching a village that meets conditions
 
 		$iSkipped = $iSkipped + 1
 		$iSkippedVillageCount += 1
-		If $ichkSwitchAcc = 1 Then $aSkippedVillageCountAcc[$nCurCOCAcc - 1] += 1 ; SwitchAcc Mod - DEMEN
 		If $iTownHallLevel <> "" Then
 			$iSearchCost += $aSearchCost[$iTownHallLevel - 1]
 			$iGoldTotal -= $aSearchCost[$iTownHallLevel - 1]
-			If $ichkSwitchAcc = 1 Then $aGoldTotalAcc[$nCurCOCAcc - 1] -= $aSearchCost[$iTownHallLevel - 1] ; Separate Stats per Each Account - SwitchAcc Mode - DEMEN
 		EndIf
 		UpdateStats()
 

@@ -91,6 +91,7 @@ Func SetComboTroopComp()
 	EndIf
 
 	Local $TotalTroopsTOtrain = 0
+
 	Switch _GUICtrlComboBox_GetCurSel($cmbTroopComp)
 		Case 0
 			_GUI_Value_STATE("SHOW", $groupTroopsArch & "#" & $groupTroopsTot)
@@ -101,6 +102,7 @@ Func SetComboTroopComp()
 				GUICtrlSetData(Eval("txtNum" & $TroopDarkName[$i]), "0")
 			Next
 			GUICtrlSetData($txtNumArch, $ArmyCampTemp)
+
 		Case 1
 			_GUI_Value_STATE("SHOW", $groupTroopsBarB & "#" & $groupTroopsTot)
 			For $i = 0 To UBound($TroopName) - 1
@@ -110,6 +112,7 @@ Func SetComboTroopComp()
 				GUICtrlSetData(Eval("txtNum" & $TroopDarkName[$i]), "0")
 			Next
 			GUICtrlSetData($txtNumBarb, $ArmyCampTemp)
+
 		Case 2
 			_GUI_Value_STATE("SHOW", $groupTroopsGobl & "#" & $groupTroopsTot)
 			For $i = 0 To UBound($TroopName) - 1
@@ -119,6 +122,7 @@ Func SetComboTroopComp()
 				GUICtrlSetData(Eval("txtNum" & $TroopDarkName[$i]), "0")
 			Next
 			GUICtrlSetData($txtNumGobl, $ArmyCampTemp)
+
 		Case 3
 			_GUI_Value_STATE("SHOW", $groupTroopsArch & "#" & $groupTroopsTot)
 			_GUI_Value_STATE("SHOW", $groupTroopsBarB & "#" & $groupTroopsTot)
@@ -193,6 +197,7 @@ Func SetComboTroopComp()
 			For $i = 0 To UBound($TroopDarkName) - 1
 				GUICtrlSetData(Eval("txtNum" & $TroopDarkName[$i]), "0")
 			Next
+
 			$TotalTroopsTOtrain = 0
 
  			GUICtrlSetData($txtNumGiant, 8)
@@ -273,7 +278,7 @@ Func lblTotalCount()
 	EndIf
 
 	If GUICtrlRead($chkTotalCampForced) = $GUI_CHECKED Then
-		GUICtrlSetData($caltotaltroops, (Floor((GUICtrlRead($lblTotalCount) / GUICtrlRead($txtTotalCampForced)) * 100) < 1 ? (GUICtrlRead($lblTotalCount) > 0 ? 1 : 0) : Floor((GUICtrlRead($lblTotalCount) / GUICtrlRead($txtTotalCampForced)) * 100)))
+	GUICtrlSetData($caltotaltroops, (Floor((GUICtrlRead($lblTotalCount) / GUICtrlRead($txtTotalCampForced)) * 100) < 1 ? (GUICtrlRead($lblTotalCount) > 0 ? 1 : 0) : Floor((GUICtrlRead($lblTotalCount) / GUICtrlRead($txtTotalCampForced)) * 100)))
 	Else
 		GUICtrlSetData($caltotaltroops, (Floor((GUICtrlRead($lblTotalCount) / $ArmyCampTemp) * 100) < 1 ? (GUICtrlRead($lblTotalCount) > 0 ? 1 : 0) : Floor((GUICtrlRead($lblTotalCount) / $ArmyCampTemp) * 100)))
 	EndIf
@@ -417,7 +422,7 @@ Func chkCloseWaitEnable()
 		GUICtrlSetState($chkSwitchAcc, $GUI_DISABLE)		; Demen & chalicucu Switch Account
 	Else
 		For $i = $chkCloseWaitTrain To $lblCloseWaitRdmPercent
-			GUICtrlSetState($i, $GUI_HIDE)
+			GUICtrlSetState($i, $GUI_SHOW)
 		Next
 		$ichkCloseWaitEnable = 0
 		_GUI_Value_STATE("DISABLE", $groupCloseWaitTrain)
@@ -453,7 +458,7 @@ Func btnCloseWaitStopRandom()
 		GUICtrlSetState($btnCloseWaitStop, BitOR($GUI_DISABLE, $GUI_UNCHECKED))
 	Else
 		$ibtnCloseWaitStopRandom = 0
-		GUICtrlSetState($btnCloseWaitStop, $GUI_ENABLE)
+		If GUICtrlRead($chkCloseWaitEnable) = $GUI_CHECKED Then GUICtrlSetState($btnCloseWaitStop, $GUI_ENABLE)
 	EndIf
 EndFunc   ;==>btnCloseWaitStopRandom
 
@@ -503,6 +508,7 @@ Func chkTroopOrder($bNoiseMode = True)
 			For $i = 0 To UBound($DefaultTroopGroup) - 1
 				$sNewTrainList &= $TroopName[$i] & ", "
 			Next
+			$sNewTrainList = StringLeft($sNewTrainList, StringLen($sNewTrainList)-2)
 			Setlog("Current train order= " & $sNewTrainList, $COLOR_BLUE)
 		EndIf
 	EndIf
@@ -534,6 +540,7 @@ Func chkDarkTroopOrder($bNoiseMode = True)
 			For $i = 0 To UBound($DefaultTroopGroupDark) - 1
 				$sNewTrainList &= $TroopDarkName[$i] & ", "
 			Next
+			$sNewTrainList = StringLeft($sNewTrainList, StringLen($sNewTrainList)-2)
 			Setlog("Current train order= " & $sNewTrainList, $COLOR_BLUE)
 		EndIf
 	EndIf
