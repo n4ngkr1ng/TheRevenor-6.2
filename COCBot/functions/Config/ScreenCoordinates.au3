@@ -105,11 +105,9 @@ Global $aWonThreeStarAtkRprt[4] = [534, 180 + $midOffsetY, 0xC8CAC7, 30] ; Cente
 	Global $OpenChatBtn[2]       = [ 10, 334 + $midOffsetY]
 	Global $IsClanTabSelected[4] = [204,  20, 0x6F6C4F,     20]
 	Global $IsClanMessage[4]     = [ 26, 320, 0xE70400,     20]
-
 	Global $ClanRequestTextArea[2]      = [430, 140]
 	Global $ConfirmClanTroopsRequest[2] = [524,228]
 	Global $CampFull[4]  	            = [328, 535 + $midOffsetY, 0xD03840,     20]
-
 	;Global $DropTrophiesStartPoint = [34, 310]
 #ce
 ;	pixel color: location information								BS 850MB (Reg GFX), BS 500MB (Med GFX) : location
@@ -127,7 +125,8 @@ Global $TrainPekk[4] = [474, 459 + $midOffsetY, 0x395671, 40] ; 385470, 395671
 Global $TrainBabyD[4] = [557, 436 + $midOffsetY, 0x88D464, 40] ; 88D464, 88D461, middle of snout
 Global $TrainMine[4] = [663, 425 + $midOffsetY, 0x1A1815, 40] ; 1A1815, 1B1814, right eye brow under hat
 
-Global $TrainMini[4] = [220, 310 + $midOffsetY, 0x182340, 40] ; 15203A, 172039, Dark blue botton of horn
+;Global $TrainMini[4] = [220, 310 + $midOffsetY, 0x182340, 40] ; 15203A, 172039, Dark blue botton of horn
+Global $TrainMini[4] = [216, 309 + $midOffsetY, 0x182240, 40] ; Dark blue botton of horn
 Global $TrainHogs[4] = [305, 318 + $midOffsetY, 0x3A2620, 40] ; 3A2620, 3B2720, brown above right ear
 Global $TrainValk[4] = [415, 315 + $midOffsetY, 0xFF6E18, 40] ; FF6E18, FF6D18, orange right hair curl above eye
 Global $TrainGole[4] = [546, 310 + $midOffsetY, 0xDEC3A8, 40] ; E1C8AD, E3C8AC, top of head
@@ -254,7 +253,12 @@ $yTrain = $yTrain + $yTrainOffset
 Global $TrainLavaRND[4] = [$xTrain + ($xTrainOffset * 0), $yTrain + $midOffsetY, $xTrain + $xBtnTrain + ($xTrainOffset * 0), $yTrain + $yBtnTrain + $midOffsetY]
 Global $TrainBowlRND[4] = [$xTrain + ($xTrainOffset * 1), $yTrain + $midOffsetY, $xTrain + $xBtnTrain + ($xTrainOffset * 1), $yTrain + $yBtnTrain + $midOffsetY]
 
-Global $aArmyTrainButtonRND[4] = [20, 560 + $midOffsetY, 62, 595 + $midOffsetY] ; Main Screen, Army Train Button, RND
-Global $aAttackButtonRND[4] = [20, 623 + $midOffsetY, 110, 690 + $midOffsetY] ; Attack Button, Main Screen, RND
-Global $aFindMatchButtonRND[4] = [150, 520 + $midOffsetY, 345, 590 + $midOffsetY] ; Find Multiplayer Match Button, Attack Screen 860x780 without shield
-Global $NextBtnRND[4] = [720, 545 + $midOffsetY, 850, 584 + $midOffsetY] ;  Next Button
+;~ Global $aArmyTrainButtonRND[4] = [20, 560 + $midOffsetY, 62, 595 + $midOffsetY] ; Main Screen, Army Train Button, RND
+;~ Global $aAttackButtonRND[4] = [20, 623 + $midOffsetY, 110, 690 + $midOffsetY] ; Attack Button, Main Screen, RND
+;~ Global $aFindMatchButtonRND[4] = [150, 520 + $midOffsetY, 345, 590 + $midOffsetY] ; Find Multiplayer Match Button, Attack Screen 860x780 without shield
+;~ Global $NextBtnRND[4] = [720, 545 + $midOffsetY, 850, 584 + $midOffsetY] ;  Next Button
+
+Global $aArmyTrainButtonRND[4] = [20, 540 + $midOffsetY, 55, 570 + $midOffsetY] ; Main Screen, Army Train Button, RND  Screen 860x732
+Global $aAttackButtonRND[4] = [20, 610 + $midOffsetY, 100, 670 + $midOffsetY] ; Attack Button, Main Screen, RND  Screen 860x732
+Global $aFindMatchButtonRND[4] = [200, 510 + $midOffsetY, 300, 530 + $midOffsetY] ; Find Multiplayer Match Button, Both Shield or without shield Screen 860x732
+Global $NextBtnRND[4] = [710, 530 + $midOffsetY, 830, 570 + $midOffsetY] ;  Next Button

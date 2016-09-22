@@ -899,6 +899,8 @@ Func Train()
 	Next
 
 	Local $z = 0, $AreAllFull = 0
+	Local $TotalCapacityOfBarracks = 0
+	Local $m = 0
 
 	For $i = 0 To UBound($TroopsToMake) - 1 ; From pekka to barbarians | OR  Miner to Barbarian if was Sorted before
 
@@ -907,8 +909,8 @@ Func Train()
 			$plural = 0
 			If $TroopsToMake[$i][3] > 1 Then $plural = 1
 
-			Local $m = 0
-			Local $TotalCapacityOfBarracks = 0
+			$m = 0
+			$TotalCapacityOfBarracks = 0
 
 			; This will disable the Barracks without this Troop
 			For $x = 0 To ($numBarracksAvailable - 1)
@@ -1036,8 +1038,8 @@ Func Train()
 			$plural = 0
 			If $DtroopsToMake[$i][3] > 1 Then $plural = 1
 
-			Local $m = 0
-			Local $TotalCapacityOfBarracks = 0
+			$m = 0
+			$TotalCapacityOfBarracks = 0
 
 			; This will disable the Barracks without this Troop
 			For $x = 0 To ($numDarkBarracksAvailable - 1)
@@ -1234,6 +1236,9 @@ Func Train()
 		If $IsFullArmywithHeroesAndSpells = True Then SetLog("Queue troops before attacking.")
 
 		While isBarrack() And $isNormalBuild
+			Local $Result = ""
+			Local $TroopCapacityAfterTraining = ""
+			Local $TotalTime = ""
 			$brrNum += 1
 			If $debugsetlogTrain = 1 Then SetLog("====== Checking available Barrack: " & $brrNum & " ======", $COLOR_PURPLE)
 			If $fullarmy Or $FirstStart Then
@@ -1388,12 +1393,18 @@ Func Train()
 			Next
 
 			If $IsFullArmywithHeroesAndSpells = True Or $FirstStart Then
-				Local $TroopCapacityAfterTraining = getBarrackArmy(525, 276)
-				Local $TotalTime = getBarracksTotalTime(634, 203)
-
-				Local $BarrackStatusTrain[4] ; [0] is Troops Capacity after training , [1] Total Army capacity , [3] Total Time , [4] Barrack capacity
-				$BarrackStatusTrain[0] = $TroopCapacityAfterTraining[0]
-				$BarrackStatusTrain[1] = $TroopCapacityAfterTraining[1]
+  				If $RunState = False Then Return
+  				If Not (IsTrainPage()) Then Return ;exit from train
+			    Local $BarrackStatusTrain[4] ; [0] is Troops Capacity after training , [1] Total Army capacity , [3] Total Time , [4] Barrack capacity
+ 				$TroopCapacityAfterTraining = getBarrackArmy(525, 276)
+				$TotalTime = getBarracksTotalTime(634, 203)
+				If IsArray($TroopCapacityAfterTraining) and  $TroopCapacityAfterTraining[0] <> "" then
+ 					$BarrackStatusTrain[0] = $TroopCapacityAfterTraining[0]
+ 					$BarrackStatusTrain[1] = $TroopCapacityAfterTraining[1]
+ 				Else
+ 					$BarrackStatusTrain[0] = 0
+ 					$BarrackStatusTrain[1] = 0
+ 				EndIf
 				$BarrackStatusTrain[2] = $BarrackCapacity[$BarrackToTrain]
 				If $TotalTime[0] <> "" And $TotalTime[0] <> -1 Then
 					$BarrackStatusTrain[3] = $TotalTime[0]
@@ -1557,24 +1568,33 @@ Func Train()
 
 				EndIf
 
-				Local $TroopCapacityAfterTraining = getBarrackArmy(525, 276)
-				Local $TotalTime = getBarracksTotalTime(634, 203)
-
+ 				If $RunState = False Then Return
+  				If Not (IsTrainPage()) Then Return ;exit from train
 				Local $BarrackStatusTrain[4] ; [0] is Troops Capacity after training , [1] Total Army capacity , [3] Total Time , [4] Barrack capacity
-				$BarrackStatusTrain[0] = $TroopCapacityAfterTraining[0]
-				$BarrackStatusTrain[1] = $TroopCapacityAfterTraining[1]
+
+				$TroopCapacityAfterTraining = getBarrackArmy(525, 276)
+  				$TotalTime = getBarracksTotalTime(634, 203)
+				If IsArray($TroopCapacityAfterTraining) and  $TroopCapacityAfterTraining[0] <> "" then
+ 					$BarrackStatusTrain[0] = $TroopCapacityAfterTraining[0]
+ 					$BarrackStatusTrain[1] = $TroopCapacityAfterTraining[1]
+ 				Else
+ 					$BarrackStatusTrain[0] = 0
+ 					$BarrackStatusTrain[1] = 0
+ 				EndIf
+
 				$BarrackStatusTrain[2] = $BarrackCapacity[$BarrackToTrain]
 				If $TotalTime[0] <> "" And $TotalTime[0] <> -1 Then
 					$BarrackStatusTrain[3] = $TotalTime[0]
 					If $InitBoostTime[$BarrackToTrain][1] > 0 Then
-						$BarrackTimeRemain[$BarrackToTrain] = $TotalTime[1] / 4
+						$BarrackTimeRemain[$BarrackToTrain] = Ceiling($TotalTime[1] / 4)
 					Else
-						$BarrackTimeRemain[$BarrackToTrain] = $TotalTime[1]
+						$BarrackTimeRemain[$BarrackToTrain] = Ceiling($TotalTime[1])
 					EndIf
 				Else
 					$BarrackStatusTrain[3] = 0
 					$BarrackTimeRemain[$BarrackToTrain] = 0
 				EndIf
+
 				If $InitBoostTime[$BarrackToTrain][1] > 0 Then
 					SetLog(" »» NB[" & $BarrackToTrain + 1 & "] Max Queue: " & $BarrackStatusTrain[2] & " | " & $BarrackStatusTrain[0] & "/" & $BarrackStatusTrain[1] & " | Total Time: " & $BarrackStatusTrain[3] & " [B]", $COLOR_BLUE)
 				Else
@@ -1685,6 +1705,9 @@ Func Train()
 				If (isDarkBarrack() Or $iBarrHere = 8) Then ExitLoop
 			WEnd
 			While isDarkBarrack()
+				Local $Result = ""
+				Local $TroopCapacityAfterTraining = ""
+				Local $TotalTime = ""
 				$brrDarkNum += 1
 				If $debugsetlogTrain = 1 Then SetLog("====== Checking available Dark Barrack: " & $brrDarkNum & " ======", $COLOR_PURPLE)
 				If $fullarmy Or $FirstStart Then ; Delete Troops That is being trained
@@ -1844,13 +1867,21 @@ Func Train()
 
 				If $IsFullArmywithHeroesAndSpells = True Or $FirstStart Then
 
-					Local $TroopCapacityAfterTraining = getBarrackArmy(525, 276)
-					Local $TotalTime = getBarracksTotalTime(634, 203)
+ 					Local $BarrackStatusTrain[4] ; [0] is Troops Capacity after training , [1] Total Army capacity , [3] Total Time , [4] Barrack capacity
 
-					Local $BarrackStatusTrain[4] ; [0] is Troops Capacity after training , [1] Total Army capacity , [3] Total Time , [4] Barrack capacity
-					$BarrackStatusTrain[0] = $TroopCapacityAfterTraining[0]
-					$BarrackStatusTrain[1] = $TroopCapacityAfterTraining[1]
-					$BarrackStatusTrain[2] = $DarkBarrackCapacity[$BarrackToTrain]
+ 					$TroopCapacityAfterTraining = getBarrackArmy(525, 276)
+  					$TotalTime = getBarracksTotalTime(634, 203)
+
+ 					If IsArray($TroopCapacityAfterTraining) And $TroopCapacityAfterTraining[0] <> "" then
+ 						$BarrackStatusTrain[0] = $TroopCapacityAfterTraining[0]
+ 						$BarrackStatusTrain[1] = $TroopCapacityAfterTraining[1]
+ 					Else
+ 						$BarrackStatusTrain[0] = 0
+ 						$BarrackStatusTrain[1] = 0
+ 					EndIf
+
+					$BarrackStatusTrain[2] = $DarkBarrackCapacity[$BarrackToTrain
+
 					If $TotalTime[0] <> "" And $TotalTime[0] <> -1 Then
 						$BarrackStatusTrain[3] = $TotalTime[0]
 						If $InitBoostTimeDark[$BarrackToTrain][1] > 0 Then
@@ -1998,13 +2029,22 @@ Func Train()
 							$fullarmy = False
 						EndIf
 					EndIf
-					Local $TroopCapacityAfterTraining = getBarrackArmy(525, 276)
-					Local $TotalTime = getBarracksTotalTime(634, 203)
 
-					Local $BarrackStatusTrain[4] ; [0] is Troops Capacity after training , [1] Total Army capacity , [3] Total Time , [4] Barrack capacity
-					$BarrackStatusTrain[0] = $TroopCapacityAfterTraining[0]
-					$BarrackStatusTrain[1] = $TroopCapacityAfterTraining[1]
+  					Local $BarrackStatusTrain[4] ; [0] is Troops Capacity after training , [1] Total Army capacity , [3] Total Time , [4] Barrack capacity
+
+ 					$TroopCapacityAfterTraining = getBarrackArmy(525, 276)
+ 					$TotalTime = getBarracksTotalTime(634, 203)
+
+ 					If IsArray($TroopCapacityAfterTraining) And $TroopCapacityAfterTraining[0] <> "" then
+ 						$BarrackStatusTrain[0] = $TroopCapacityAfterTraining[0]
+ 						$BarrackStatusTrain[1] = $TroopCapacityAfterTraining[1]
+ 					Else
+ 						$BarrackStatusTrain[0] = 0
+ 						$BarrackStatusTrain[1] = 0
+ 					EndIf
+
 					$BarrackStatusTrain[2] = $DarkBarrackCapacity[$BarrackToTrain]
+
 					If $TotalTime[0] <> "" And $TotalTime[0] <> -1 Then
 						$BarrackStatusTrain[3] = $TotalTime[0]
 						If $InitBoostTimeDark[$BarrackToTrain][1] > 0 Then
@@ -2271,7 +2311,7 @@ EndFunc   ;==>DeleteQueueDarkTroops
 
 Func getBarrackCapacity($x_start, $y_start) ; Get Barrack capacity on each Barrack window
 
-	Local $Result = 0
+	Local $Result = ""
 	Local $aGetBarrackSize = 0
 	Local $aGetBarrackCapacity = 0
 
@@ -2377,7 +2417,7 @@ EndFunc   ;==>GoesToArmyOverViewWindow
 
 Func getBarrackArmy($x_start, $y_start) ; Get Barrack capacity on each Barrack window
 
-	Local $Result = 0
+	Local $Result = ""
 	Local $aGetBarrackSize
 	Local $aGetBarrackCapacity[2] = [0, 0]
 
@@ -2413,7 +2453,7 @@ EndFunc   ;==>getBarrackArmy
 
 Func getBarracksTotalTime($x_start, $y_start) ; Gets quantity of troops in training
 
-	Local $Result = 0
+	Local $Result = ""
 	Local $aGetTime
 	Local $aGetTotalTime[2] = ["", 0] ; [0] will be the string to use in a setlog | [1] will be total time in seconds
 
@@ -2475,7 +2515,7 @@ Func getBarracksTotalTime($x_start, $y_start) ; Gets quantity of troops in train
 EndFunc   ;==>getBarracksTotalTime
 
 Func getBarracksRemaingBoostTime($x_start, $y_start) ;  -> Gets Remaning Boost Time from the Button
-	Local $Result = 0
+	Local $Result = ""
 	Local $aGetTime
 	Local $aGetTotalTime[2] = ["", 0] ; [0] will be the string to use in a setlog | [1] will be total time in seconds
 
@@ -2651,7 +2691,7 @@ Func RunFirstAndDeleteQueuedTroops()
 EndFunc   ;==>RunFirstAndDeleteQueuedTroops
 
 Func getReceivedTroops($x_start, $y_start) ;  -> Gets Remaning Boost Time from the Button
-	Local $Result = 0
+	Local $Result = ""
 
 	$Result = getOcrAndCapture("coc-DonTroops", $x_start, $y_start, 100, 25, True) ; X = 162  Y = 200
 
