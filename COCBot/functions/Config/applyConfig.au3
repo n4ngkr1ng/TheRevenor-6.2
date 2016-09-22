@@ -2756,6 +2756,13 @@ Func applyConfig($bRedrawAtExit = True) ;Applies the data from config to the con
 		GUICtrlSetState($chkAlertSmartUpgrade, $GUI_UNCHECKED)
 	EndIf
 
+	; Upgrade Management - Added by MMHK
+	If $bUpdateNewUpgradesOnly = 1 Then
+		GUICtrlSetState($chkUpdateNewUpgradesOnly, $GUI_CHECKED)
+	Else
+		GUICtrlSetState($chkUpdateNewUpgradesOnly, $GUI_UNCHECKED)
+	EndIf
+
 	; Profile Switch
 	If $ichkGoldSwitchMax = 1 Then
 		GUICtrlSetState($chkGoldSwitchMax, $GUI_CHECKED)
@@ -2906,8 +2913,6 @@ Func applyConfig($bRedrawAtExit = True) ;Applies the data from config to the con
 	Else
 		GUICtrlSetState($chkIgnoreDColl, $GUI_UNCHECKED)
 	EndIf
-
-	chkSmartUpgrade()
 
 	;Apply to switch Attack Standard after THSnipe End ==>
 	If $ichkTSActivateCamps2 = 1 Then

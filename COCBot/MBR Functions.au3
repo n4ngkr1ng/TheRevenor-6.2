@@ -305,3 +305,6 @@
 
 ; Multy Farming - Added by TheRevenor
 #include "functions\Mod\Multy\MultyFarmingRevenor.au3"
+
+; Upgrade Management - Added by MMHK
+#include "functions\Mod\UpgradeManagement\UpgradesMgmt.au3"
