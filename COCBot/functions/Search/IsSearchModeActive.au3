@@ -19,7 +19,7 @@ Func IsSearchModeActive($iMatchMode, $nocheckHeroes = False)
 	Local $currentTropies = $iTrophyCurrent
 	Local $currentArmyCamps = Int($CurCamp / $TotalCamp * 100)
 
-	Local $bMatchModeEnabled = False
+	Local $bMatchModeEnabled = True
 	Local $checkSearches = Int($currentSearch) >= Int($iEnableAfterCount[$iMatchMode]) And Int($currentSearch) <= Int($iEnableBeforeCount[$iMatchMode]) And $iEnableSearchSearches[$iMatchMode] = 1
 	Local $checkTropies = Int($currentTropies) >= Int($iEnableAfterTropies[$iMatchMode]) And Int($currentTropies) <= Int($iEnableBeforeTropies[$iMatchMode]) And $iEnableSearchTropies[$iMatchMode] = 1
 	Local $checkArmyCamps = Int($currentArmyCamps) >= Int($iEnableAfterArmyCamps[$iMatchMode]) Or $fullarmy = True And $iEnableSearchCamps[$iMatchMode] = 1
@@ -28,15 +28,13 @@ Func IsSearchModeActive($iMatchMode, $nocheckHeroes = False)
 
 	Switch $iMatchMode
 		Case $DB
-            If $iDBcheck = 1 Then $bMatchModeEnabled = True
+			$bMatchModeEnabled = ($iDBcheck = 1)
 		Case $LB
-            If $iABcheck = 1 Then $bMatchModeEnabled = True
+			$bMatchModeEnabled = ($iABcheck = 1)
 		Case $TS
-            If $iTScheck = 1 Then $bMatchModeEnabled = True
+			$bMatchModeEnabled = ($iTScheck = 1)
 	EndSwitch
 
-	If $bMatchModeEnabled = False Then Return False
-	
 	If $checkHeroes And $checkSpells Then ;If $checkHeroes Then
 		If $bMatchModeEnabled And ($checkSearches Or $iEnableSearchSearches[$iMatchMode] = 0) And ($checkTropies Or $iEnableSearchTropies[$iMatchMode] = 0) And ($checkArmyCamps Or $iEnableSearchCamps[$iMatchMode] = 0) Then
 			If $debugsetlog = 1 Then Setlog($sModeText[$iMatchMode] & " active! ($checkSearches=" & $checkSearches & ",$checkTropies=" & $checkTropies & ",$checkArmyCamps=" & $checkArmyCamps & ",$checkHeroes=" & $checkHeroes & ",$checkSpells=" & $checkSpells & ")", $Color_Blue) ;If $debugsetlog = 1 Then Setlog($sModeText[$iMatchMode] & " active! ($checkSearches=" & $checkSearches & ",$checkTropies=" & $checkTropies &",$checkArmyCamps=" & $checkArmyCamps & ",$checkHeroes=" & $checkHeroes & ")" , $Color_Blue)
@@ -66,10 +64,8 @@ Func IsSearchModeActive($iMatchMode, $nocheckHeroes = False)
 		EndIf
 	ElseIf $checkHeroes = 0 Then
 		If $debugsetlog = 1 Then Setlog("Heroes not ready", $color_purple)
-        Return False
 	Else
 		If $debugsetlog = 1 Then Setlog("Spells not ready", $color_purple)
-        Return False
 	EndIf
 EndFunc   ;==>IsSearchModeActive
 

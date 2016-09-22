@@ -12,7 +12,6 @@
 ; Link ..........: https://github.com/MyBotRun/MyBot/wiki
 ; Example .......: No
 ; ===============================================================================================================================
-
 Func CheckVersion()
 	If $ichkVersion = 1 Then
 		CheckVersionHTML()

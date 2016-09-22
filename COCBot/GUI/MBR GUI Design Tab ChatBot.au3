@@ -4,7 +4,7 @@
 ; Syntax ........:
 ; Parameters ....: None
 ; Return values .: None
-; Author ........:
+; Author ........: 
 ; Modified ......: TheRevenor (2016)
 ; Remarks .......: This file is part of MyBot, previously known as ClashGameBot. Copyright 2016
 ;                  MyBot is distributed under the terms of the GNU GPL
@@ -74,6 +74,16 @@ $chkUseResponses = GUICtrlCreateCheckbox("Use custom responses", $x - 9, $y)
 _GUICtrlSetTip($chkUseResponses, "Use the keywords and responses defined below")
 GUICtrlSetState($chkUseResponses, $ChatbotClanUseResponses)
 GUICtrlSetOnEvent(-1, "ChatGuiCheckboxUpdate")
+#Cs $y += 25
+$chkUseCleverbot = GUICtrlCreateCheckbox("Use cleverbot responses", $x - 9, $y)
+GUICtrlSetTip($chkUseCleverbot, "Get responses from cleverbot.com")
+GUICtrlSetState($chkUseCleverbot, $ChatbotClanUseCleverbot)
+GUICtrlSetOnEvent(-1, "ChatGuiCheckboxUpdate")
+$y += 25
+$chkUseSimsimi = GUICtrlCreateCheckbox("Use simsimi responses", $x - 9, $y)
+GUICtrlSetTip($chkUseSimsimi, "Get responses from simsimi.com")
+GUICtrlSetState($chkUseSimsimi, $ChatbotClanUseSimsimi)
+#Ce GUICtrlSetOnEvent(-1, "ChatGuiCheckboxUpdate")
 $y += 25
 $chkUseGeneric = GUICtrlCreateCheckbox("Use generic chats", $x - 9, $y)
 _GUICtrlSetTip($chkUseGeneric, "Use generic chats if reading the latest chat failed or there are no new chats")
@@ -95,7 +105,7 @@ $ChatbotChatDelayLabel = GUICtrlCreateLabel("Chat Delay", $x - 9, $y)
 _GUICtrlSetTip($ChatbotChatDelayLabel, "Delay chat between number of bot cycles")
 $chkchatdelay = GUICtrlCreateInput("0", $x + 50, $y - 1, 35, 18, BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER, $ES_NUMBER))
 GUICtrlSetLimit(-1, 2)
-
+   
 $y += 25
 $editResponses = GUICtrlCreateEdit(_ArrayToString($ClanResponses, ":", -1, -1, @CRLF), $x - 9, $y, 200, 96)
 _GUICtrlSetTip($editResponses, "Look for the specified keywords in clan messages and respond with the responses. One item per line, in the format keyword:response")
@@ -106,7 +116,7 @@ _GUICtrlSetTip($editGeneric, "Generic messages to send, one per line")
 GUICtrlSetOnEvent(-1, "ChatGuiEditUpdate")
 
 GUICtrlCreateGroup("", -99, -99, 1, 1)
-
+   
 ChatGuicheckboxUpdateAT()
 
 Global $LastControlToHideMOD = GUICtrlCreateDummy()

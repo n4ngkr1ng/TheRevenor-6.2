@@ -1095,13 +1095,6 @@ Func readConfig($inputfile = $config, $partial = False) ;Reads config and sets i
 		$iSmartMinElixir = IniRead($config, "upgrade", "SmartMinElixir", "0")
 		$iSmartMinDark = IniRead($config, "upgrade", "SmartMinDark", "0")
 
-		; Upgrade Management - Added by MMHK
-		If IniRead($config, "upgrade", "UpdateNewUpgradesOnly", "0") = 1 Then
-			$bUpdateNewUpgradesOnly = True
-		Else
-			$bUpdateNewUpgradesOnly = False
-		EndIf
-
 	Else
 		Return False
 	EndIf

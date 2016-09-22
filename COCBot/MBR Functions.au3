@@ -293,6 +293,10 @@
 ; ExtremeZap - Added by TheRevenor
 #include "functions\Mod\SmartZap\ExtremeZap.au3"
 
+; One Star - Added by nangkring
+#include "functions\Mod\SmartZap\builderHutSearch.au3"
+#include "functions\Mod\SmartZap\oneStarZap.au3"
+
 ; SmartZap files - Added by LunaEclipse
 #include "functions\Mod\SmartZap\drillSearch.au3"
 #include "functions\Mod\SmartZap\smartZap.au3"
@@ -305,6 +309,3 @@
 
 ; Multy Farming - Added by TheRevenor
 #include "functions\Mod\Multy\MultyFarmingRevenor.au3"
-
-; Upgrade Management - Added by MMHK
-#include "functions\Mod\UpgradeManagement\UpgradesMgmt.au3"

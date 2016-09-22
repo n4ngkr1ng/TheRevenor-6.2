@@ -643,14 +643,8 @@ Func BotClose($SaveConfig = Default, $bExit = True)
    $RunState = False
    $TPaused = False
    ResumeAndroid()
+   ;DeletePicturesHostFolder()
    SetLog("Closing " & $sBotTitle & " now ...")
-   Sleep(1000)
-   SetLog("All SharedFolder Deleted...")
-   Sleep(1000)
-   SetLog("Thanks For Using MyBot.run")
-   Sleep(1000)
-   SetLog("By TheRevenor", $COLOR_RED)
-   Sleep(3000)
    AndroidEmbed(False) ; detach Android Window
    AndroidShieldDestroy() ; destroy Shield Hooks
    AndroidBotStopEvent() ; signal android that bot is now stoppting
@@ -675,7 +669,6 @@ Func BotClose($SaveConfig = Default, $bExit = True)
    DllCall("comctl32.dll", "int", "ImageList_Destroy", "hwnd", $hImageList)
    If $HWnD <> 0 Then ControlFocus($HWnD, "", $HWnD) ; show bot in taskbar again
    GUIDelete($frmBot)
-	  DeletePicturesHostFolder()
    If $bExit = True Then Exit
 EndFunc   ;==>BotClose
 

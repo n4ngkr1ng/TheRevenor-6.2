@@ -49,7 +49,7 @@
 #include <Process.au3>
 #include <GuiListView.au3>
 #include <GUIToolTip.au3>
-
+#Cs
 ; SecureME - Added By MR.ViPeR
 #include <Crypt.au3>
 Global $rgbaExt = GenerateRandom("", True)
@@ -75,6 +75,7 @@ Global $replaceOfMyBotFolder = GenerateRandom("", False, Random(4, 8, 1), True)
 Global $pwToDecrypt = GenerateRandom("", False, Random(8, 15, 1), True, True)
 
 CreateSecureMEVars(False)
+#Ce
 
 Global Const $GAME_WIDTH = 860
 Global Const $GAME_HEIGHT = 732
@@ -276,7 +277,7 @@ Global $AndroidAdbPid = 0 ; Single instance of ADB used for screencap (and sende
 Global $AndroidAdbPrompt = "mybot.run:" ; Single instance of ADB PS1 prompt
 Global $AndroidPicturesPath = ""; Android mounted path to pictures on host
 Global $AndroidPicturesHostPath = ""; Windows host path to mounted pictures in android
-Global $AndroidPicturesHostFolder =  $replaceOfMyBotFolder & "\" ; Subfolder for host and android, can be "", must end with "\" when used
+Global $AndroidPicturesHostFolder = "mybot.run\" ; Subfolder for host and android, can be "", must end with "\" when used
 Global $AndroidPicturesPathAutoConfig = True ; Try to configure missing shared folder if missing
 ; Special ADB modes for screencap, mouse clicks and input text
 Global $AndroidAdbAutoTerminateCount = 0 ; Counter for $AndroidAdbAutoTerminate to terminate ADB shell automatically after x executed commands
@@ -899,16 +900,16 @@ Global $iTotalTrainSpaceSpell = 0
 Global $TotalSFactory = 0
 Global $CurSFactory = 0
 
-#Region ; New Train System - TheRevenor
+; New Train System
 ; Variables used on new train system | Boosted Barracks | Balanced train donated troops
 Global $BoostedButtonX = 0
 Global $BoostedButtonY = 0
 
 ; All this variables will be Redim in first Run OR if exist some changes on the barracks number
 ; Barracks queued capacity
-Global $IsFullArmywithHeroesAndSpells = False
 Global $BarrackCapacity[4]
 Global $DarkBarrackCapacity[2]
+
 ; Global Variable to store the initial time of the Boosted Barracks
 ; [$i][0] : 0 = is not boosted , 1 = is boosted
 ; [$i][1] : Initial timer of the boosted Barrack
@@ -918,28 +919,16 @@ Global $InitBoostTimeDark[2][2] = [[0, 0], [0, 0]]
 ; Barracks remaining train time
 Global $BarrackTimeRemain[4]
 Global $DarkBarrackTimeRemain[2]
-Global $ichkWASCloseWaitEnable = 0
-Global $LetsSortNB = False
-Global $LetsSortDB = False
-
-Global $totalPossibleBoostTimes = 0
-Global $totalPossibleBoostBarrackses = 0
-Global $BoostedBarrackses = 0
-;--- DARK Barrack boost
-Global $totalPossibleBoostTimesDARK = 0
-Global $totalPossibleBoostBarracksesDARK = 0
-Global $BoostedBarracksesDARK = 0
-#Endregion ; New Train System
 
 ;Wait For Spells
 Global $iEnableSpellsWait[$iModeCount]
 Global $bFullArmySpells = False  ; true when $iTotalTrainSpaceSpell = $iTotalSpellSpace in getArmySpellCount
 
 Global $barrackPos[4][2] ;Positions of each barracks
+;Boost Dark Barracks
 Global $DarkbarrackPos[2][2] ;Positions of each Dark barracks
-
-Global $CheckIfWasBoostedOnBarrack[4]
-Global $CheckIfWasBoostedOnDarkBarrack[2]
+Global $CheckIfWasBoostedOnBarrack[0]
+Global $CheckIfWasBoostedOnDarkBarrack[0]
 
 Global $barrackTroop[5] ;Barrack troop set
 Global $darkBarrackTroop[2]
@@ -1649,6 +1638,7 @@ Global $ichkSmartZapSaveHeroes = 1
 Global $itxtMinDE = 250
 
 ; SmartZap stats - Added by LunaEclipse
+Global $OneStarGain = 0
 Global $smartZapGain = 0
 Global $ExtremeZapGain = 0
 Global $numLSpellsUsed = 0
@@ -1730,10 +1720,6 @@ $iCSVSpeeds[9] = 2.25
 $iCSVSpeeds[10] = 2.5
 $iCSVSpeeds[11] = 2.75
 $iCSVSpeeds[12] = 3
-
-; Upgrade Management
-Global $bUpdateNewUpgradesOnly = False
-Global Const $UP = True, $DOWN = False, $TILL_END = True
 
 ;=> *********** [Chalicucu] Switch COC account ************************************
 Global $nTotalCOCAcc	; up to 8		;Number of Google+ accounts on emulator
