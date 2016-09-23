@@ -724,10 +724,10 @@ Func getArmyNormalTroopCount()
 					$CurPekk = -($TroopQ)
 				ElseIf $Troops[0] = $eBabyD Then
 					$TroopQ = $Troops[2]
-					$CurPekk = -($TroopQ)
+					$CurBabyD = -($TroopQ)
 				ElseIf $Troops[0] = $eMine Then
 					$TroopQ = $Troops[2]
-					$CurPekk = -($TroopQ)
+					$CurMine = -($TroopQ)
 				EndIf
 				Local $plural = 0
 				If $TroopQ > 1 Then $plural = 1
