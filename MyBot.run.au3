@@ -639,6 +639,9 @@ Func Idle() ;Sequence that runs until Full Army
 		While $iReHere < 7
 			$iReHere += 1
 			DonateCC(True)
+			If $CommandStop = 3 then
+				If _Sleep(Random(10000,15000,1)) Then ExitLoop
+			EndIf
 			; Modify Chat by TheRevenor ===============================================
 			If $iReHere = 6 Then
 				CheckNewChat()

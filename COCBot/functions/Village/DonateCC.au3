@@ -94,7 +94,7 @@ Func DonateCC($Check = False)
 	;<---- opens clan tab and verbose in log
 	ClickP($aAway, 1, 0, "#0167") ;Click Away
 	Setlog("Checking for Donate Requests in Clan Chat", $COLOR_BLUE)
-	
+
     ForceCaptureRegion()
     If _CheckPixel($aChatTab, $bCapturePixel) = False Then ClickP($aOpenChat, 1, 0, "#0168") ; Clicks chat tab
 	If _Sleep($iDelayDonateCC4) Then Return
@@ -122,7 +122,7 @@ Func DonateCC($Check = False)
         EndIf
 		If _Sleep($iDelayDonateCC1) Then Return ; delay Allow 15x
     WEnd
-	
+
 	Local $Scroll
 	; add scroll here
 	While 1
@@ -684,7 +684,8 @@ Func DonateTroopType($Type, $Quant = 0, $Custom = False, $bDonateAll = False)
 								_ColorCheck(_GetPixelColor(360 + ($Slot * 68), $DonationWindowY + 107 + $YComp, True), Hex(0x306ca8, 6), 20) Then ; check for 'blue'
 
 							Click(365 + ($Slot * 68), $DonationWindowY + 100 + $YComp, 1, $iDelayDonateCC3, "#0175")
-							;DonatedTroop($Type)
+							DonatedTroop($Type)
+							If $CommandStop = 3 then $CommandStop = 0
 							If _Sleep(1000) Then Return
 							$icount += 1
 						EndIf
@@ -736,7 +737,8 @@ Func DonateTroopType($Type, $Quant = 0, $Custom = False, $bDonateAll = False)
 								_ColorCheck(_GetPixelColor(360 + ($Slot * 68), $DonationWindowY + 107 + $YComp, True), Hex(0x306ca8, 6), 20) Then ; check for 'blue'
 
 							Click(365 + ($Slot * 68), $DonationWindowY + 100 + $YComp, 1, $iDelayDonateCC3, "#0175")
-							;DonatedTroop($Type)
+							DonatedTroop($Type)
+							If $CommandStop = 3 then $CommandStop = 0
 							If _Sleep(1000) Then Return
 							$icount += 1
 						EndIf
@@ -828,14 +830,15 @@ Func DonateTroopType($Type, $Quant = 0, $Custom = False, $bDonateAll = False)
 			EndIf
 			If $debugOCRdonate = 0 Then
 				Click(365 + ($Slot * 68), $DonationWindowY + 100 + $YComp, $iDonSpellsQuantity, $iDelayDonateCC3, "#0600")
-				;DonatedSpell($Type)
+				If $CommandStop = 3 then $CommandStop = 0
+			    DonatedSpell($Type)
 			EndIf
 
 			$bDonate = True
 
 			;DonateStats =========================================
 			$DonatedValue = $iDonSpellsQuantity
-			
+
 			; Assign the donated quantity Spells to train : $Don $SpellName
 			; need to implement assign $DonPoison etc later
 
