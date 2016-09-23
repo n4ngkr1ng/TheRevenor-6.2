@@ -182,8 +182,8 @@ Local $x = 20, $y = 177 ;150
 	GUICtrlCreateGroup("", -99, -99, 1, 1)
 
     ; Chalicucu & demen: switch CoC Acc GUI
-	Local $x = 20, $y = 291
-	GUICtrlCreateGroup(GetTranslated(636,2, "Switch CoC Accounts"), $x - 20, $y - 20, 440, 90)
+	Local $x = 20, $y = 293
+	GUICtrlCreateGroup(GetTranslated(636,2, "Switch CoC Accounts"), $x - 20, $y - 20, 440, 95)
 		$chkSwitchAcc = GUICtrlCreateCheckbox("Enable Switch Account", $x - 10, $y - 5, -1, -1)
 			$txtTip = "Switch to another account & profile when remain train time >=3 minutes" & @CRLF & _
 			          "This function supports maximum 8 CoC accounts & 9 Bot profiles" & @CRLF & _

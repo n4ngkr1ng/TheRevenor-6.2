@@ -43,7 +43,7 @@ Func CheckVersion()
 			SetLog(" ")
 			_PrintLogVersion($oldModversmessage)
 		ElseIf VersionNumFromVersionTXT($sModversion) > VersionNumFromVersionTXT($lastModversion) Then
-			SetLog("YOU ARE USING A FUTURE MOD TheRevenor VERSION CHIEF!", $COLOR_GREEN)
+			SetLog("YOU ARE USING A FUTURE MOD nangkring VERSION CHIEF!", $COLOR_GREEN)
 			SetLog("YOUR MOD VERSION: " & $sModversion, $COLOR_GREEN)
 			SetLog("OFFICIAL MOD VERSION: " & $lastModversion, $COLOR_GREEN)
 			SetLog(" ")
@@ -52,7 +52,7 @@ Func CheckVersion()
 			SetLog(" ")
 			_PrintLogVersion($lastmessage)
 		EndIf
-		;CheckMODVersion()
+		CheckMODVersion()
 	EndIf
 EndFunc   ;==>CheckVersion
 
@@ -89,7 +89,7 @@ Func CheckVersionHTML()
 		FileCopy(@ScriptDir & "\TestVersion.txt", $versionfile, 1)
 	Else
 		;download page from site contains last bot version
-		$hDownload = InetGet("https://raw.githubusercontent.com/TheRevenor/MyBot-6.2-Official-Release/master/LastVersions.txt", $versionfile, 0, 1)
+		$hDownload = InetGet("https://raw.githubusercontent.com/n4ngkr1ng/TheRevenor-6.2/master/LastVersions.txt", $versionfile, 0, 1)
 
 		; Wait for the download to complete by monitoring when the 2nd index value of InetGetInfo returns True.
 		Local $i = 0
@@ -115,7 +115,7 @@ Func CheckVersionHTML()
 			FileCopy(@ScriptDir & "\TestVersion_" & $sLanguage & ".txt", $versionfilelocalized, 1)
 		Else
 			;download page from site contains last bot version localized messages
-			$hDownload = InetGet("https://raw.githubusercontent.com/TheRevenor/MyBot-6.2-Official-Release/master/LastVersions_" & $sLanguage & ".txt", $versionfilelocalized, 0, 1)
+			$hDownload = InetGet("https://raw.githubusercontent.com/n4ngkr1ng/TheRevenor-6.2/master/LastVersions_" & $sLanguage & ".txt", $versionfilelocalized, 0, 1)
 
 			; Wait for the download to complete by monitoring when the 2nd index value of InetGetInfo returns True.
 			Local $i = 0
@@ -194,8 +194,8 @@ Func CheckMODVersion()
 	FileDelete($tempJson)
 
 	If $sLatestReleaseTag <> $sGitHubModLatestReleaseTag Then
-		MsgBox(0, "Attentions!", "Chief, A New Version Of Mod By TheRevenor Has Been Uploaded (" & $sLatestReleaseTag & "), Your Version Might Be Outdated." & @CRLF & _
-		"Please Download Latest Version From Official MOD TheRevenor")
+		MsgBox(0, "Attentions!", "Chief, A New Version Of Mod By nangkring Has Been Uploaded (" & $sLatestReleaseTag & "), Your Version Might Be Outdated." & @CRLF & _
+		"Please Download Latest Version From Official MOD nangkring")
 		ShellExecute($sModSupportUrl)
 		Return False
 	EndIf

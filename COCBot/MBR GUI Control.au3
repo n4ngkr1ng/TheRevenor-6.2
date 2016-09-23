@@ -377,7 +377,7 @@ Func GUIControl_WM_COMMAND($hWind, $iMsg, $wParam, $lParam)
 		;Case $idMENU_DONATE_SUPPORT
 		;	ShellExecute("https://mybot.run/forums/index.php?/donate/make-donation/")
 		Case $CheckVersionConfig
-			If CheckMODVersion() Then MsgBox(0, "", "You Are Using The Latest Version Of Mod By TheRevenor")
+			If CheckMODVersion() Then MsgBox(0, "", "You Are Using The Latest Version Of Mod By nangkring")
 		;Case $DownloadLatestConfig
 		;	ShellExecute("https://github.com/" & $sGitHubModOwner & "/" & $sGitHubModRepo & "/releases/latest")
 		;Case $ModSupportConfig
@@ -649,7 +649,7 @@ Func BotClose($SaveConfig = Default, $bExit = True)
    Sleep(1000)
    SetLog("Thanks For Using MyBot.run")
    Sleep(1000)
-   SetLog("By TheRevenor", $COLOR_RED)
+   SetLog("By nangkring", $COLOR_RED)
    Sleep(3000)
    AndroidEmbed(False) ; detach Android Window
    AndroidShieldDestroy() ; destroy Shield Hooks
