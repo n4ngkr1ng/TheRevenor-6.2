@@ -3,6 +3,6 @@ version    = "v6.2.2"
 messagenew = "Fully working with May update\nNew GUI and lots of new features\nFor more information, go to \nhttps://mybot.run\n\n Always free and open source."
 messageold = "A new version of MyBot (v6.2.2) is available!\nPlease download the latest from:\nhttps://mybot.run"
 [mod]
-version    = "v2.0.3"
+version    = "v2.0.4"
 messagenew = "Fully working with May update\nNew GUI and lots of new features\nFor more information, go to \nhttps://mybot.run\n\n Always free and open source."
-messageold = "A new version of MOD (v2.0.3) is available!\nPlease download the latest from:\nhttps://mybot.run"
+messageold = "A new version of MOD (v2.0.4) is available!\nPlease download the latest from:\nhttps://mybot.run"
