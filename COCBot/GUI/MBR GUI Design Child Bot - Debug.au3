@@ -70,5 +70,9 @@ $y = 45
 
 	$btnTestImage = GUICtrlCreateButton(GetTranslated(636,103, "Test Image"), $x  , $y , 140, 30)
 
+	$y += 35
+
+	$btnEagle = GUICtrlCreateButton(GetTranslated(636,104, "Test Eagle"), $x  , $y , 140, 30)
+
 GUICtrlCreateGroup("", -99, -99, 1, 1)
 

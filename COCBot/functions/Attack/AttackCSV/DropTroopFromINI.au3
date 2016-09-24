@@ -159,7 +159,7 @@ Func DropTroopFromINI($vectors, $indexStart, $indexEnd, $indexArray, $qtaMin, $q
 		EndIf
 	Else
 		SelectDropTroop($troopPosition) ; select the troop...
-		
+
 		If $sleepBeforeMin = 0 Then $sleepBeforeMin = 50
    		If $sleepBeforeMax = 0 Then $sleepBeforeMax = 50
 
@@ -192,6 +192,7 @@ Func DropTroopFromINI($vectors, $indexStart, $indexEnd, $indexArray, $qtaMin, $q
 		;drop
 		$TroopDropNumber += 1
 
+		Local $tempquant = 0
 		Local $currentJumpIndex
 		Local $hTimer = TimerInit()
 
@@ -263,24 +264,23 @@ Func DropTroopFromINI($vectors, $indexStart, $indexEnd, $indexArray, $qtaMin, $q
 					; CSV Deployment Speed Mod
 					$delayPoint = $delayPoint / $iCSVSpeeds[$isldSelectedCSVSpeed[$iMatchMode]]
 					$delayDropLast = $delayDropLast / $iCSVSpeeds[$isldSelectedCSVSpeed[$iMatchMode]]
+					local $plural = 0
+					If $qty2 > 1 then $plural = 1
 
 					Switch Eval("e" & $troopName)
 						Case $eBarb To $eBowl ; drop normal troops
 							If $debug = True Then
 								Setlog("PureClick( " & $pixel[0] & ", " & $pixel[1] & " , " & $qty2 & ", " & $delayPoint & ")")
-								;PureClick($pixel[0], $pixel[1], $qty2, $delayPoint)
 							Else
-								If ( $Android = "BlueStacks" ) Or ( $Android = "BlueStacks2" ) Then
+								If ($Android = "BlueStacks") Or ($Android = "BlueStacks2") Or ($Android = "LeapDroid") Then
 									PureClick($pixel[0], $pixel[1], $qty2, $delayPoint)
+									Setlog(" » Deploying " & $qty2 & " of "& NameOfTroop(Eval("e" & $troopName), $plural))
 								Else
-									If $AndroidAdbClicksEnabled Then 
-										;AttackClick($pixel[0], $pixel[1], $qty2, SetSleep(0), 0, "#0667")
-										AttackClick($pixel[0], $pixel[1], $qty2, Int($delayPoint/4), 0, "#0666")
-									Else
-										;AttackClick($pixel[0], $pixel[1], $qty2, $delayPoint, $delayDropLast, "#0667")
-										AttackClick($pixel[0], $pixel[1], $qty2, $delayPoint, 0, "#0666")
-									EndIf
+									AttackClick($pixel[0], $pixel[1], $qty2, $delayPoint, 0, "#0666")
+									Setlog(" » Deploying " & $qty2 & " of "& NameOfTroop(Eval("e" & $troopName), $plural))
 								EndIf
+								$tempquant += $qty2
+								If $tempquant > 0 And $i = $indexEnd Then Setlog(" » Try to Deploy " & $tempquant & " of "& NameOfTroop(Eval("e" & $troopName), $plural))
 							EndIf
 						Case $eKing
 							If $debug = True Then
@@ -311,6 +311,7 @@ Func DropTroopFromINI($vectors, $indexStart, $indexEnd, $indexArray, $qtaMin, $q
 								Setlog("Drop Spell AttackClick( " & $pixel[0] & ", " & $pixel[1] & " , " & $qty2 & ", " & $delayPoint & ",#0666)")
 							Else
 								AttackClick($pixel[0], $pixel[1], $qty2, $delayPoint, $delayDropLast, "#0667")
+								If $qty2 > 0 then Setlog(" » Deploying " & $qty2 & " of "& NameOfTroop(Eval("e" & $troopName), $plural))
 							EndIf
 						Case Else
 							Setlog("Error parsing line")
@@ -339,19 +340,19 @@ Func DropTroopFromINI($vectors, $indexStart, $indexEnd, $indexArray, $qtaMin, $q
 				EndIf
 			Next
 		Next
-		
+
 		Local $htimerDrop = Round(TimerDiff($hTimer) / 1000, 2)
 		Setlog("Dropped " & $troopsDropped & " " & $troopName & " in " & $htimerDrop & " seconds.  Remaining: " & $remainingTroopsDrop)
-		
+
 		For $i = 0 to Ubound($remainingTroops) - 1
 			If $remainingTroops[$i][0] = $troopEnum Then
 				$remainingTroops[$i][1] = $remainingTroopsDrop
 			EndIf
-		Next 
+		Next
 
 		ReleaseClicks()
-	    ;~ SuspendAndroid($SuspendMode)   
-		
+	    ;~ SuspendAndroid($SuspendMode)
+
 		If $sleepafterMin = 0 Then $sleepafterMin = 50
    		If $sleepAfterMax = 0 Then $sleepAfterMax = 50
 
@@ -365,7 +366,7 @@ Func DropTroopFromINI($vectors, $indexStart, $indexEnd, $indexArray, $qtaMin, $q
 
 		; CSV Deployment Speed Mod
 		$sleepafter = $sleepafter / $iCSVSpeeds[$isldSelectedCSVSpeed[$iMatchMode]]
-		
+
 		If $sleepafter > 50 And IsKeepClicksActive() = False Then
 			debugAttackCSV(">> delay after drop all troops: " & $sleepafter)
 			If $sleepafter <= 1000 Then  ; check SLEEPAFTER value is less than 1 second?

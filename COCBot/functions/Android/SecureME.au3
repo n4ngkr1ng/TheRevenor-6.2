@@ -5,7 +5,7 @@
 ; Parameters ....:
 ; Return values .:
 ; Author ........: MR.ViPER
-; Modified ......: MR.ViPER (9-15-2016)
+; Modified ......: MR.ViPER (9-15-2016), MR.ViPER (9-22-2016)
 ; Remarks .......: This file is part of MyBot, previously known as ClashGameBot. Copyright 2015-2016
 ;                  MyBot is distributed under the terms of the GNU GPL
 ; Related .......:
@@ -55,7 +55,7 @@ Func RemoveFolderFromInUseList($folder = "")
 			;---- Update inUse Registery
 			RegWrite($inUsePath, "inUse", "REG_SZ", $inUseList)
 	EndSelect
-	RemoveUnAvailableFoldersFromInUseList()
+	;RemoveUnAvailableFoldersFromInUseList()
 EndFunc   ;==>RemoveFolderFromInUseList
 
 Func AddFolderToInUseList($folder = "")
@@ -205,19 +205,23 @@ EndFunc   ;==>AfterAADBSSCMD
 Func DeleteOtherFoldersInSharedFolder()
 	$allFolders = _FileListToArray($AndroidPicturesHostPath, "*", 2, False)
 	For $i = 1 To UBound($allFolders) - 1
-		If IsFolderInUse($allFolders[$i]) = False Then
-			RemoveFolderFromInUseList($allFolders[$i])
-			DirRemove($AndroidPicturesHostPath & $allFolders[$i], 1)
+		If $AndroidPicturesHostPath & $allFolders[$i] <> $AndroidPicturesHostPath Then
+			If IsFolderInUse($allFolders[$i]) = False Then
+				RemoveFolderFromInUseList($allFolders[$i])
+				DirRemove($AndroidPicturesHostPath & $allFolders[$i], 1)
+			EndIf
 		EndIf
 	Next
 EndFunc   ;==>DeleteOtherFoldersInSharedFolder
 
 Func DeletePicturesHostFolder($isClosingBot = True)
-	DirRemove($AndroidPicturesHostPath & $AndroidPicturesHostFolder, 1)
+	If $AndroidPicturesHostPath & $AndroidPicturesHostFolder <> $AndroidPicturesHostPath Then DirRemove($AndroidPicturesHostPath & $AndroidPicturesHostFolder, 1)
 	$allFolders = _FileListToArray($AndroidPicturesHostPath, "*", 2, False)
 	For $i = 1 To UBound($allFolders) - 1
-		If IsFolderInUse($allFolders[$i]) = False Then
-			DirRemove($AndroidPicturesHostPath & $allFolders[$i], 1)
+		If $AndroidPicturesHostPath & $allFolders[$i] <> $AndroidPicturesHostPath Then
+			If IsFolderInUse($allFolders[$i]) = False Then
+				DirRemove($AndroidPicturesHostPath & $allFolders[$i], 1)
+			EndIf
 		EndIf
 	Next
 	If $isClosingBot = True Then RemoveFolderFromInUseList()

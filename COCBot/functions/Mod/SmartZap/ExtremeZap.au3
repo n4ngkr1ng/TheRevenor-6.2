@@ -26,14 +26,14 @@ Func ExtremeZap()
 		SetLog("Not a dead base so lets just go home!", $COLOR_ORANGE)
 		Return $performedZap
 	EndIf
-	
+
 	If getDarkElixirStorageFull() Then
 		SetLog("Your Dark Elixir Storage is full, no need to zap!", $COLOR_FUCHSIA)
 		Return $performedZap
 	EndIf
 
 	Local $aDrills
-	
+
 	; Get Drill locations and info
 	Local $listPixelByLevel = getDrillArray()
 	Local $aDarkDrills = drillSearch($listPixelByLevel)
@@ -50,7 +50,7 @@ Func ExtremeZap()
 	Else
 		SetLog("Number of Dark Elixir Drills: " & $numDrills, $COLOR_FUCHSIA)
 	EndIf
-	
+
 	; Get the number of lightning spells
 	$numSpells = $CurLightningSpell
 	If $numSpells = 0 Then
@@ -84,10 +84,10 @@ Func ExtremeZap()
 			Return $performedZap
 		EndIf
 		CheckHeroesHealth()
-		
+
 		; Store the DE value before any Zaps are done.
 		$oldSearchDark = $searchDark
-		
+
 		; If you have max lightning spells, drop lightning on any level DE drill
 		If $numDrills >= 1 Then
 			SetLog("ExtremeZap Drop L.Spell For All Dark Elixir Drill.", $COLOR_FUCHSIA)
@@ -105,7 +105,7 @@ Func ExtremeZap()
 
 		; Get the DE Value after ExtremeZap has performed its actions.
 		$searchDark = getDarkElixir()
-		
+
 		; No Dark Elixir Left
 		If Not $searchDark Or $searchDark = 0 Then
 			SetLog("No Dark Elixir so lets just exit!", $COLOR_FUCHSIA)
@@ -119,7 +119,7 @@ Func ExtremeZap()
 
 			; Get the DE Value after ExtremeZap has performed its actions.
 			$searchDark = getDarkElixir()
-			
+
 			; Check to make sure we actually zapped
 			If $aDarkDrills[0][1] <> -1 Then
 				$expectedDE = 81
@@ -140,7 +140,7 @@ Func ExtremeZap()
 			$SmartZapGain += $strikeGain
 			SetLog("DE from last zap: " & $strikeGain & ", Total DE from ExtremeZap: " & $SmartZapGain, $COLOR_FUCHSIA)
 		EndIf
-		
+
 		; Resort the array
 		_ArraySort($aDarkDrills, 1, 0, 0, 3)
 
@@ -178,7 +178,7 @@ Func ExtremeZap()
 				For $i = 0 To UBound($aDarkDrills, 2) - 1
 					$aDarkDrills[0][$i] = -1
 				Next
-				SetLog("Removing drill since it wasn't found, so it was probably destroyed.", $COLOR_FUCHSIA)
+				SetLog("Removing drill since it wasn't found, so it was probably destroyed.", $COLOR_ORANGE)
 				; Resort the array
 				_ArraySort($aDarkDrills, 1, 0, 0, 3)
 			EndIf
