@@ -21,6 +21,7 @@ Func BrewSpells()
 	Local $iLightningSpell, $iHealSpell, $iRageSpell, $iJumpSpell, $iFreezeSpell, $iCloneSpell, $iPoisonSpell, $iEarthSpell, $iHasteSpell, $iSkeletonSpell
 
 	If $iTotalCountSpell = 0 Then Return
+    Local $WaitForSpells = IsWaitforSpellsActive()
 
 	Local $IsFullArmywithHeroesAndSpells = BitAND($fullarmy, BitOR(IsSearchModeActive($DB), IsSearchModeActive($TS), IsSearchModeActive($LB)))
 
@@ -37,7 +38,7 @@ Func BrewSpells()
 		If isSpellFactory() Then
 			If $iLightningSpellComp > 0 Then ; Lightning Spells
 				Local $iTempLightningSpell = Number(getBarracksTroopQuantity(175 + 107 * 0, 295 + $midOffsetY))
-				If $IsFullArmywithHeroesAndSpells = True Then ;if spell factory full
+				If $IsFullArmywithHeroesAndSpells = True And $WaitForSpells = True Then ;if spell factory full
 					If $iTempLightningSpell = $iLightningSpellComp Then ; check if replacement spells trained,
 						$iLightningSpell = 0
 					Else
@@ -71,7 +72,7 @@ Func BrewSpells()
 			EndIf
 			If $iHealSpellComp > 0 Then ; Heal Spells
 				Local $iTempHealSpell = Number(getBarracksTroopQuantity(175 + 107 * 1, 295 + $midOffsetY))
-				If $IsFullArmywithHeroesAndSpells = True Then ;if spell factory full
+				If $IsFullArmywithHeroesAndSpells = True And $WaitForSpells = True Then ;if spell factory full
 					If $iTempHealSpell = $iHealSpellComp Then ; check if replacement spells trained,
 						$iHealSpell = 0
 					Else
@@ -105,7 +106,7 @@ Func BrewSpells()
 			EndIf
 			If $iRageSpellComp > 0 Then ; Rage Spells
 				Local $iTempRageSpell = Number(getBarracksTroopQuantity(175 + 107 * 2, 295 + $midOffsetY))
-				If $IsFullArmywithHeroesAndSpells = True Then ;if spell factory full
+				If $IsFullArmywithHeroesAndSpells = True And $WaitForSpells = True Then ;if spell factory full
 					If $iTempRageSpell = $iRageSpellComp Then ; check if replacement spells trained,
 						$iRageSpell = 0
 					Else
@@ -139,7 +140,7 @@ Func BrewSpells()
 			EndIf
 			If $iJumpSpellComp > 0 Then ; Jump Spells
 				Local $iTempJumpSpell = Number(getBarracksTroopQuantity(175 + 107 * 3, 295 + $midOffsetY))
-				If $IsFullArmywithHeroesAndSpells = True Then ;if spell factory full
+				If $IsFullArmywithHeroesAndSpells = True And $WaitForSpells = True Then ;if spell factory full
 					If $iTempJumpSpell = $iJumpSpellComp Then ; check if replacement spells trained,
 						$iJumpSpell = 0
 					Else
@@ -173,7 +174,7 @@ Func BrewSpells()
 			EndIf
 			If $iFreezeSpellComp > 0 Then ; Freeze Spells
 				Local $iTempFreezeSpell = Number(getBarracksTroopQuantity(175 + 107 * 4, 295 + $midOffsetY))
-				If $IsFullArmywithHeroesAndSpells = True Then ;if spell factory full
+				If $IsFullArmywithHeroesAndSpells = True And $WaitForSpells = True Then ;if spell factory full
 					If $iTempFreezeSpell = $iFreezeSpellComp Then ; check if replacement spells trained,
 						$iFreezeSpell = 0
 					Else
@@ -207,7 +208,7 @@ Func BrewSpells()
 			EndIf
 			If $iCloneSpellComp > 0 Then ; Clone Spells
 				Local $iTempCloneSpell = Number(getBarracksTroopQuantity(175 + 107 * 1, 401 + $midOffsetY))
-				If $IsFullArmywithHeroesAndSpells = True Then ;if spell factory full
+				If $IsFullArmywithHeroesAndSpells = True And $WaitForSpells = True Then ;if spell factory full
 					If $iTempCloneSpell = $iCloneSpellComp Then ; check if replacement spells trained,
 						$iCloneSpell = 0
 					Else
@@ -260,14 +261,11 @@ Func BrewSpells()
 		If isDarkSpellFactory() Then
 			If $iPoisonSpellComp > 0 Then ; Poison Spells
 				Local $iTempPoisonSpell = Number(getBarracksTroopQuantity(175 + 107 * 0, 295 + $midOffsetY))
-				If $IsFullArmywithHeroesAndSpells = True Then ;if spell factory full
+				If $IsFullArmywithHeroesAndSpells = True And $WaitForSpells = True Then ;if spell factory full
 					If $iTempPoisonSpell = $iPoisonSpellComp Then ; check if replacement spells trained,
 						$iPoisonSpell = 0
 					Else
   						$iPoisonSpell = $iPoisonSpellComp - $iTempPoisonSpell ; add spells to queue to match GUI
- 						If $debugSetLogSpellBrew = True Then SetLog("$iPoisonSpell -= " & (Number($CurPoisonSpell - $iPoisonSpellComp)), $COLOR_BLUE)
- 						$iPoisonSpell -= (Number($CurPoisonSpell - $iPoisonSpellComp))
- 						If $debugSetLogSpellBrew = True Then SetLog("$iPoisonSpell = " & $iPoisonSpell, $COLOR_BLUE)
 					EndIf
 				Else
   					$iPoisonSpell = $iPoisonSpellComp - ($CurPoisonSpell + $iTempPoisonSpell) ; not full, add more spell if needed
@@ -302,14 +300,11 @@ Func BrewSpells()
 
 			If $iEarthSpellComp > 0 Then ; EarthQuake Spells
 				Local $iTempEarthSpell = Number(getBarracksTroopQuantity(175 + 107 * 1, 295 + $midOffsetY))
-				If $IsFullArmywithHeroesAndSpells = True Then ;if spell factory full
+				If $IsFullArmywithHeroesAndSpells = True And $WaitForSpells = True Then ;if spell factory full
 					If $iTempEarthSpell = $iEarthSpellComp Then ; check if replacement spells trained,
 						$iEarthSpell = 0
 					Else
   						$iEarthSpell = $iEarthSpellComp - $iTempEarthSpell ; add spells to queue to match GUI
- 						If $debugSetLogSpellBrew = True Then SetLog("$iEarthSpell -= " & (Number($CurEarthSpell - $iEarthSpellComp)), $COLOR_BLUE)
- 						$iEarthSpell -= (Number($CurEarthSpell - $iEarthSpellComp))
- 						If $debugSetLogSpellBrew = True Then SetLog("$iEarthSpell = " & $iEarthSpell, $COLOR_BLUE)
   					EndIf
 				Else
 					$iEarthSpell = $iEarthSpellComp - ($CurEarthSpell + $iTempEarthSpell) ; not full, add more spell if needed
@@ -343,14 +338,11 @@ Func BrewSpells()
 
 			If $iHasteSpellComp > 0 Then ; Haste Spells
 				Local $iTempHasteSpell = Number(getBarracksTroopQuantity(175 + 107 * 2, 295 + $midOffsetY))
-				If $IsFullArmywithHeroesAndSpells = True Then ;if spell factory full
+				If $IsFullArmywithHeroesAndSpells = True And $WaitForSpells = True Then ;if spell factory full
 					If $iTempHasteSpell = $iHasteSpellComp Then ; check if replacement spells trained,
 						$iHasteSpell = 0
 					Else
   						$iHasteSpell = $iHasteSpellComp - $iTempHasteSpell ; add spells to queue to match GUI
- 						If $debugSetLogSpellBrew = True Then SetLog("$iHasteSpell -= " & (Number($CurHasteSpell - $iHasteSpellComp)), $COLOR_BLUE)
- 						$iHasteSpell -= (Number($CurHasteSpell - $iHasteSpellComp))
- 						If $debugSetLogSpellBrew = True Then SetLog("$iHasteSpell = " & $iHasteSpell, $COLOR_BLUE)
   					EndIf
 				Else
 					$iHasteSpell = $iHasteSpellComp - ($CurHasteSpell + $iTempHasteSpell) ; not full, add more spell if needed
@@ -383,14 +375,11 @@ Func BrewSpells()
 			EndIf
 			If $iSkeletonSpellComp > 0 Then ; Skeleton Spells
 				Local $iTempSkeletonSpell = Number(getBarracksTroopQuantity(175 + 107 * 3, 295 + $midOffsetY))
-				If $IsFullArmywithHeroesAndSpells = True Then ;if spell factory full
+				If $IsFullArmywithHeroesAndSpells = True And $WaitForSpells = True Then ;if spell factory full
 					If $iTempSkeletonSpell = $iSkeletonSpellComp Then ; check if replacement spells trained,
 						$iSkeletonSpell = 0
 					Else
   						$iSkeletonSpell = $iSkeletonSpellComp - $iTempSkeletonSpell ; add spells to queue to match GUI
- 						If $debugSetLogSpellBrew = True Then SetLog("$iSkeletonSpell -= " & (Number($CurSkeletonSpell - $iSkeletonSpellComp)), $COLOR_BLUE)
- 						$iSkeletonSpell -= (Number($CurSkeletonSpell - $iSkeletonSpellComp))
- 						If $debugSetLogSpellBrew = True Then SetLog("$iSkeletonSpell = " & $iSkeletonSpell, $COLOR_BLUE)
   					EndIf
 				Else
 					$iSkeletonSpell = $iSkeletonSpellComp - ($CurSkeletonSpell + $iTempSkeletonSpell) ; not full, add more spell if needed
